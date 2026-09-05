@@ -65,6 +65,15 @@ h1,h2,h3,h4{margin:0;font-weight:700;}
 }
 #login-card button.primary:hover{background:var(--accent-dark);}
 #login-error{color:var(--danger);font-size:13px;min-height:18px;margin-top:8px;}
+#login-card .divider{display:flex;align-items:center;gap:10px;margin:18px 0;color:var(--muted);font-size:12px;}
+#login-card .divider::before,#login-card .divider::after{content:"";flex:1;height:1px;background:var(--border);}
+#login-card button.demo{
+  width:100%;padding:11px;border:1px solid var(--accent);border-radius:8px;
+  background:var(--accent-light);color:var(--accent-dark);font-weight:700;font-size:14px;cursor:pointer;
+}
+#login-card button.demo:hover{background:#dcefec;}
+#login-card button.demo:disabled{opacity:.6;cursor:default;}
+#login-card .demo-sub{font-size:11.5px;color:var(--muted);text-align:center;margin-top:6px;}
 #login-card details{margin-top:18px;border-top:1px solid var(--border);padding-top:14px;}
 #login-card summary{cursor:pointer;color:var(--accent);font-weight:600;font-size:13px;}
 #login-card details button{margin-top:14px;background:#f0f4f4;color:var(--accent-dark);border:1px solid var(--border);}
@@ -266,8 +275,11 @@ tr.order-row:hover{background:#fafbfb;}
     <input id="login-password" type="password" autocomplete="current-password" placeholder="••••••••">
     <button class="primary" onclick="Auth.login()">Sign in</button>
     <div id="login-error"></div>
+    <div class="divider">or</div>
+    <button class="demo" id="demo-login-btn" onclick="Auth.tryDemo()">Try the demo</button>
+    <p class="demo-sub">One click — no signup. Loads a sample merchant store with synthetic data.</p>
     <details>
-      <summary>Create a demo account</summary>
+      <summary>Create your own account</summary>
       <label for="reg-email">Email</label>
       <input id="reg-email" type="email" placeholder="you@merchant.com">
       <label for="reg-password">Password (8+ characters)</label>
@@ -395,7 +407,55 @@ const Fmt = {
 /* ============================================================
    Auth
    ============================================================ */
+const DEMO_ACCOUNT = {
+  email: "demo@returnrisk.app",
+  password: "demo-password-1234",
+  organization_id: "demo_store",
+};
+
 const Auth = {
+  async tryDemo() {
+    const btn = document.getElementById("demo-login-btn");
+    const errEl = document.getElementById("login-error");
+    errEl.style.color = "var(--danger)";
+    errEl.textContent = "";
+    btn.disabled = true;
+    const prevLabel = btn.textContent;
+    btn.textContent = "Loading demo…";
+    try {
+      const data = await api("/auth/login", {
+        method: "POST",
+        body: JSON.stringify({ email: DEMO_ACCOUNT.email, password: DEMO_ACCOUNT.password }),
+      });
+      State.token = data.token;
+      State.orgId = data.organization_id;
+      localStorage.setItem(TOKEN_KEY, data.token);
+      await App.start();
+    } catch (loginErr) {
+      // First-ever run on this server: the demo account doesn't exist
+      // yet. Create it once, silently, then sign in — the person
+      // never sees a form or types anything.
+      try {
+        await api("/auth/register", {
+          method: "POST",
+          body: JSON.stringify(DEMO_ACCOUNT),
+        });
+        const data = await api("/auth/login", {
+          method: "POST",
+          body: JSON.stringify({ email: DEMO_ACCOUNT.email, password: DEMO_ACCOUNT.password }),
+        });
+        State.token = data.token;
+        State.orgId = data.organization_id;
+        localStorage.setItem(TOKEN_KEY, data.token);
+        await App.start();
+      } catch (setupErr) {
+        errEl.textContent = setupErr.message || "Couldn't load the demo. Try again.";
+      }
+    } finally {
+      btn.disabled = false;
+      btn.textContent = prevLabel;
+    }
+  },
   async login() {
     const email = document.getElementById("login-email").value.trim();
     const password = document.getElementById("login-password").value;
