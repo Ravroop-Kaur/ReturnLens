@@ -1,0 +1,4345 @@
+{
+  "label": "Synthetic benchmark performance -- not real-world production performance.",
+  "n_scenarios_total": 600,
+  "n_dev": 198,
+  "n_val": 198,
+  "n_test": 204,
+  "dev_results": {
+    "metrics": {
+      "counts": {
+        "tp": 66,
+        "fp": 3,
+        "tn": 112,
+        "fn": 17
+      },
+      "threshold": 0.5,
+      "precision": 0.9565217391304348,
+      "recall": 0.7951807228915663,
+      "f1": 0.868421052631579,
+      "fpr": 0.02608695652173913,
+      "fnr": 0.20481927710843373,
+      "precision_defined": true,
+      "recall_defined": true,
+      "fpr_defined": true,
+      "fnr_defined": true,
+      "n_positive": 83,
+      "n_negative": 115,
+      "n_total": 198,
+      "positive_class": "return",
+      "negative_class": "no_return",
+      "dataset_type": null,
+      "model_version": null,
+      "confusion_matrix": {
+        "tp": 66,
+        "fp": 3,
+        "fn": 17,
+        "tn": 112
+      },
+      "test_size": 198
+    },
+    "bootstrap_95_ci": {
+      "precision_95_ci": [
+        0.9032061369000787,
+        1.0
+      ],
+      "recall_95_ci": [
+        0.7011494252873564,
+        0.8718023255813954
+      ]
+    },
+    "per_scenario": [
+      {
+        "scenario_id": "true_negative_39",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_60",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_88",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_87",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_75",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_70",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_44",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_11",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_33",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_15",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_35",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_28",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_57",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_94",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_50",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_54",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_83",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_82",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_40",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_00",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_40",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_28",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_84",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_02",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_92",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_21",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_34",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "true_positive_89",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_58",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_90",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_11",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_55",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_36",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_04",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_52",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_21",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "true_negative_95",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_50",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_91",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_46",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_13",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "noisy_37",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_74",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_61",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_09",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_23",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_00",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_38",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_23",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_69",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": true,
+        "correct": false
+      },
+      {
+        "scenario_id": "noisy_80",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_53",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_40",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_23",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_93",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_19",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_60",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_59",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_61",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_99",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_37",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_53",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_46",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_79",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_63",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_18",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_75",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_55",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_04",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_30",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_17",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "hard_negative_80",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_84",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_02",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_66",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_24",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_67",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_67",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_33",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_14",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_07",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_12",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_84",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_05",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_63",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_65",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_52",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_20",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_17",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_64",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_62",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_16",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_43",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_32",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_34",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_06",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_11",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_00",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "noisy_33",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_43",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_16",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_56",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_77",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_32",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_01",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_70",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_94",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_16",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_86",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_81",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_72",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_02",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_68",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_54",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_29",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_69",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_42",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_36",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_86",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "hard_negative_50",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": true,
+        "correct": false
+      },
+      {
+        "scenario_id": "hard_negative_31",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_21",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_53",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "true_negative_21",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_42",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_86",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_44",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_99",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_31",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "subtle_positive_72",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "subtle_positive_77",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "distribution_shift_35",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_75",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_90",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_68",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_07",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_71",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_22",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_49",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "noisy_74",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_24",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_14",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_14",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_95",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "subtle_positive_32",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_22",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_48",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_73",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_26",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": true,
+        "correct": false
+      },
+      {
+        "scenario_id": "hard_negative_72",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_93",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_57",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "distribution_shift_46",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_83",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_02",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_07",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_88",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_70",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_61",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "true_negative_88",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_07",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "true_negative_27",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_20",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_80",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_95",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "true_negative_98",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_36",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_34",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_73",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_41",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_12",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_66",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_84",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_33",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_96",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_94",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_55",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_54",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_58",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_75",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_63",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_10",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_42",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_03",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_57",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_64",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_77",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_39",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_27",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_94",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_38",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_54",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_08",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_10",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_86",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_02",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_97",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_79",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      }
+    ]
+  },
+  "val_results": {
+    "metrics": {
+      "counts": {
+        "tp": 64,
+        "fp": 5,
+        "tn": 111,
+        "fn": 18
+      },
+      "threshold": 0.5,
+      "precision": 0.927536231884058,
+      "recall": 0.7804878048780488,
+      "f1": 0.8476821192052981,
+      "fpr": 0.04310344827586207,
+      "fnr": 0.21951219512195122,
+      "precision_defined": true,
+      "recall_defined": true,
+      "fpr_defined": true,
+      "fnr_defined": true,
+      "n_positive": 82,
+      "n_negative": 116,
+      "n_total": 198,
+      "positive_class": "return",
+      "negative_class": "no_return",
+      "dataset_type": null,
+      "model_version": null,
+      "confusion_matrix": {
+        "tp": 64,
+        "fp": 5,
+        "fn": 18,
+        "tn": 111
+      },
+      "test_size": 198
+    },
+    "bootstrap_95_ci": {
+      "precision_95_ci": [
+        0.86353668261563,
+        0.9841331845238095
+      ],
+      "recall_95_ci": [
+        0.6944362745098039,
+        0.8674698795180723
+      ]
+    },
+    "per_scenario": [
+      {
+        "scenario_id": "true_negative_76",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_42",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_26",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_37",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_30",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_58",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_39",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": true,
+        "correct": false
+      },
+      {
+        "scenario_id": "subtle_positive_56",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_58",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_39",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "subtle_positive_69",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_49",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": true,
+        "correct": false
+      },
+      {
+        "scenario_id": "noisy_22",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_79",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_51",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_26",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_23",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_83",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_60",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_78",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_83",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_63",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_82",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_00",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_92",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_41",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_56",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_76",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_06",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_67",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_20",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_00",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_08",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_12",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_49",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_27",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_48",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_17",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "noisy_11",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_75",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_19",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "true_positive_81",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_51",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_43",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_75",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_59",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_65",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_38",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_79",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_82",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_65",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_32",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_66",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_41",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_41",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_36",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_59",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_45",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_14",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_73",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_92",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_45",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "subtle_positive_10",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "true_negative_74",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_09",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_10",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_05",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_22",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_48",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_65",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_77",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_64",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_65",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_44",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "hard_negative_37",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_36",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_40",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_74",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_03",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_13",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_32",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_46",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_48",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_08",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_77",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_29",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_37",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_97",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_51",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": true,
+        "correct": false
+      },
+      {
+        "scenario_id": "noisy_31",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_29",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_73",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_87",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_47",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_90",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_01",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "subtle_positive_08",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "true_negative_18",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_30",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_46",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_99",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "noisy_27",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_62",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_22",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_76",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_74",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "noisy_42",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_51",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_89",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_78",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_34",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_85",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_47",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_28",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "true_negative_50",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_26",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_93",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_48",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_53",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "true_positive_77",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_49",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_26",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_76",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_35",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_19",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_56",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_55",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_09",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_91",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_58",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_47",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "noisy_18",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_17",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_64",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_99",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_24",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_18",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_65",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_37",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_13",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_67",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_45",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_48",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_24",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_04",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_98",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_28",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_16",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_88",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_78",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": true,
+        "correct": false
+      },
+      {
+        "scenario_id": "subtle_positive_96",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "distribution_shift_17",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_28",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_47",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_06",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_50",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_57",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_90",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_45",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_63",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_78",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_31",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_29",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_35",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_82",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_98",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_72",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_71",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_01",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_71",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "hard_negative_09",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_61",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "true_positive_71",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_93",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_13",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_80",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_97",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_06",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_88",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_52",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_15",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_64",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_56",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_86",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_14",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_28",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_40",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_43",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_92",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_04",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "true_positive_13",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_12",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": true,
+        "correct": false
+      },
+      {
+        "scenario_id": "subtle_positive_76",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_49",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "true_positive_79",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_34",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_85",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_19",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      }
+    ]
+  },
+  "test_results": {
+    "metrics": {
+      "counts": {
+        "tp": 64,
+        "fp": 6,
+        "tn": 113,
+        "fn": 21
+      },
+      "threshold": 0.5,
+      "precision": 0.9142857142857143,
+      "recall": 0.7529411764705882,
+      "f1": 0.8258064516129033,
+      "fpr": 0.05042016806722689,
+      "fnr": 0.24705882352941178,
+      "precision_defined": true,
+      "recall_defined": true,
+      "fpr_defined": true,
+      "fnr_defined": true,
+      "n_positive": 85,
+      "n_negative": 119,
+      "n_total": 204,
+      "positive_class": "return",
+      "negative_class": "no_return",
+      "dataset_type": null,
+      "model_version": null,
+      "confusion_matrix": {
+        "tp": 64,
+        "fp": 6,
+        "fn": 21,
+        "tn": 113
+      },
+      "test_size": 204
+    },
+    "bootstrap_95_ci": {
+      "precision_95_ci": [
+        0.8421052631578947,
+        0.9743589743589743
+      ],
+      "recall_95_ci": [
+        0.6627834302325581,
+        0.8427135508325436
+      ]
+    },
+    "per_scenario": [
+      {
+        "scenario_id": "subtle_positive_40",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "true_negative_05",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_89",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_05",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_20",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "noisy_00",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_94",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_41",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_93",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_96",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_84",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_22",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_04",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_69",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_31",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_01",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_09",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_95",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_55",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "distribution_shift_59",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_62",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": true,
+        "correct": false
+      },
+      {
+        "scenario_id": "distribution_shift_25",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_27",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_33",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "true_negative_35",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_19",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_55",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_44",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_97",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_89",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_89",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_12",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_54",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "subtle_positive_85",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_81",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_38",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_70",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_25",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_70",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_97",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_15",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_62",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_39",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_03",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "subtle_positive_78",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_87",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_07",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_38",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_78",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_15",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "distribution_shift_86",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_21",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_85",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_96",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_66",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_52",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_05",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_81",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_60",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_51",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_66",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_67",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_64",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_91",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_76",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_83",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_21",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_10",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_23",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_58",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_27",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "true_positive_25",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_30",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_09",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_63",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_88",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "true_negative_82",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_60",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_36",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_98",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_57",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_23",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_93",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_46",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_41",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_16",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_61",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_42",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_69",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_73",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": true,
+        "correct": false
+      },
+      {
+        "scenario_id": "noisy_97",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_62",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_16",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_59",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "hard_negative_87",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_98",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_49",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_71",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "noisy_50",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_87",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_24",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_85",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_90",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_11",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_25",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_54",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_72",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_18",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_84",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_73",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_67",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "true_positive_59",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_68",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_91",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_02",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_05",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_69",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "true_negative_47",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_66",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_14",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_15",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_47",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "noisy_72",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_29",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_94",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": true,
+        "correct": false
+      },
+      {
+        "scenario_id": "hard_negative_82",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_03",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_20",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_99",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_70",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_45",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "hard_negative_52",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": true,
+        "correct": false
+      },
+      {
+        "scenario_id": "distribution_shift_30",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_06",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_35",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "distribution_shift_71",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_68",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_92",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_19",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_34",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_24",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_51",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_10",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_43",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "distribution_shift_33",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_92",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_96",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_39",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_68",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_06",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_44",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_96",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_30",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_18",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_03",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_12",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_60",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_53",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_61",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_91",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_80",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "true_positive_98",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_81",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "subtle_positive_25",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_80",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_25",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_68",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_08",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_85",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": true,
+        "correct": false
+      },
+      {
+        "scenario_id": "hard_negative_74",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_08",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_79",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "subtle_positive_01",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_13",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_81",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_11",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": true,
+        "correct": false
+      },
+      {
+        "scenario_id": "true_positive_95",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_62",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_57",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_52",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_20",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_56",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_45",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_83",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_03",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "subtle_positive_90",
+        "family": "subtle_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": false,
+        "correct": false
+      },
+      {
+        "scenario_id": "distribution_shift_15",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_95",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_31",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_26",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_32",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_44",
+        "family": "noisy",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_53",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "distribution_shift_43",
+        "family": "distribution_shift",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_17",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_04",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "noisy_91",
+        "family": "noisy",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_87",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_38",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_89",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_01",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_negative_07",
+        "family": "true_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      },
+      {
+        "scenario_id": "true_positive_99",
+        "family": "true_positive",
+        "ground_truth_has_effect": true,
+        "engine_detected_effect": true,
+        "correct": true
+      },
+      {
+        "scenario_id": "hard_negative_29",
+        "family": "hard_negative",
+        "ground_truth_has_effect": false,
+        "engine_detected_effect": false,
+        "correct": true
+      }
+    ]
+  }
+}

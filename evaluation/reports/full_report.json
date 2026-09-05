@@ -1,0 +1,399 @@
+{
+  "dataset_label": "DEMO / SYNTHETIC",
+  "ingestion": {
+    "n_rows_raw": 24000,
+    "capabilities": {
+      "return_outcome_available": "True",
+      "category_available": true,
+      "region_available": true,
+      "fulfilment_available": true,
+      "shipping_service_available": true,
+      "review_text_available": false,
+      "missing_required_fields": []
+    },
+    "message": "Dataset supports full return-risk analysis."
+  },
+  "status": "ok",
+  "model": {
+    "model_name": "logistic_regression",
+    "threshold": 0.505,
+    "feature_count": 42,
+    "val_model_comparison": {
+      "logistic_regression": {
+        "val_auc": 0.8832460489520995,
+        "val_ap": 0.8108214174058481
+      },
+      "lightgbm": {
+        "val_auc": 0.8737462538074292,
+        "val_ap": 0.7969934637664882
+      }
+    },
+    "threshold_selection_on_validation": {
+      "threshold": 0.505,
+      "precision": 0.7091212458286985,
+      "recall": 0.7639304973037747,
+      "f1": 0.7355062013267955,
+      "tp": 1275,
+      "fp": 523,
+      "fn": 394,
+      "tn": 2608,
+      "selection_rule": "validation_only: precision>=70% and recall>=70%, maximize F1; fallback=max F1"
+    },
+    "split": {
+      "train_n": 14400,
+      "val_n": 4800,
+      "test_n": 4800,
+      "train_end": "2025-08-06 06:00:00",
+      "val_end": "2025-10-19 08:00:00",
+      "test_end": "2025-12-31 23:00:00"
+    },
+    "random_seed": 42
+  },
+  "test_evaluation": {
+    "counts": {
+      "tp": 1248,
+      "fp": 454,
+      "tn": 2681,
+      "fn": 417
+    },
+    "threshold": 0.505,
+    "precision": 0.7332549941245593,
+    "recall": 0.7495495495495496,
+    "f1": 0.7413127413127413,
+    "fpr": 0.1448165869218501,
+    "fnr": 0.25045045045045045,
+    "precision_defined": true,
+    "recall_defined": true,
+    "fpr_defined": true,
+    "fnr_defined": true,
+    "n_positive": 1665,
+    "n_negative": 3135,
+    "n_total": 4800,
+    "positive_class": "return",
+    "negative_class": "no_return",
+    "dataset_type": "synthetic_holdout",
+    "model_version": null,
+    "confusion_matrix": {
+      "tp": 1248,
+      "fp": 454,
+      "fn": 417,
+      "tn": 2681
+    },
+    "test_size": 4800
+  },
+  "financial_exposure": {
+    "predicted_return_exposure": 1951061.32,
+    "observed_historical_return_value": 1929922.61,
+    "false_positive_exposure": 522612.02,
+    "false_negative_exposure": 501473.31,
+    "n_high_risk_orders": 1702,
+    "n_total_orders": 4800,
+    "pct_orders_high_risk": 0.3546,
+    "note": "Predicted exposure is an estimate, not a guaranteed loss. See docs for exact definitions."
+  },
+  "feature_importance": [
+    {
+      "feature": "hist_return_rate_customer_id",
+      "weight": 1.8395841018929122,
+      "direction": "increases risk"
+    },
+    {
+      "feature": "hist_return_rate_product_id",
+      "weight": 1.5633428491722354,
+      "direction": "increases risk"
+    },
+    {
+      "feature": "hist_return_rate_region",
+      "weight": -1.3113871710306937,
+      "direction": "decreases risk"
+    },
+    {
+      "feature": "hist_return_rate_category",
+      "weight": -0.9792126260329188,
+      "direction": "decreases risk"
+    },
+    {
+      "feature": "hist_return_rate_shipping_service",
+      "weight": -0.5542633997145676,
+      "direction": "decreases risk"
+    },
+    {
+      "feature": "hist_count_customer_id",
+      "weight": 0.503497752958874,
+      "direction": "increases risk"
+    },
+    {
+      "feature": "prior_order_count_customer_id",
+      "weight": -0.42540558269184847,
+      "direction": "decreases risk"
+    },
+    {
+      "feature": "category_Apparel",
+      "weight": 0.3224187020684829,
+      "direction": "increases risk"
+    },
+    {
+      "feature": "hist_count_region",
+      "weight": -0.27402854949598365,
+      "direction": "decreases risk"
+    },
+    {
+      "feature": "category_Home",
+      "weight": -0.262046963454966,
+      "direction": "decreases risk"
+    }
+  ],
+  "diagnosis": {
+    "fulfilment_method": [
+      {
+        "dimension": "fulfilment_method",
+        "segment": "third_party_fulfilled",
+        "segment_return_rate": 0.4306878306878307,
+        "baseline_return_rate": 0.3263294422827497,
+        "relative_risk": 1.3197945845004668,
+        "segment_n": 945,
+        "baseline_n": 3855,
+        "ci_low": 0.39945957629082335,
+        "ci_high": 0.462477337099146,
+        "practically_significant": true,
+        "statistically_supported": "True"
+      },
+      {
+        "dimension": "fulfilment_method",
+        "segment": "merchant_fulfilled",
+        "segment_return_rate": 0.3497133497133497,
+        "baseline_return_rate": 0.3459066778429729,
+        "relative_risk": 1.0110049100356047,
+        "segment_n": 1221,
+        "baseline_n": 3579,
+        "ci_low": 0.32347357950148503,
+        "ci_high": 0.3768958396952503,
+        "practically_significant": false,
+        "statistically_supported": "False"
+      },
+      {
+        "dimension": "fulfilment_method",
+        "segment": "platform_fulfilled",
+        "segment_return_rate": 0.31548974943052394,
+        "baseline_return_rate": 0.3850415512465374,
+        "relative_risk": 0.8193654643483391,
+        "segment_n": 2634,
+        "baseline_n": 2166,
+        "ci_low": 0.298022112894671,
+        "ci_high": 0.33349480608939547,
+        "practically_significant": false,
+        "statistically_supported": "False"
+      }
+    ],
+    "category": [
+      {
+        "dimension": "category",
+        "segment": "Apparel",
+        "segment_return_rate": 0.4847009735744089,
+        "baseline_return_rate": 0.2879238548483046,
+        "relative_risk": 1.6834345797078127,
+        "segment_n": 1438,
+        "baseline_n": 3362,
+        "ci_low": 0.4589450185261123,
+        "ci_high": 0.5105384531673108,
+        "practically_significant": true,
+        "statistically_supported": "True"
+      },
+      {
+        "dimension": "category",
+        "segment": "Beauty",
+        "segment_return_rate": 0.47480916030534354,
+        "baseline_return_rate": 0.32665862484921593,
+        "relative_risk": 1.4535332123084557,
+        "segment_n": 655,
+        "baseline_n": 4145,
+        "ci_low": 0.43682427952524006,
+        "ci_high": 0.5130878086003428,
+        "practically_significant": true,
+        "statistically_supported": "True"
+      },
+      {
+        "dimension": "category",
+        "segment": "Electronics",
+        "segment_return_rate": 0.3684210526315789,
+        "baseline_return_rate": 0.341425215348473,
+        "relative_risk": 1.079068083051666,
+        "segment_n": 969,
+        "baseline_n": 3831,
+        "ci_low": 0.3386237341393514,
+        "ci_high": 0.3992575406745545,
+        "practically_significant": false,
+        "statistically_supported": "False"
+      },
+      {
+        "dimension": "category",
+        "segment": "Home",
+        "segment_return_rate": 0.1976608187134503,
+        "baseline_return_rate": 0.3792141951837769,
+        "relative_risk": 0.5212379210057229,
+        "segment_n": 855,
+        "baseline_n": 3945,
+        "ci_low": 0.17234472165575482,
+        "ci_high": 0.22568164315936362,
+        "practically_significant": false,
+        "statistically_supported": "False"
+      },
+      {
+        "dimension": "category",
+        "segment": "Sports",
+        "segment_return_rate": 0.1497005988023952,
+        "baseline_return_rate": 0.36985345429169575,
+        "relative_risk": 0.40475652468647605,
+        "segment_n": 501,
+        "baseline_n": 4299,
+        "ci_low": 0.12112963905915781,
+        "ci_high": 0.18360277601915587,
+        "practically_significant": false,
+        "statistically_supported": "False"
+      }
+    ],
+    "region": [
+      {
+        "dimension": "region",
+        "segment": "South",
+        "segment_return_rate": 0.37156398104265403,
+        "baseline_return_rate": 0.33991989319092125,
+        "relative_risk": 1.0930927800508556,
+        "segment_n": 1055,
+        "baseline_n": 3745,
+        "ci_low": 0.34291987095147425,
+        "ci_high": 0.40114005264805197,
+        "practically_significant": false,
+        "statistically_supported": "True"
+      },
+      {
+        "dimension": "region",
+        "segment": "North",
+        "segment_return_rate": 0.34885764499121263,
+        "baseline_return_rate": 0.3462588749317313,
+        "relative_risk": 1.0075052807238334,
+        "segment_n": 1138,
+        "baseline_n": 3662,
+        "ci_low": 0.32171655691229956,
+        "ci_high": 0.3770157366037186,
+        "practically_significant": false,
+        "statistically_supported": "False"
+      },
+      {
+        "dimension": "region",
+        "segment": "West",
+        "segment_return_rate": 0.3426829268292683,
+        "baseline_return_rate": 0.34773869346733666,
+        "relative_risk": 0.9854610179049769,
+        "segment_n": 820,
+        "baseline_n": 3980,
+        "ci_low": 0.3109990308080433,
+        "ci_high": 0.3758339720410481,
+        "practically_significant": false,
+        "statistically_supported": "False"
+      },
+      {
+        "dimension": "region",
+        "segment": "East",
+        "segment_return_rate": 0.34097706879361916,
+        "baseline_return_rate": 0.3484329734000527,
+        "relative_risk": 0.9786016101355797,
+        "segment_n": 1003,
+        "baseline_n": 3797,
+        "ci_low": 0.31229636982044795,
+        "ci_high": 0.3708712704518651,
+        "practically_significant": false,
+        "statistically_supported": "False"
+      },
+      {
+        "dimension": "region",
+        "segment": "Central",
+        "segment_return_rate": 0.3227040816326531,
+        "baseline_return_rate": 0.351593625498008,
+        "relative_risk": 0.9178325721223334,
+        "segment_n": 784,
+        "baseline_n": 4016,
+        "ci_low": 0.29091129356792755,
+        "ci_high": 0.35622589746133526,
+        "practically_significant": false,
+        "statistically_supported": "False"
+      }
+    ],
+    "shipping_service": [
+      {
+        "dimension": "shipping_service",
+        "segment": "Economy",
+        "segment_return_rate": 0.3768595041322314,
+        "baseline_return_rate": 0.33676880222841227,
+        "relative_risk": 1.119045177696204,
+        "segment_n": 1210,
+        "baseline_n": 3590,
+        "ci_low": 0.3499844326087903,
+        "ci_high": 0.4045140126578738,
+        "practically_significant": false,
+        "statistically_supported": "True"
+      },
+      {
+        "dimension": "shipping_service",
+        "segment": "Expedited",
+        "segment_return_rate": 0.34065934065934067,
+        "baseline_return_rate": 0.3485127665175046,
+        "relative_risk": 0.9774658875867335,
+        "segment_n": 1001,
+        "baseline_n": 3799,
+        "ci_low": 0.3119584907332039,
+        "ci_high": 0.3705785379885368,
+        "practically_significant": false,
+        "statistically_supported": "False"
+      },
+      {
+        "dimension": "shipping_service",
+        "segment": "Standard",
+        "segment_return_rate": 0.33526458091927386,
+        "baseline_return_rate": 0.36047037539574855,
+        "relative_risk": 0.9300752677697798,
+        "segment_n": 2589,
+        "baseline_n": 2211,
+        "ci_low": 0.3173357030210104,
+        "ci_high": 0.353681608641993,
+        "practically_significant": false,
+        "statistically_supported": "False"
+      }
+    ]
+  },
+  "top_finding": {
+    "dimension": "category",
+    "segment": "Apparel",
+    "segment_return_rate": 0.4847009735744089,
+    "baseline_return_rate": 0.2879238548483046,
+    "relative_risk": 1.6834345797078127,
+    "segment_n": 1438,
+    "baseline_n": 3362,
+    "ci_low": 0.4589450185261123,
+    "ci_high": 0.5105384531673108,
+    "practically_significant": true,
+    "statistically_supported": "True"
+  },
+  "recommendation": {
+    "text": "Review product quality, sizing/listing accuracy, or return drivers for the 'Apparel' category.",
+    "dimension": "category",
+    "segment": "Apparel",
+    "relative_risk": 1.6834345797078127,
+    "evidence_summary": "Orders in segment 'Apparel' (category) show an observed return rate of 48.5%, compared with 28.8% for the rest of the data -- about 1.7x higher. This is an observed association, not a proven cause.",
+    "bounded": true,
+    "autonomous": false
+  },
+  "verification": {
+    "before_rate": 0.4847009735744089,
+    "after_rate": 0.26008344923504867,
+    "before_n": 1438,
+    "after_n": 1438,
+    "absolute_change": -0.22461752433936022,
+    "relative_change": -0.4634146341463415,
+    "z_stat": 12.458438843318147,
+    "p_value": 0.0,
+    "improved": true,
+    "is_simulation": true,
+    "label": "DEMO / SYNTHETIC SIMULATION"
+  }
+}

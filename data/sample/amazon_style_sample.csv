@@ -1,0 +1,501 @@
+Order ID,Date,Status,Fulfilment,ship-service-level,Category,Amount,ship-state,SKU
+ORD-0001448,04-09-25,Shipped - Delivered to Buyer,platform_fulfilled,Expedited,Home,741.34,West,HOM-0001
+ORD-0011404,07-25-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Apparel,243.48,North,APP-0001
+ORD-0002288,05-09-25,Shipped,platform_fulfilled,Standard,Beauty,1202.27,South,BEA-0001
+ORD-0012950,03-22-25,Shipped,platform_fulfilled,Standard,Sports,1315.49,West,SPO-0001
+ORD-0011085,03-10-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Electronics,2386.89,South,ELE-0001
+ORD-0011831,01-05-25,Shipped - Delivered to Buyer,third_party_fulfilled,Standard,Apparel,401.85,North,APP-0005
+ORD-0010192,12-31-25,Shipped - Delivered to Buyer,third_party_fulfilled,Expedited,Apparel,577.4,Central,APP-0001
+ORD-0016824,08-30-25,Shipped - Rejected by Buyer,platform_fulfilled,Expedited,Sports,793.11,North,SPO-0001
+ORD-0023733,01-03-25,Shipped,platform_fulfilled,Economy,Beauty,858.48,West,BEA-0005
+ORD-0017111,12-27-25,Shipped,merchant_fulfilled,Expedited,Home,1493.36,Central,HOM-0001
+ORD-0023871,07-18-25,Shipped - Returned to seller,platform_fulfilled,Standard,Home,2842.93,Central,HOM-0001
+ORD-0006072,11-29-25,Shipped,platform_fulfilled,Standard,Apparel,1093.93,South,APP-0002
+ORD-0011578,06-16-25,Shipped - Rejected by Buyer,platform_fulfilled,Standard,Apparel,3043.69,Central,APP-0001
+ORD-0019867,05-22-25,Shipped - Rejected by Buyer,merchant_fulfilled,Standard,Sports,860.96,North,SPO-0001
+ORD-0017452,06-15-25,Shipped - Delivered to Buyer,platform_fulfilled,Expedited,Apparel,688.1,Central,APP-0001
+ORD-0019467,02-12-25,Shipped,merchant_fulfilled,Standard,Apparel,373.33,North,APP-0001
+ORD-0009550,07-28-25,Shipped - Rejected by Buyer,third_party_fulfilled,Standard,Apparel,591.57,East,APP-0001
+ORD-0023451,05-20-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Beauty,381.04,South,BEA-0017
+ORD-0007992,04-08-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Books,292.87,South,BOO-0001
+ORD-0014488,02-18-25,Shipped - Delivered to Buyer,platform_fulfilled,Expedited,Beauty,460.34,East,BEA-0002
+ORD-0020159,10-09-25,Shipped - Returned to seller,third_party_fulfilled,Expedited,Electronics,3866.21,North,ELE-0001
+ORD-0002626,03-21-25,Shipped,platform_fulfilled,Standard,Electronics,1506.33,Central,ELE-0001
+ORD-0001641,09-23-25,Shipped,platform_fulfilled,Economy,Beauty,197.39,East,BEA-0140
+ORD-0003966,06-19-25,Shipped - Delivered to Buyer,platform_fulfilled,Expedited,Apparel,1622.88,North,APP-0021
+ORD-0016130,07-27-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Electronics,1364.11,Central,ELE-0001
+ORD-0014909,01-20-25,Shipped - Returned to seller,merchant_fulfilled,Standard,Electronics,3140.93,Central,ELE-0002
+ORD-0011089,08-16-25,Shipped - Rejected by Buyer,merchant_fulfilled,Standard,Sports,677.28,South,SPO-0001
+ORD-0003832,04-12-25,Shipped - Delivered to Buyer,merchant_fulfilled,Economy,Home,1458.61,South,HOM-0002
+ORD-0000049,02-20-25,Shipped - Delivered to Buyer,platform_fulfilled,Expedited,Beauty,333.91,South,BEA-0022
+ORD-0012018,10-27-25,Shipped - Returned to seller,merchant_fulfilled,Expedited,Sports,464.18,East,SPO-0001
+ORD-0019132,07-07-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Sports,844.09,Central,SPO-0001
+ORD-0002913,04-11-25,Shipped,third_party_fulfilled,Standard,Home,1640.3,West,HOM-0001
+ORD-0009335,11-11-25,Shipped - Returned to seller,third_party_fulfilled,Expedited,Home,689.84,Central,HOM-0001
+ORD-0019169,11-22-25,Shipped,platform_fulfilled,Standard,Sports,2347.79,North,SPO-0003
+ORD-0004161,02-04-25,Shipped,platform_fulfilled,Standard,Home,456.88,Central,HOM-0003
+ORD-0023919,10-31-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Apparel,824.17,East,APP-0001
+ORD-0004211,12-26-25,Shipped,platform_fulfilled,Economy,Beauty,351.13,East,BEA-0005
+ORD-0008723,06-27-25,Shipped - Delivered to Buyer,merchant_fulfilled,Standard,Beauty,215.82,North,BEA-0003
+ORD-0014596,06-13-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Home,469.36,East,HOM-0004
+ORD-0003834,10-20-25,Shipped,merchant_fulfilled,Standard,Electronics,3164.26,East,ELE-0105
+ORD-0012472,08-21-25,Shipped,platform_fulfilled,Standard,Apparel,808.43,Central,APP-0003
+ORD-0007945,07-01-25,Shipped - Returned to seller,platform_fulfilled,Standard,Home,1457.6,South,HOM-0002
+ORD-0004714,01-09-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Sports,2214.86,Central,SPO-0001
+ORD-0020130,03-08-25,Shipped,third_party_fulfilled,Economy,Apparel,561.65,Central,APP-0002
+ORD-0000255,05-11-25,Shipped - Returned to seller,platform_fulfilled,Standard,Apparel,796.46,Central,APP-0009
+ORD-0005968,04-05-25,Shipped,merchant_fulfilled,Standard,Apparel,1187.44,Central,APP-0001
+ORD-0009947,04-24-25,Shipped - Delivered to Buyer,merchant_fulfilled,Expedited,Beauty,938.53,North,BEA-0001
+ORD-0003766,09-05-25,Shipped,merchant_fulfilled,Standard,Beauty,277.13,North,BEA-0004
+ORD-0015854,12-12-25,Shipped,platform_fulfilled,Standard,Electronics,3128.36,Central,ELE-0037
+ORD-0021312,10-23-25,Shipped - Rejected by Buyer,third_party_fulfilled,Expedited,Sports,856.81,East,SPO-0001
+ORD-0013973,08-22-25,Shipped - Rejected by Buyer,platform_fulfilled,Standard,Apparel,826.89,East,APP-0001
+ORD-0017932,04-16-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Electronics,2069.3,North,ELE-0001
+ORD-0010259,11-03-25,Shipped,third_party_fulfilled,Economy,Electronics,667.87,West,ELE-0003
+ORD-0011301,08-16-25,Shipped - Delivered to Buyer,merchant_fulfilled,Standard,Home,1855.27,Central,HOM-0002
+ORD-0014647,06-02-25,Shipped - Delivered to Buyer,third_party_fulfilled,Standard,Apparel,1109.22,West,APP-0001
+ORD-0004242,10-22-25,Shipped,platform_fulfilled,Standard,Sports,2345.08,East,SPO-0019
+ORD-0006542,09-08-25,Shipped - Rejected by Buyer,platform_fulfilled,Standard,Apparel,901.53,South,APP-0001
+ORD-0012358,03-19-25,Shipped,platform_fulfilled,Standard,Apparel,1445.43,North,APP-0002
+ORD-0009667,10-17-25,Shipped - Delivered to Buyer,platform_fulfilled,Expedited,Books,263.39,Central,BOO-0002
+ORD-0017159,09-27-25,Shipped - Delivered to Buyer,merchant_fulfilled,Standard,Books,327.87,Central,BOO-0001
+ORD-0013347,10-08-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Sports,2036.19,South,SPO-0001
+ORD-0008282,10-30-25,Shipped,merchant_fulfilled,Expedited,Home,508.6,North,HOM-0140
+ORD-0008203,12-26-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Apparel,341.15,North,APP-0001
+ORD-0023581,02-19-25,Shipped - Returned to seller,platform_fulfilled,Expedited,Apparel,624.6,North,APP-0001
+ORD-0020403,05-03-25,Shipped - Delivered to Buyer,merchant_fulfilled,Expedited,Apparel,1127.34,East,APP-0001
+ORD-0020391,01-28-25,Shipped,platform_fulfilled,Expedited,Home,412.28,North,HOM-0003
+ORD-0012697,10-28-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Beauty,544.68,East,BEA-0001
+ORD-0003372,02-01-25,Shipped - Returned to seller,platform_fulfilled,Standard,Apparel,1588.9,West,APP-0001
+ORD-0019482,12-19-25,Shipped - Rejected by Buyer,platform_fulfilled,Standard,Apparel,720.79,East,APP-0001
+ORD-0010089,12-25-25,Shipped,platform_fulfilled,Standard,Apparel,494.52,North,APP-0001
+ORD-0004552,11-16-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Beauty,349.44,North,BEA-0001
+ORD-0014392,08-05-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Electronics,1595.29,East,ELE-0005
+ORD-0012890,03-23-25,Shipped,merchant_fulfilled,Standard,Electronics,1313.15,East,ELE-0001
+ORD-0005143,02-05-25,Shipped,merchant_fulfilled,Standard,Electronics,2448.26,East,ELE-0005
+ORD-0000612,08-26-25,Shipped,merchant_fulfilled,Standard,Home,921.52,North,HOM-0002
+ORD-0012504,03-29-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Sports,1021.63,North,SPO-0005
+ORD-0015269,06-16-25,Shipped - Rejected by Buyer,platform_fulfilled,Economy,Apparel,1416.5,North,APP-0001
+ORD-0008276,12-20-25,Shipped,platform_fulfilled,Standard,Electronics,1925.43,Central,ELE-0001
+ORD-0016965,05-17-25,Shipped,platform_fulfilled,Economy,Home,507.94,North,HOM-0001
+ORD-0000995,06-06-25,Shipped,platform_fulfilled,Expedited,Books,311.12,North,BOO-0002
+ORD-0022836,01-02-25,Shipped,platform_fulfilled,Standard,Apparel,1365.25,South,APP-0001
+ORD-0008482,11-11-25,Shipped,merchant_fulfilled,Economy,Apparel,915.79,South,APP-0002
+ORD-0002013,03-15-25,Shipped - Returned to seller,third_party_fulfilled,Standard,Apparel,665.17,East,APP-0005
+ORD-0017288,11-22-25,Shipped,platform_fulfilled,Standard,Home,734.0,West,HOM-0006
+ORD-0008913,04-29-25,Shipped - Delivered to Buyer,third_party_fulfilled,Economy,Home,1059.6,North,HOM-0002
+ORD-0003759,12-04-25,Shipped - Delivered to Buyer,merchant_fulfilled,Expedited,Books,250.32,North,BOO-0008
+ORD-0007197,09-12-25,Shipped,merchant_fulfilled,Standard,Apparel,1321.12,West,APP-0006
+ORD-0012849,08-08-25,Shipped,third_party_fulfilled,Expedited,Apparel,1427.57,East,APP-0005
+ORD-0005663,04-16-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Home,1587.71,East,HOM-0001
+ORD-0010238,04-17-25,Shipped,platform_fulfilled,Expedited,Apparel,634.37,North,APP-0001
+ORD-0009964,03-07-25,Shipped - Delivered to Buyer,merchant_fulfilled,Economy,Books,390.63,West,BOO-0002
+ORD-0006245,03-10-25,Shipped - Returned to seller,third_party_fulfilled,Economy,Apparel,680.61,West,APP-0001
+ORD-0008821,10-01-25,Shipped - Delivered to Buyer,merchant_fulfilled,Standard,Electronics,2415.43,North,ELE-0001
+ORD-0008834,10-23-25,Shipped - Delivered to Buyer,merchant_fulfilled,Economy,Home,1205.87,South,HOM-0003
+ORD-0004863,05-29-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Apparel,559.56,South,APP-0001
+ORD-0014914,01-09-25,Shipped,third_party_fulfilled,Economy,Electronics,3924.18,North,ELE-0001
+ORD-0010039,04-17-25,Shipped,platform_fulfilled,Standard,Home,1444.53,Central,HOM-0001
+ORD-0008485,05-06-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Beauty,1708.06,South,BEA-0032
+ORD-0020047,12-13-25,Shipped,platform_fulfilled,Standard,Sports,900.64,East,SPO-0002
+ORD-0015157,12-27-25,Shipped,merchant_fulfilled,Standard,Electronics,1690.37,West,ELE-0001
+ORD-0020837,02-26-25,Shipped,platform_fulfilled,Standard,Beauty,188.35,Central,BEA-0001
+ORD-0003719,01-19-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Books,418.98,North,BOO-0001
+ORD-0018355,01-02-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Electronics,3838.37,East,ELE-0007
+ORD-0020689,01-04-25,Shipped,platform_fulfilled,Standard,Home,525.89,South,HOM-0002
+ORD-0007999,11-26-25,Shipped,platform_fulfilled,Standard,Apparel,1229.33,West,APP-0043
+ORD-0023381,11-12-25,Shipped - Delivered to Buyer,merchant_fulfilled,Standard,Home,1335.64,West,HOM-0001
+ORD-0000616,07-09-25,Shipped,platform_fulfilled,Expedited,Beauty,950.92,South,BEA-0003
+ORD-0016704,06-02-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Home,1057.73,East,HOM-0001
+ORD-0011727,02-15-25,Shipped - Delivered to Buyer,merchant_fulfilled,Economy,Electronics,1951.72,South,ELE-0001
+ORD-0015235,04-12-25,Shipped - Returned to seller,platform_fulfilled,Standard,Apparel,666.64,North,APP-0001
+ORD-0008663,12-01-25,Shipped - Delivered to Buyer,third_party_fulfilled,Standard,Books,116.84,North,BOO-0005
+ORD-0008437,05-04-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Electronics,1962.83,South,ELE-0001
+ORD-0018939,05-31-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Apparel,419.71,North,APP-0008
+ORD-0004548,11-12-25,Shipped - Delivered to Buyer,merchant_fulfilled,Standard,Apparel,503.32,North,APP-0001
+ORD-0022387,08-29-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Home,921.7,East,HOM-0002
+ORD-0009217,09-28-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Books,134.13,Central,BOO-0007
+ORD-0013407,08-06-25,Shipped,platform_fulfilled,Expedited,Apparel,310.21,North,APP-0003
+ORD-0022406,09-25-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Beauty,329.06,South,BEA-0001
+ORD-0017392,02-19-25,Shipped - Delivered to Buyer,platform_fulfilled,Expedited,Electronics,1389.43,West,ELE-0002
+ORD-0014341,04-16-25,Shipped - Delivered to Buyer,platform_fulfilled,Expedited,Home,563.65,East,HOM-0002
+ORD-0003476,12-13-25,Shipped - Delivered to Buyer,merchant_fulfilled,Standard,Electronics,2424.8,West,ELE-0064
+ORD-0019126,02-19-25,Shipped,platform_fulfilled,Economy,Sports,1545.15,Central,SPO-0009
+ORD-0016242,07-04-25,Shipped,merchant_fulfilled,Expedited,Sports,1806.03,North,SPO-0030
+ORD-0007073,03-23-25,Shipped,platform_fulfilled,Standard,Electronics,2008.4,North,ELE-0001
+ORD-0000900,02-12-25,Shipped,merchant_fulfilled,Expedited,Home,786.18,East,HOM-0001
+ORD-0011947,08-22-25,Shipped - Returned to seller,platform_fulfilled,Expedited,Apparel,681.03,West,APP-0001
+ORD-0011843,09-26-25,Shipped - Returned to seller,third_party_fulfilled,Economy,Home,933.51,North,HOM-0002
+ORD-0019376,04-13-25,Shipped,third_party_fulfilled,Economy,Electronics,905.55,Central,ELE-0001
+ORD-0017195,04-25-25,Shipped,merchant_fulfilled,Standard,Apparel,559.92,South,APP-0001
+ORD-0006812,11-13-25,Shipped - Delivered to Buyer,merchant_fulfilled,Economy,Apparel,350.1,North,APP-0002
+ORD-0020214,07-11-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Sports,727.02,East,SPO-0001
+ORD-0023251,03-27-25,Shipped,third_party_fulfilled,Standard,Electronics,3754.67,Central,ELE-0001
+ORD-0012198,04-02-25,Shipped,third_party_fulfilled,Standard,Apparel,3795.57,North,APP-0006
+ORD-0020508,02-17-25,Shipped,platform_fulfilled,Standard,Electronics,2366.35,North,ELE-0016
+ORD-0014058,07-18-25,Shipped,platform_fulfilled,Economy,Electronics,4093.98,West,ELE-0005
+ORD-0006866,07-30-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Electronics,1356.52,South,ELE-0001
+ORD-0005627,01-24-25,Shipped - Returned to seller,merchant_fulfilled,Expedited,Beauty,783.0,East,BEA-0002
+ORD-0003027,08-13-25,Shipped,merchant_fulfilled,Standard,Apparel,389.08,Central,APP-0002
+ORD-0009911,05-10-25,Shipped - Rejected by Buyer,platform_fulfilled,Expedited,Apparel,1233.1,East,APP-0003
+ORD-0020369,02-21-25,Shipped - Returned to seller,third_party_fulfilled,Standard,Books,230.98,North,BOO-0001
+ORD-0016494,05-27-25,Shipped - Delivered to Buyer,merchant_fulfilled,Economy,Home,924.92,East,HOM-0001
+ORD-0011218,08-24-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Electronics,2353.31,East,ELE-0001
+ORD-0004673,06-11-25,Shipped - Returned to seller,platform_fulfilled,Standard,Apparel,1338.95,Central,APP-0001
+ORD-0006432,10-15-25,Shipped - Returned to seller,merchant_fulfilled,Economy,Electronics,1332.63,North,ELE-0001
+ORD-0019480,04-10-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Electronics,1058.39,West,ELE-0001
+ORD-0018723,01-29-25,Shipped - Delivered to Buyer,platform_fulfilled,Expedited,Sports,880.3,Central,SPO-0001
+ORD-0009666,07-22-25,Shipped - Delivered to Buyer,merchant_fulfilled,Standard,Beauty,198.29,North,BEA-0001
+ORD-0010532,07-25-25,Shipped,platform_fulfilled,Economy,Apparel,845.34,North,APP-0011
+ORD-0022267,10-05-25,Shipped,platform_fulfilled,Expedited,Beauty,337.7,South,BEA-0003
+ORD-0003437,01-23-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Electronics,1771.5,South,ELE-0001
+ORD-0023033,05-09-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Apparel,394.9,West,APP-0002
+ORD-0021471,09-22-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Electronics,1102.37,North,ELE-0001
+ORD-0008799,02-26-25,Shipped - Rejected by Buyer,merchant_fulfilled,Economy,Apparel,1200.62,North,APP-0001
+ORD-0002934,01-19-25,Shipped - Returned to seller,platform_fulfilled,Standard,Sports,2151.22,East,SPO-0003
+ORD-0018336,04-21-25,Shipped,platform_fulfilled,Expedited,Electronics,1599.54,South,ELE-0005
+ORD-0023214,10-12-25,Shipped,merchant_fulfilled,Expedited,Electronics,3493.6,Central,ELE-0004
+ORD-0009462,04-18-25,Shipped,platform_fulfilled,Expedited,Apparel,320.73,North,APP-0001
+ORD-0013465,09-03-25,Shipped - Delivered to Buyer,platform_fulfilled,Expedited,Home,837.91,Central,HOM-0002
+ORD-0002526,03-08-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Apparel,895.18,South,APP-0001
+ORD-0016916,12-07-25,Shipped,platform_fulfilled,Standard,Electronics,3362.07,East,ELE-0034
+ORD-0016777,06-14-25,Shipped - Delivered to Buyer,platform_fulfilled,Expedited,Home,931.0,North,HOM-0001
+ORD-0001953,01-16-25,Shipped,merchant_fulfilled,Standard,Beauty,672.9,East,BEA-0001
+ORD-0007458,10-20-25,Shipped - Returned to seller,third_party_fulfilled,Standard,Beauty,511.69,East,BEA-0001
+ORD-0013727,11-30-25,Shipped,platform_fulfilled,Economy,Electronics,1737.76,West,ELE-0001
+ORD-0021468,05-28-25,Shipped,merchant_fulfilled,Standard,Sports,1143.27,South,SPO-0001
+ORD-0019952,05-07-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Home,1373.36,North,HOM-0001
+ORD-0019642,01-05-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Electronics,1214.34,North,ELE-0001
+ORD-0021261,12-12-25,Shipped,merchant_fulfilled,Standard,Home,1134.26,North,HOM-0002
+ORD-0010741,01-07-25,Shipped - Delivered to Buyer,third_party_fulfilled,Standard,Books,298.65,South,BOO-0001
+ORD-0014933,03-04-25,Shipped - Delivered to Buyer,merchant_fulfilled,Standard,Sports,1055.27,Central,SPO-0056
+ORD-0022381,07-26-25,Shipped,third_party_fulfilled,Standard,Electronics,1532.71,West,ELE-0029
+ORD-0002652,09-10-25,Shipped,platform_fulfilled,Standard,Electronics,2257.57,East,ELE-0004
+ORD-0012927,08-05-25,Shipped,platform_fulfilled,Standard,Home,2252.65,South,HOM-0001
+ORD-0001926,10-04-25,Shipped,platform_fulfilled,Economy,Apparel,587.41,West,APP-0001
+ORD-0000095,05-26-25,Shipped - Rejected by Buyer,platform_fulfilled,Economy,Electronics,6067.42,East,ELE-0001
+ORD-0005043,11-05-25,Shipped - Delivered to Buyer,merchant_fulfilled,Economy,Electronics,3302.23,Central,ELE-0002
+ORD-0020819,05-20-25,Shipped - Returned to seller,merchant_fulfilled,Standard,Home,1459.82,Central,HOM-0002
+ORD-0008169,03-14-25,Shipped - Delivered to Buyer,merchant_fulfilled,Economy,Apparel,743.87,North,APP-0002
+ORD-0000201,04-05-25,Shipped - Delivered to Buyer,third_party_fulfilled,Expedited,Beauty,490.59,Central,BEA-0002
+ORD-0017231,07-30-25,Shipped - Delivered to Buyer,merchant_fulfilled,Standard,Apparel,1276.42,South,APP-0010
+ORD-0005822,04-01-25,Shipped,platform_fulfilled,Standard,Sports,1335.63,South,SPO-0003
+ORD-0013241,11-21-25,Shipped,platform_fulfilled,Standard,Apparel,199.12,South,APP-0001
+ORD-0011306,02-04-25,Shipped,merchant_fulfilled,Economy,Home,978.93,East,HOM-0002
+ORD-0012801,06-04-25,Shipped - Delivered to Buyer,third_party_fulfilled,Standard,Books,408.58,Central,BOO-0003
+ORD-0010232,02-12-25,Shipped - Delivered to Buyer,merchant_fulfilled,Standard,Beauty,724.27,South,BEA-0001
+ORD-0016039,09-29-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Home,286.08,West,HOM-0030
+ORD-0002247,11-16-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Apparel,308.16,Central,APP-0013
+ORD-0023894,01-27-25,Shipped - Delivered to Buyer,merchant_fulfilled,Standard,Electronics,1581.45,Central,ELE-0002
+ORD-0013190,11-26-25,Shipped - Returned to seller,merchant_fulfilled,Standard,Beauty,443.19,South,BEA-0001
+ORD-0012009,11-18-25,Shipped - Rejected by Buyer,platform_fulfilled,Standard,Beauty,512.06,East,BEA-0001
+ORD-0017210,05-04-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Beauty,907.81,North,BEA-0001
+ORD-0017926,06-16-25,Shipped,merchant_fulfilled,Standard,Electronics,1001.8,North,ELE-0002
+ORD-0003517,05-10-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Home,1736.33,South,HOM-0001
+ORD-0006783,10-05-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Home,2197.76,East,HOM-0005
+ORD-0002589,08-26-25,Shipped - Delivered to Buyer,platform_fulfilled,Expedited,Electronics,6879.55,West,ELE-0002
+ORD-0017472,05-31-25,Shipped,platform_fulfilled,Standard,Apparel,674.98,South,APP-0001
+ORD-0005870,06-11-25,Shipped - Delivered to Buyer,third_party_fulfilled,Economy,Apparel,540.62,West,APP-0001
+ORD-0018597,06-13-25,Shipped,platform_fulfilled,Standard,Apparel,980.29,South,APP-0002
+ORD-0003665,09-08-25,Shipped,platform_fulfilled,Standard,Apparel,449.51,Central,APP-0001
+ORD-0016209,12-15-25,Shipped,platform_fulfilled,Expedited,Home,607.85,West,HOM-0001
+ORD-0020199,05-31-25,Shipped - Returned to seller,third_party_fulfilled,Standard,Home,2343.85,South,HOM-0001
+ORD-0001533,10-22-25,Shipped,platform_fulfilled,Standard,Home,1606.71,Central,HOM-0001
+ORD-0004892,01-15-25,Shipped - Rejected by Buyer,platform_fulfilled,Expedited,Apparel,2058.08,Central,APP-0014
+ORD-0010358,06-13-25,Shipped - Delivered to Buyer,third_party_fulfilled,Standard,Home,1539.2,Central,HOM-0001
+ORD-0020408,09-15-25,Shipped,merchant_fulfilled,Standard,Beauty,392.89,South,BEA-0001
+ORD-0019070,05-25-25,Shipped - Delivered to Buyer,merchant_fulfilled,Standard,Home,1070.12,East,HOM-0004
+ORD-0011385,09-06-25,Shipped - Returned to seller,third_party_fulfilled,Standard,Electronics,3049.39,East,ELE-0002
+ORD-0018208,04-16-25,Shipped,third_party_fulfilled,Expedited,Sports,1173.03,Central,SPO-0004
+ORD-0013280,04-28-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Home,1926.11,South,HOM-0001
+ORD-0001081,10-19-25,Shipped - Delivered to Buyer,platform_fulfilled,Expedited,Apparel,485.27,East,APP-0001
+ORD-0023152,02-22-25,Shipped,third_party_fulfilled,Standard,Books,221.8,East,BOO-0002
+ORD-0014447,03-01-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Beauty,762.32,South,BEA-0004
+ORD-0003754,04-17-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Beauty,450.06,North,BEA-0140
+ORD-0005397,07-24-25,Shipped - Delivered to Buyer,third_party_fulfilled,Standard,Electronics,4622.58,North,ELE-0003
+ORD-0003329,07-20-25,Shipped - Delivered to Buyer,merchant_fulfilled,Expedited,Home,1276.34,South,HOM-0001
+ORD-0005211,07-08-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Electronics,2590.9,North,ELE-0001
+ORD-0016968,02-21-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Electronics,1202.33,North,ELE-0002
+ORD-0019271,09-30-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Apparel,543.57,East,APP-0021
+ORD-0011407,01-03-25,Shipped - Delivered to Buyer,merchant_fulfilled,Standard,Home,373.49,South,HOM-0001
+ORD-0018042,08-11-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Books,221.37,South,BOO-0004
+ORD-0013291,03-20-25,Shipped,third_party_fulfilled,Expedited,Beauty,943.07,East,BEA-0003
+ORD-0019151,04-05-25,Shipped - Returned to seller,third_party_fulfilled,Standard,Electronics,2869.85,South,ELE-0001
+ORD-0011313,07-26-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Home,867.43,Central,HOM-0001
+ORD-0018859,05-24-25,Shipped,platform_fulfilled,Standard,Apparel,514.27,South,APP-0003
+ORD-0008125,06-02-25,Shipped - Delivered to Buyer,third_party_fulfilled,Standard,Books,201.45,South,BOO-0002
+ORD-0022002,07-29-25,Shipped,merchant_fulfilled,Standard,Electronics,1609.38,East,ELE-0001
+ORD-0010177,02-26-25,Shipped - Returned to seller,platform_fulfilled,Standard,Apparel,981.17,East,APP-0001
+ORD-0008461,11-01-25,Shipped,third_party_fulfilled,Economy,Sports,1650.76,Central,SPO-0001
+ORD-0009834,05-21-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Beauty,179.94,Central,BEA-0018
+ORD-0018315,03-12-25,Shipped,third_party_fulfilled,Standard,Apparel,1599.15,East,APP-0001
+ORD-0000351,10-16-25,Shipped - Returned to seller,merchant_fulfilled,Standard,Home,938.67,North,HOM-0001
+ORD-0011808,08-04-25,Shipped,platform_fulfilled,Standard,Home,1276.3,Central,HOM-0004
+ORD-0008820,12-13-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Sports,841.82,West,SPO-0062
+ORD-0023939,03-20-25,Shipped,merchant_fulfilled,Economy,Beauty,441.11,South,BEA-0003
+ORD-0003955,07-21-25,Shipped - Rejected by Buyer,platform_fulfilled,Standard,Apparel,1348.18,West,APP-0055
+ORD-0015630,03-16-25,Shipped - Returned to seller,merchant_fulfilled,Expedited,Electronics,6206.88,Central,ELE-0001
+ORD-0001381,08-26-25,Shipped,third_party_fulfilled,Standard,Electronics,1068.25,North,ELE-0006
+ORD-0014132,05-06-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Books,190.01,East,BOO-0057
+ORD-0019123,03-14-25,Shipped,platform_fulfilled,Economy,Books,290.31,North,BOO-0001
+ORD-0022164,03-04-25,Shipped - Returned to seller,platform_fulfilled,Standard,Beauty,827.84,North,BEA-0001
+ORD-0015377,01-09-25,Shipped,platform_fulfilled,Standard,Books,666.7,East,BOO-0001
+ORD-0019202,06-27-25,Shipped - Delivered to Buyer,platform_fulfilled,Expedited,Home,573.4,South,HOM-0001
+ORD-0000200,08-20-25,Shipped,platform_fulfilled,Standard,Electronics,2148.34,South,ELE-0004
+ORD-0000608,01-27-25,Shipped - Rejected by Buyer,platform_fulfilled,Standard,Apparel,2090.59,East,APP-0002
+ORD-0016361,02-03-25,Shipped,platform_fulfilled,Standard,Apparel,1397.53,South,APP-0001
+ORD-0004545,03-29-25,Shipped,platform_fulfilled,Standard,Electronics,7616.0,East,ELE-0005
+ORD-0018686,12-31-25,Shipped - Rejected by Buyer,platform_fulfilled,Economy,Apparel,701.14,South,APP-0001
+ORD-0007251,07-26-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Home,166.39,South,HOM-0005
+ORD-0017511,05-29-25,Shipped,merchant_fulfilled,Economy,Beauty,462.07,East,BEA-0002
+ORD-0016504,01-02-25,Shipped - Delivered to Buyer,merchant_fulfilled,Standard,Beauty,190.47,Central,BEA-0001
+ORD-0015461,09-06-25,Shipped,platform_fulfilled,Expedited,Home,3021.25,East,HOM-0001
+ORD-0006299,02-14-25,Shipped - Rejected by Buyer,third_party_fulfilled,Standard,Apparel,590.44,Central,APP-0001
+ORD-0009999,09-02-25,Shipped,third_party_fulfilled,Standard,Electronics,4015.27,Central,ELE-0004
+ORD-0019189,06-16-25,Shipped,merchant_fulfilled,Standard,Home,1215.82,South,HOM-0001
+ORD-0017611,12-18-25,Shipped - Returned to seller,platform_fulfilled,Economy,Apparel,2670.59,North,APP-0001
+ORD-0019717,04-10-25,Shipped - Delivered to Buyer,platform_fulfilled,Expedited,Sports,1251.47,West,SPO-0001
+ORD-0019120,08-14-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Apparel,503.01,West,APP-0001
+ORD-0021906,10-08-25,Shipped,third_party_fulfilled,Economy,Electronics,3573.63,East,ELE-0001
+ORD-0011837,05-22-25,Shipped - Delivered to Buyer,merchant_fulfilled,Standard,Home,998.4,Central,HOM-0001
+ORD-0005622,07-10-25,Shipped,platform_fulfilled,Standard,Electronics,1298.06,South,ELE-0004
+ORD-0013351,07-02-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Beauty,481.84,North,BEA-0012
+ORD-0015758,08-23-25,Shipped - Returned to seller,platform_fulfilled,Standard,Apparel,711.28,North,APP-0002
+ORD-0006027,02-02-25,Shipped,merchant_fulfilled,Expedited,Apparel,608.46,East,APP-0001
+ORD-0005461,10-06-25,Shipped - Delivered to Buyer,third_party_fulfilled,Standard,Beauty,415.36,North,BEA-0001
+ORD-0000834,10-02-25,Shipped,platform_fulfilled,Standard,Home,1458.81,Central,HOM-0005
+ORD-0018927,09-29-25,Shipped - Delivered to Buyer,third_party_fulfilled,Economy,Books,407.48,North,BOO-0001
+ORD-0023858,07-11-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Electronics,2212.53,North,ELE-0004
+ORD-0011121,09-28-25,Shipped - Delivered to Buyer,platform_fulfilled,Expedited,Sports,945.86,West,SPO-0002
+ORD-0003041,03-25-25,Shipped,third_party_fulfilled,Expedited,Electronics,1623.59,South,ELE-0001
+ORD-0007716,12-09-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Apparel,579.68,South,APP-0008
+ORD-0012424,12-29-25,Shipped - Returned to seller,third_party_fulfilled,Expedited,Apparel,928.98,East,APP-0001
+ORD-0007633,07-13-25,Shipped,platform_fulfilled,Standard,Sports,980.33,West,SPO-0010
+ORD-0022938,06-28-25,Shipped,platform_fulfilled,Expedited,Apparel,865.39,North,APP-0140
+ORD-0019542,03-05-25,Shipped,merchant_fulfilled,Standard,Beauty,1080.6,South,BEA-0001
+ORD-0015986,09-29-25,Shipped - Delivered to Buyer,third_party_fulfilled,Economy,Apparel,810.78,Central,APP-0001
+ORD-0013040,05-18-25,Shipped,third_party_fulfilled,Standard,Books,149.1,East,BOO-0002
+ORD-0017614,08-21-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Home,1124.7,North,HOM-0001
+ORD-0021935,01-29-25,Shipped,platform_fulfilled,Standard,Apparel,482.58,South,APP-0001
+ORD-0000476,10-14-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Electronics,2183.28,South,ELE-0001
+ORD-0010372,11-30-25,Shipped,platform_fulfilled,Standard,Apparel,607.71,North,APP-0001
+ORD-0012514,03-26-25,Shipped,platform_fulfilled,Standard,Beauty,979.25,South,BEA-0010
+ORD-0023973,01-14-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Home,1260.39,North,HOM-0002
+ORD-0020210,05-06-25,Shipped,merchant_fulfilled,Standard,Home,629.55,East,HOM-0001
+ORD-0003509,10-19-25,Shipped,platform_fulfilled,Standard,Beauty,385.77,Central,BEA-0001
+ORD-0019912,09-18-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Electronics,1517.11,South,ELE-0012
+ORD-0022565,05-07-25,Shipped,platform_fulfilled,Economy,Home,456.79,North,HOM-0001
+ORD-0022023,04-26-25,Shipped,platform_fulfilled,Standard,Sports,828.72,East,SPO-0001
+ORD-0014915,04-23-25,Shipped - Delivered to Buyer,merchant_fulfilled,Standard,Apparel,516.15,West,APP-0002
+ORD-0007141,06-29-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Electronics,907.59,North,ELE-0003
+ORD-0017767,10-10-25,Shipped - Delivered to Buyer,merchant_fulfilled,Standard,Electronics,3334.4,North,ELE-0002
+ORD-0010682,09-02-25,Shipped,platform_fulfilled,Standard,Sports,390.01,West,SPO-0001
+ORD-0013684,12-17-25,Shipped,merchant_fulfilled,Economy,Beauty,733.87,North,BEA-0002
+ORD-0020475,09-10-25,Shipped,platform_fulfilled,Economy,Sports,1098.75,Central,SPO-0002
+ORD-0009101,08-13-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Electronics,2792.19,West,ELE-0006
+ORD-0023275,08-04-25,Shipped,platform_fulfilled,Economy,Home,320.21,North,HOM-0002
+ORD-0004493,07-22-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Books,142.64,South,BOO-0001
+ORD-0000822,07-09-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Home,644.33,Central,HOM-0001
+ORD-0013225,05-10-25,Shipped - Delivered to Buyer,third_party_fulfilled,Expedited,Home,937.39,North,HOM-0001
+ORD-0012944,05-06-25,Shipped,platform_fulfilled,Expedited,Sports,692.85,East,SPO-0001
+ORD-0013902,04-24-25,Shipped - Delivered to Buyer,third_party_fulfilled,Standard,Beauty,294.26,South,BEA-0001
+ORD-0002966,09-23-25,Shipped,platform_fulfilled,Standard,Home,974.7,North,HOM-0002
+ORD-0004993,09-25-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Beauty,862.08,North,BEA-0009
+ORD-0014209,12-14-25,Shipped - Delivered to Buyer,platform_fulfilled,Expedited,Apparel,638.65,Central,APP-0001
+ORD-0020276,04-07-25,Shipped - Delivered to Buyer,merchant_fulfilled,Standard,Apparel,601.18,North,APP-0001
+ORD-0015160,04-02-25,Shipped - Rejected by Buyer,merchant_fulfilled,Standard,Apparel,1548.15,West,APP-0001
+ORD-0012734,12-04-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Sports,939.55,Central,SPO-0017
+ORD-0002133,08-02-25,Shipped,third_party_fulfilled,Standard,Books,254.55,North,BOO-0001
+ORD-0011202,02-12-25,Shipped,merchant_fulfilled,Expedited,Apparel,449.01,Central,APP-0001
+ORD-0013402,08-03-25,Shipped,merchant_fulfilled,Standard,Electronics,3303.78,East,ELE-0001
+ORD-0010891,07-09-25,Shipped - Rejected by Buyer,platform_fulfilled,Standard,Apparel,594.1,South,APP-0001
+ORD-0021301,05-23-25,Shipped,platform_fulfilled,Expedited,Apparel,978.12,Central,APP-0003
+ORD-0002773,12-06-25,Shipped - Returned to seller,platform_fulfilled,Expedited,Sports,527.81,Central,SPO-0003
+ORD-0017557,08-16-25,Shipped - Delivered to Buyer,third_party_fulfilled,Economy,Sports,680.15,North,SPO-0001
+ORD-0003438,08-23-25,Shipped - Rejected by Buyer,platform_fulfilled,Expedited,Electronics,4557.48,North,ELE-0002
+ORD-0013561,01-08-25,Shipped - Returned to seller,platform_fulfilled,Standard,Apparel,603.61,South,APP-0001
+ORD-0022445,01-26-25,Shipped,platform_fulfilled,Standard,Electronics,3765.27,East,ELE-0002
+ORD-0000447,10-09-25,Shipped - Rejected by Buyer,third_party_fulfilled,Economy,Books,494.53,South,BOO-0001
+ORD-0007791,07-24-25,Shipped - Returned to seller,merchant_fulfilled,Economy,Beauty,167.46,South,BEA-0001
+ORD-0009112,08-27-25,Shipped - Delivered to Buyer,third_party_fulfilled,Standard,Electronics,1356.68,South,ELE-0002
+ORD-0009059,07-30-25,Shipped,platform_fulfilled,Economy,Apparel,927.66,South,APP-0002
+ORD-0004848,11-20-25,Shipped - Returned to seller,third_party_fulfilled,Economy,Home,1606.19,South,HOM-0002
+ORD-0005704,05-27-25,Shipped,merchant_fulfilled,Standard,Beauty,772.91,East,BEA-0001
+ORD-0019293,07-26-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Home,2013.39,North,HOM-0001
+ORD-0020278,04-15-25,Shipped - Returned to seller,platform_fulfilled,Standard,Apparel,624.34,North,APP-0001
+ORD-0011265,03-19-25,Shipped - Returned to seller,merchant_fulfilled,Economy,Apparel,1514.94,West,APP-0001
+ORD-0021944,09-17-25,Shipped - Delivered to Buyer,third_party_fulfilled,Standard,Home,638.75,North,HOM-0027
+ORD-0004037,02-20-25,Shipped,merchant_fulfilled,Economy,Electronics,2616.11,West,ELE-0001
+ORD-0005808,01-11-25,Shipped,platform_fulfilled,Standard,Sports,1668.94,Central,SPO-0016
+ORD-0001527,05-25-25,Shipped - Returned to seller,third_party_fulfilled,Standard,Electronics,1315.1,South,ELE-0001
+ORD-0012608,04-27-25,Shipped,platform_fulfilled,Economy,Sports,954.19,Central,SPO-0001
+ORD-0011402,10-18-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Home,502.57,North,HOM-0003
+ORD-0009150,07-23-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Apparel,1140.14,Central,APP-0005
+ORD-0001824,03-19-25,Shipped - Delivered to Buyer,third_party_fulfilled,Standard,Home,583.26,North,HOM-0002
+ORD-0017085,01-06-25,Shipped,merchant_fulfilled,Expedited,Sports,844.13,South,SPO-0001
+ORD-0002158,06-19-25,Shipped - Returned to seller,third_party_fulfilled,Economy,Apparel,507.64,South,APP-0001
+ORD-0015575,09-30-25,Shipped - Delivered to Buyer,platform_fulfilled,Expedited,Home,1765.96,North,HOM-0001
+ORD-0002308,03-10-25,Shipped - Delivered to Buyer,merchant_fulfilled,Standard,Electronics,3057.57,North,ELE-0001
+ORD-0007349,11-03-25,Shipped - Rejected by Buyer,third_party_fulfilled,Standard,Apparel,914.39,North,APP-0005
+ORD-0007239,05-19-25,Shipped,merchant_fulfilled,Standard,Electronics,823.8,East,ELE-0002
+ORD-0009747,03-14-25,Shipped,third_party_fulfilled,Economy,Home,542.08,East,HOM-0065
+ORD-0023682,05-11-25,Shipped - Returned to seller,platform_fulfilled,Standard,Apparel,883.49,South,APP-0001
+ORD-0000844,07-14-25,Shipped - Delivered to Buyer,merchant_fulfilled,Expedited,Electronics,1116.71,Central,ELE-0001
+ORD-0012071,04-10-25,Shipped - Returned to seller,platform_fulfilled,Economy,Beauty,209.28,South,BEA-0015
+ORD-0013882,04-28-25,Shipped,platform_fulfilled,Expedited,Apparel,575.65,West,APP-0011
+ORD-0010194,05-06-25,Shipped - Returned to seller,third_party_fulfilled,Economy,Electronics,3144.73,West,ELE-0001
+ORD-0004902,12-30-25,Shipped,merchant_fulfilled,Economy,Apparel,539.01,South,APP-0008
+ORD-0000868,12-18-25,Shipped - Returned to seller,platform_fulfilled,Standard,Beauty,487.06,West,BEA-0001
+ORD-0015341,06-12-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Apparel,1028.55,East,APP-0001
+ORD-0023421,08-01-25,Shipped - Delivered to Buyer,merchant_fulfilled,Standard,Apparel,991.07,North,APP-0003
+ORD-0020931,12-02-25,Shipped,platform_fulfilled,Standard,Beauty,276.92,Central,BEA-0010
+ORD-0022174,05-04-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Apparel,368.53,East,APP-0002
+ORD-0014476,10-02-25,Shipped,platform_fulfilled,Standard,Beauty,356.59,West,BEA-0003
+ORD-0003574,10-07-25,Shipped,platform_fulfilled,Standard,Electronics,769.73,South,ELE-0007
+ORD-0017178,03-01-25,Shipped,platform_fulfilled,Expedited,Beauty,791.9,Central,BEA-0001
+ORD-0004018,04-23-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Electronics,6886.79,East,ELE-0001
+ORD-0023047,07-22-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Apparel,1196.56,North,APP-0001
+ORD-0003374,06-19-25,Shipped - Delivered to Buyer,merchant_fulfilled,Standard,Apparel,288.43,East,APP-0001
+ORD-0000579,09-19-25,Shipped,platform_fulfilled,Standard,Sports,589.06,West,SPO-0001
+ORD-0004506,01-04-25,Shipped,merchant_fulfilled,Standard,Electronics,1358.71,South,ELE-0001
+ORD-0007163,05-31-25,Shipped - Delivered to Buyer,third_party_fulfilled,Standard,Home,1100.4,Central,HOM-0023
+ORD-0018059,11-04-25,Shipped - Returned to seller,platform_fulfilled,Economy,Sports,487.55,West,SPO-0001
+ORD-0017430,08-27-25,Shipped - Delivered to Buyer,third_party_fulfilled,Economy,Electronics,1766.68,East,ELE-0001
+ORD-0021409,03-14-25,Shipped - Delivered to Buyer,third_party_fulfilled,Economy,Electronics,1416.32,East,ELE-0002
+ORD-0004987,05-09-25,Shipped - Delivered to Buyer,merchant_fulfilled,Standard,Home,1252.44,West,HOM-0002
+ORD-0006637,07-22-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Apparel,531.01,South,APP-0002
+ORD-0000186,09-26-25,Shipped,platform_fulfilled,Standard,Home,1406.82,East,HOM-0001
+ORD-0002165,11-09-25,Shipped - Delivered to Buyer,merchant_fulfilled,Standard,Sports,485.91,South,SPO-0002
+ORD-0021024,05-14-25,Shipped,platform_fulfilled,Economy,Beauty,268.85,South,BEA-0001
+ORD-0001607,08-31-25,Shipped - Delivered to Buyer,merchant_fulfilled,Economy,Books,146.29,East,BOO-0002
+ORD-0012636,03-20-25,Shipped,platform_fulfilled,Standard,Home,2059.58,West,HOM-0001
+ORD-0005402,01-15-25,Shipped,platform_fulfilled,Economy,Apparel,970.2,Central,APP-0010
+ORD-0021497,11-17-25,Shipped,merchant_fulfilled,Economy,Home,1378.85,West,HOM-0001
+ORD-0002148,11-21-25,Shipped,platform_fulfilled,Economy,Books,86.78,East,BOO-0002
+ORD-0023981,04-04-25,Shipped - Returned to seller,merchant_fulfilled,Economy,Apparel,852.31,East,APP-0001
+ORD-0022127,11-05-25,Shipped - Delivered to Buyer,merchant_fulfilled,Standard,Apparel,1221.12,North,APP-0001
+ORD-0018347,10-27-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Home,655.12,East,HOM-0001
+ORD-0005898,04-20-25,Shipped - Returned to seller,merchant_fulfilled,Economy,Sports,481.18,South,SPO-0001
+ORD-0011598,04-03-25,Shipped - Rejected by Buyer,third_party_fulfilled,Standard,Electronics,1891.47,South,ELE-0001
+ORD-0000791,09-01-25,Shipped - Returned to seller,merchant_fulfilled,Standard,Apparel,1253.72,West,APP-0007
+ORD-0021848,04-21-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Apparel,543.56,East,APP-0001
+ORD-0004379,07-16-25,Shipped,platform_fulfilled,Standard,Sports,938.74,Central,SPO-0003
+ORD-0022122,06-28-25,Shipped - Delivered to Buyer,third_party_fulfilled,Expedited,Sports,968.12,East,SPO-0002
+ORD-0009175,08-02-25,Shipped,platform_fulfilled,Standard,Sports,1333.08,East,SPO-0001
+ORD-0017731,08-13-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Electronics,2856.38,South,ELE-0001
+ORD-0013235,11-26-25,Shipped - Returned to seller,third_party_fulfilled,Economy,Beauty,463.54,South,BEA-0001
+ORD-0001989,08-20-25,Shipped,platform_fulfilled,Standard,Books,348.15,East,BOO-0002
+ORD-0004123,06-25-25,Shipped - Delivered to Buyer,platform_fulfilled,Expedited,Sports,1585.94,South,SPO-0002
+ORD-0002957,02-23-25,Shipped - Delivered to Buyer,merchant_fulfilled,Economy,Apparel,242.21,West,APP-0001
+ORD-0013605,02-17-25,Shipped,merchant_fulfilled,Expedited,Apparel,868.88,Central,APP-0001
+ORD-0022989,08-22-25,Shipped,platform_fulfilled,Standard,Electronics,4973.38,North,ELE-0003
+ORD-0004770,05-05-25,Shipped,platform_fulfilled,Economy,Beauty,622.34,North,BEA-0001
+ORD-0010808,11-02-25,Shipped - Returned to seller,platform_fulfilled,Standard,Apparel,738.54,West,APP-0001
+ORD-0003974,07-12-25,Shipped - Returned to seller,platform_fulfilled,Expedited,Apparel,791.24,West,APP-0001
+ORD-0010639,02-02-25,Shipped,third_party_fulfilled,Expedited,Home,359.12,South,HOM-0001
+ORD-0011713,07-25-25,Shipped - Rejected by Buyer,platform_fulfilled,Economy,Apparel,516.85,South,APP-0001
+ORD-0017438,08-05-25,Shipped,third_party_fulfilled,Standard,Electronics,2822.7,Central,ELE-0002
+ORD-0015334,12-26-25,Shipped,third_party_fulfilled,Standard,Home,1499.94,East,HOM-0001
+ORD-0015184,03-03-25,Shipped,platform_fulfilled,Standard,Home,430.74,North,HOM-0006
+ORD-0021529,02-18-25,Shipped,platform_fulfilled,Standard,Beauty,186.1,North,BEA-0007
+ORD-0004473,04-08-25,Shipped - Delivered to Buyer,third_party_fulfilled,Expedited,Home,1073.12,South,HOM-0001
+ORD-0005016,03-22-25,Shipped - Rejected by Buyer,platform_fulfilled,Standard,Apparel,1305.74,West,APP-0001
+ORD-0010095,03-11-25,Shipped,merchant_fulfilled,Standard,Sports,1389.25,East,SPO-0001
+ORD-0011738,03-19-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Beauty,285.06,East,BEA-0001
+ORD-0019670,01-16-25,Shipped,merchant_fulfilled,Standard,Apparel,739.47,West,APP-0001
+ORD-0017626,01-08-25,Shipped,platform_fulfilled,Economy,Beauty,1104.79,South,BEA-0003
+ORD-0018470,02-10-25,Shipped,third_party_fulfilled,Standard,Electronics,4494.04,Central,ELE-0003
+ORD-0007556,12-14-25,Shipped - Delivered to Buyer,third_party_fulfilled,Economy,Sports,1120.44,Central,SPO-0001
+ORD-0009682,05-03-25,Shipped,platform_fulfilled,Economy,Apparel,577.57,West,APP-0002
+ORD-0009312,11-24-25,Shipped - Rejected by Buyer,third_party_fulfilled,Standard,Home,817.27,South,HOM-0001
+ORD-0018283,08-02-25,Shipped,platform_fulfilled,Standard,Books,212.19,Central,BOO-0012
+ORD-0006247,07-15-25,Shipped,platform_fulfilled,Standard,Books,248.61,North,BOO-0001
+ORD-0008872,01-18-25,Shipped,platform_fulfilled,Standard,Sports,1093.45,West,SPO-0003
+ORD-0018664,10-14-25,Shipped - Delivered to Buyer,merchant_fulfilled,Standard,Home,581.88,West,HOM-0003
+ORD-0018532,03-12-25,Shipped - Delivered to Buyer,third_party_fulfilled,Standard,Sports,1890.42,South,SPO-0005
+ORD-0016762,09-19-25,Shipped,merchant_fulfilled,Expedited,Beauty,296.65,Central,BEA-0007
+ORD-0009470,04-12-25,Shipped - Delivered to Buyer,third_party_fulfilled,Economy,Apparel,716.84,West,APP-0002
+ORD-0013840,05-19-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Home,1668.06,South,HOM-0019
+ORD-0006568,08-23-25,Shipped,third_party_fulfilled,Standard,Home,901.54,South,HOM-0001
+ORD-0007211,11-05-25,Shipped - Delivered to Buyer,third_party_fulfilled,Standard,Home,1464.23,Central,HOM-0001
+ORD-0001746,01-25-25,Shipped,merchant_fulfilled,Expedited,Home,1337.24,North,HOM-0001
+ORD-0020196,11-24-25,Shipped,platform_fulfilled,Economy,Beauty,501.12,West,BEA-0001
+ORD-0006294,07-18-25,Shipped,platform_fulfilled,Standard,Books,490.74,North,BOO-0008
+ORD-0022190,05-03-25,Shipped,platform_fulfilled,Standard,Home,553.46,West,HOM-0001
+ORD-0015771,08-14-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Books,302.28,North,BOO-0002
+ORD-0015949,12-15-25,Shipped - Returned to seller,platform_fulfilled,Standard,Apparel,309.01,North,APP-0003
+ORD-0001552,05-08-25,Shipped - Rejected by Buyer,platform_fulfilled,Standard,Electronics,2061.14,South,ELE-0001
+ORD-0023139,07-21-25,Shipped - Delivered to Buyer,merchant_fulfilled,Expedited,Apparel,448.37,Central,APP-0002
+ORD-0003631,07-31-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Apparel,720.93,North,APP-0001
+ORD-0022618,12-04-25,Shipped,merchant_fulfilled,Expedited,Electronics,1086.68,North,ELE-0002
+ORD-0009448,10-20-25,Shipped,merchant_fulfilled,Economy,Home,1328.14,West,HOM-0001
+ORD-0021122,05-01-25,Shipped - Returned to seller,third_party_fulfilled,Economy,Apparel,616.8,Central,APP-0011
+ORD-0008765,05-20-25,Shipped,platform_fulfilled,Standard,Electronics,2736.42,Central,ELE-0004
+ORD-0019140,09-28-25,Shipped,platform_fulfilled,Expedited,Beauty,678.0,Central,BEA-0003
+ORD-0022231,01-03-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Beauty,508.01,North,BEA-0003
+ORD-0006805,02-21-25,Shipped - Delivered to Buyer,platform_fulfilled,Expedited,Sports,1026.92,Central,SPO-0001
+ORD-0012087,04-28-25,Shipped - Returned to seller,platform_fulfilled,Expedited,Home,896.69,South,HOM-0008
+ORD-0007279,11-12-25,Shipped,merchant_fulfilled,Standard,Home,623.28,Central,HOM-0001
+ORD-0017979,10-13-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Sports,510.86,South,SPO-0001
+ORD-0010360,06-22-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Beauty,761.03,East,BEA-0006
+ORD-0001480,05-25-25,Shipped,platform_fulfilled,Standard,Electronics,1454.52,West,ELE-0001
+ORD-0017572,10-18-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Apparel,972.36,East,APP-0012
+ORD-0009406,12-16-25,Shipped,merchant_fulfilled,Expedited,Home,1180.18,Central,HOM-0001
+ORD-0018972,02-06-25,Shipped,merchant_fulfilled,Standard,Apparel,812.54,South,APP-0001
+ORD-0021103,12-06-25,Shipped,platform_fulfilled,Standard,Apparel,450.57,South,APP-0010
+ORD-0000771,10-25-25,Shipped - Returned to seller,third_party_fulfilled,Expedited,Apparel,876.13,South,APP-0003
+ORD-0009207,06-16-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Home,2759.53,West,HOM-0003
+ORD-0014257,06-01-25,Shipped,platform_fulfilled,Standard,Apparel,749.19,West,APP-0002
+ORD-0014032,12-04-25,Shipped,merchant_fulfilled,Standard,Beauty,391.53,South,BEA-0002
+ORD-0017732,05-22-25,Shipped - Returned to seller,third_party_fulfilled,Economy,Apparel,388.75,West,APP-0001
+ORD-0009928,09-25-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Apparel,734.64,North,APP-0005
+ORD-0010772,03-24-25,Shipped,merchant_fulfilled,Standard,Electronics,1011.35,West,ELE-0001
+ORD-0005213,10-02-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Books,429.22,East,BOO-0002
+ORD-0012881,04-27-25,Shipped,platform_fulfilled,Standard,Apparel,311.15,North,APP-0001
+ORD-0023851,07-15-25,Shipped,platform_fulfilled,Expedited,Apparel,527.47,East,APP-0001
+ORD-0013755,06-28-25,Shipped,platform_fulfilled,Economy,Apparel,713.74,North,APP-0001
+ORD-0002654,03-30-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Beauty,621.27,East,BEA-0003
+ORD-0000961,01-02-25,Shipped - Delivered to Buyer,platform_fulfilled,Expedited,Home,830.09,South,HOM-0005
+ORD-0008104,07-15-25,Shipped,merchant_fulfilled,Standard,Beauty,693.04,West,BEA-0003
+ORD-0019158,07-27-25,Shipped - Rejected by Buyer,platform_fulfilled,Economy,Beauty,552.1,East,BEA-0003
+ORD-0019395,09-21-25,Shipped,platform_fulfilled,Economy,Electronics,3241.58,South,ELE-0006
+ORD-0010031,10-31-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Home,1348.56,West,HOM-0001
+ORD-0003025,08-11-25,Shipped - Delivered to Buyer,third_party_fulfilled,Standard,Electronics,1432.41,West,ELE-0001
+ORD-0021243,02-09-25,Shipped,merchant_fulfilled,Standard,Apparel,871.59,Central,APP-0001
+ORD-0007898,06-14-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Apparel,327.67,West,APP-0001
+ORD-0019451,10-08-25,Shipped - Delivered to Buyer,platform_fulfilled,Expedited,Beauty,2704.93,East,BEA-0001
+ORD-0005554,01-05-25,Shipped - Returned to seller,merchant_fulfilled,Economy,Apparel,468.8,West,APP-0001
+ORD-0012251,02-20-25,Shipped - Returned to seller,third_party_fulfilled,Standard,Apparel,836.61,North,APP-0011
+ORD-0010765,07-12-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Home,1213.82,East,HOM-0001
+ORD-0023017,02-02-25,Shipped - Rejected by Buyer,platform_fulfilled,Standard,Apparel,553.52,East,APP-0001
+ORD-0018996,02-09-25,Shipped,third_party_fulfilled,Standard,Sports,2300.4,North,SPO-0007
+ORD-0014093,05-28-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Books,203.82,North,BOO-0001
+ORD-0008974,07-10-25,Shipped - Delivered to Buyer,platform_fulfilled,Economy,Apparel,1736.7,East,APP-0003
+ORD-0021869,01-20-25,Shipped - Returned to seller,merchant_fulfilled,Standard,Electronics,2401.08,North,ELE-0001
+ORD-0019750,04-16-25,Shipped - Rejected by Buyer,platform_fulfilled,Standard,Beauty,660.3,North,BEA-0004
+ORD-0013456,12-14-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Home,453.84,South,HOM-0001
+ORD-0014042,11-15-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Sports,1051.71,North,SPO-0005
+ORD-0021226,07-30-25,Shipped - Delivered to Buyer,third_party_fulfilled,Standard,Apparel,1469.58,West,APP-0013
+ORD-0005339,07-08-25,Shipped,platform_fulfilled,Expedited,Sports,1569.64,North,SPO-0001
+ORD-0001566,07-10-25,Shipped - Returned to seller,platform_fulfilled,Economy,Electronics,1293.67,East,ELE-0140
+ORD-0002549,01-25-25,Shipped,platform_fulfilled,Standard,Electronics,2214.37,North,ELE-0001
+ORD-0020113,11-28-25,Shipped,platform_fulfilled,Standard,Electronics,742.05,North,ELE-0001
+ORD-0014154,10-14-25,Shipped - Returned to seller,third_party_fulfilled,Standard,Apparel,1001.07,West,APP-0007
+ORD-0011663,10-16-25,Shipped - Delivered to Buyer,merchant_fulfilled,Economy,Electronics,5086.51,East,ELE-0001
+ORD-0022807,02-01-25,Shipped,third_party_fulfilled,Economy,Books,240.21,East,BOO-0001
+ORD-0019154,02-24-25,Shipped,merchant_fulfilled,Economy,Home,1999.37,North,HOM-0004
+ORD-0012810,01-05-25,Shipped,third_party_fulfilled,Economy,Apparel,810.46,East,APP-0140
+ORD-0011449,09-19-25,Shipped,platform_fulfilled,Standard,Beauty,491.99,North,BEA-0008
+ORD-0015567,01-30-25,Shipped,merchant_fulfilled,Economy,Beauty,1427.99,Central,BEA-0002
+ORD-0010831,08-04-25,Shipped,platform_fulfilled,Standard,Beauty,923.54,Central,BEA-0007
+ORD-0020073,07-16-25,Shipped,merchant_fulfilled,Economy,Electronics,5492.46,South,ELE-0001
+ORD-0004331,04-16-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Apparel,199.67,Central,APP-0001
+ORD-0004143,12-01-25,Shipped,merchant_fulfilled,Standard,Apparel,768.97,North,APP-0001
+ORD-0007383,10-10-25,Shipped,platform_fulfilled,Expedited,Books,288.94,West,BOO-0001
+ORD-0011530,06-23-25,Shipped,merchant_fulfilled,Economy,Home,968.91,North,HOM-0007
+ORD-0009230,08-31-25,Shipped - Delivered to Buyer,platform_fulfilled,Standard,Electronics,821.81,South,ELE-0003
+ORD-0012788,10-05-25,Shipped,merchant_fulfilled,Expedited,Beauty,401.08,East,BEA-0002
+ORD-0015918,08-01-25,Shipped - Delivered to Buyer,third_party_fulfilled,Economy,Apparel,465.01,North,APP-0015
+ORD-0010836,02-13-25,Shipped - Delivered to Buyer,merchant_fulfilled,Economy,Apparel,1286.91,East,APP-0007
+ORD-0008344,12-29-25,Shipped - Delivered to Buyer,third_party_fulfilled,Standard,Electronics,990.88,East,ELE-0001
+ORD-0022852,03-25-25,Shipped - Delivered to Buyer,third_party_fulfilled,Standard,Electronics,3467.53,South,ELE-0001

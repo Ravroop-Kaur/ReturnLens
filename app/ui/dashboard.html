@@ -1,0 +1,974 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Return Risk Manager</title>
+<style>
+:root{
+  --bg:#f5f7f8;
+  --sidebar-bg:#ffffff;
+  --card-bg:#ffffff;
+  --border:#e5e9eb;
+  --text:#152026;
+  --muted:#6b7686;
+  --accent:#0f766e;
+  --accent-light:#e6f4f2;
+  --accent-dark:#0b5c56;
+  --danger:#c0392b;
+  --danger-bg:#fdecec;
+  --warn:#b8720a;
+  --warn-bg:#fef3e2;
+  --good:#1e8a5f;
+  --good-bg:#e7f6ee;
+  --radius:10px;
+  --radius-lg:14px;
+  --shadow:0 1px 2px rgba(16,24,32,.04), 0 1px 8px rgba(16,24,32,.03);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+button{font-family:inherit;}
+a{color:var(--accent);}
+h1,h2,h3,h4{margin:0;font-weight:700;}
+.hidden{display:none !important;}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);}
+
+/* ---------- Login gate ---------- */
+#login-gate{
+  position:fixed;inset:0;background:#0e1b1c;z-index:9999;
+  display:flex;align-items:center;justify-content:center;padding:20px;
+}
+#login-card{
+  width:min(420px,100%);background:#ffffff;border-radius:var(--radius-lg);
+  padding:32px;box-shadow:0 20px 60px rgba(0,0,0,.35);
+}
+#login-card .brand{display:flex;align-items:center;gap:10px;margin-bottom:18px;}
+#login-card .brand .logo-dot{width:28px;height:28px;border-radius:8px;background:var(--accent);flex-shrink:0;}
+#login-card h1{font-size:20px;}
+#login-card p.sub{color:var(--muted);font-size:13px;margin:4px 0 20px;}
+#login-card label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin:12px 0 4px;}
+#login-card input{
+  width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--border);
+  background:#fbfcfc;color:var(--text);font-size:14px;
+}
+#login-card input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent);}
+#login-card button.primary{
+  width:100%;padding:11px;margin-top:16px;border:0;border-radius:8px;
+  background:var(--accent);color:#fff;font-weight:700;font-size:14px;cursor:pointer;
+}
+#login-card button.primary:hover{background:var(--accent-dark);}
+#login-error{color:var(--danger);font-size:13px;min-height:18px;margin-top:8px;}
+#login-card details{margin-top:18px;border-top:1px solid var(--border);padding-top:14px;}
+#login-card summary{cursor:pointer;color:var(--accent);font-weight:600;font-size:13px;}
+#login-card details button{margin-top:14px;background:#f0f4f4;color:var(--accent-dark);border:1px solid var(--border);}
+
+/* ---------- App shell ---------- */
+#app{display:flex;min-height:100vh;}
+.sidebar{
+  width:230px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;padding:20px 14px;position:sticky;top:0;height:100vh;
+}
+.sidebar .brand{display:flex;align-items:center;gap:10px;padding:6px 8px 22px;}
+.sidebar .brand .logo-dot{width:26px;height:26px;border-radius:7px;background:var(--accent);flex-shrink:0;}
+.sidebar .brand-text{line-height:1.2;}
+.sidebar .brand-text .name{font-weight:700;font-size:15px;}
+.sidebar .brand-text .tag{font-size:10.5px;color:var(--muted);}
+.nav-item{
+  display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;
+  color:var(--muted);font-size:14px;font-weight:600;cursor:pointer;margin-bottom:2px;
+  border:none;background:none;width:100%;text-align:left;
+}
+.nav-item .ico{width:18px;text-align:center;flex-shrink:0;font-size:15px;}
+.nav-item:hover{background:#f2f5f5;color:var(--text);}
+.nav-item.active{background:var(--accent-light);color:var(--accent-dark);}
+.nav-item:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.sidebar-footer{margin-top:auto;padding-top:14px;border-top:1px solid var(--border);}
+.sidebar-footer .org-name{font-size:12px;color:var(--muted);padding:4px 8px 8px;}
+#logout-btn{
+  width:100%;padding:9px 12px;border-radius:8px;border:1px solid var(--border);
+  background:#fff;color:var(--text);cursor:pointer;font-size:13px;font-weight:600;text-align:left;
+}
+#logout-btn:hover{background:#f2f5f5;}
+
+.main{flex:1;min-width:0;}
+.topbar{
+  height:60px;border-bottom:1px solid var(--border);background:#fff;
+  display:flex;align-items:center;justify-content:space-between;padding:0 28px;
+  position:sticky;top:0;z-index:5;
+}
+.topbar h2{font-size:17px;}
+.topbar .right{display:flex;align-items:center;gap:10px;}
+.badge{
+  display:inline-block;font-size:11px;font-weight:700;letter-spacing:.03em;
+  padding:4px 9px;border-radius:999px;background:#eef1f2;color:var(--muted);
+}
+.badge.demo{background:var(--warn-bg);color:var(--warn);}
+.content{padding:28px;max-width:1200px;margin:0 auto;}
+.page{display:none;}
+.page.active{display:block;}
+
+/* ---------- Cards / grid ---------- */
+.card{
+  background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:22px;box-shadow:var(--shadow);
+}
+.card + .card{margin-top:20px;}
+.grid{display:grid;gap:18px;}
+.grid.cols-4{grid-template-columns:repeat(4,1fr);}
+.grid.cols-2{grid-template-columns:repeat(2,1fr);}
+.grid.cols-3{grid-template-columns:repeat(3,1fr);}
+@media (max-width:1000px){
+  .grid.cols-4{grid-template-columns:repeat(2,1fr);}
+  .grid.cols-3{grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width:700px){
+  #app{flex-direction:column;}
+  .sidebar{width:100%;height:auto;position:relative;flex-direction:row;overflow-x:auto;padding:10px;}
+  .sidebar .brand{display:none;}
+  .sidebar-footer{display:none;}
+  .nav-item{flex-shrink:0;}
+  .grid.cols-4,.grid.cols-3,.grid.cols-2{grid-template-columns:1fr;}
+  .content{padding:16px;}
+}
+
+.stat-card .stat-label{font-size:13px;color:var(--muted);font-weight:600;}
+.stat-card .stat-value{font-size:28px;font-weight:800;margin-top:6px;}
+.stat-card .stat-note{font-size:12px;color:var(--muted);margin-top:4px;}
+
+.section-title{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:4px;}
+.section-title h3{font-size:16px;}
+.section-sub{color:var(--muted);font-size:13px;margin:2px 0 14px;}
+
+.driver-row{display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid var(--border);cursor:pointer;}
+.driver-row:last-child{border-bottom:none;}
+.driver-row:hover{background:#fafbfb;}
+.driver-rank{width:22px;height:22px;border-radius:50%;background:#eef1f2;color:var(--muted);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.driver-name{flex:1;min-width:0;font-weight:600;font-size:14px;}
+.driver-name .dim{color:var(--muted);font-weight:500;font-size:12px;display:block;}
+.driver-bar-track{flex:2;background:#eef1f2;border-radius:6px;height:10px;overflow:hidden;min-width:80px;}
+.driver-bar-fill{height:100%;background:var(--accent);border-radius:6px;}
+.driver-rr{width:48px;text-align:right;font-weight:700;font-size:13px;color:var(--accent-dark);flex-shrink:0;}
+.driver-evidence{width:76px;text-align:right;font-size:12px;color:var(--muted);flex-shrink:0;}
+
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700;}
+.pill.high, .pill.suspicious{background:var(--danger-bg);color:var(--danger);}
+.pill.medium, .pill.needs-review{background:var(--warn-bg);color:var(--warn);}
+.pill.low, .pill.supported{background:var(--good-bg);color:var(--good);}
+.pill.indeterminate{background:#eef1f2;color:var(--muted);}
+
+.metric-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:6px;}
+.metric-box{flex:1;min-width:100px;background:#fafbfb;border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;}
+.metric-box .v{font-size:20px;font-weight:800;}
+.metric-box .l{font-size:11.5px;color:var(--muted);margin-top:2px;}
+
+details.tech{margin-top:14px;}
+details.tech > summary{cursor:pointer;color:var(--accent);font-weight:600;font-size:13px;list-style:none;}
+details.tech > summary::-webkit-details-marker{display:none;}
+details.tech > summary:before{content:"▸ ";}
+details.tech[open] > summary:before{content:"▾ ";}
+details.tech .tech-body{margin-top:12px;}
+
+table{width:100%;border-collapse:collapse;font-size:13.5px;}
+th{text-align:left;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.03em;padding:8px 10px;border-bottom:1px solid var(--border);}
+td{padding:10px 10px;border-bottom:1px solid var(--border);}
+tr.order-row{cursor:pointer;}
+tr.order-row:hover{background:#fafbfb;}
+.table-wrap{overflow-x:auto;}
+
+.filter-bar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.filter-btn{
+  padding:6px 14px;border-radius:999px;border:1px solid var(--border);background:#fff;
+  font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;
+}
+.filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+
+.risk-summary{display:flex;gap:14px;margin-bottom:18px;flex-wrap:wrap;}
+.risk-summary .box{flex:1;min-width:110px;border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border);}
+.risk-summary .box .n{font-size:22px;font-weight:800;}
+.risk-summary .box .l{font-size:12px;color:var(--muted);margin-top:2px;}
+.risk-summary .box.high{background:var(--danger-bg);}
+.risk-summary .box.high .n{color:var(--danger);}
+.risk-summary .box.medium{background:var(--warn-bg);}
+.risk-summary .box.medium .n{color:var(--warn);}
+.risk-summary .box.low{background:var(--good-bg);}
+.risk-summary .box.low .n{color:var(--good);}
+
+.cta-btn{
+  display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:9px;
+  background:var(--accent);color:#fff;font-weight:700;font-size:14px;border:none;cursor:pointer;
+}
+.cta-btn:hover{background:var(--accent-dark);}
+.cta-btn.secondary{background:#fff;color:var(--accent-dark);border:1px solid var(--border);}
+.cta-btn.secondary:hover{background:#f2f5f5;}
+
+.note{font-size:12.5px;color:var(--muted);}
+.disclaimer-box{
+  background:#fafbfb;border:1px dashed var(--border);border-radius:8px;padding:12px 14px;
+  font-size:12.5px;color:var(--muted);margin-top:12px;
+}
+
+.empty-state{padding:34px 20px;text-align:center;color:var(--muted);}
+.empty-state .big-ico{font-size:26px;margin-bottom:8px;}
+.error-state{padding:16px 18px;background:var(--danger-bg);color:var(--danger);border-radius:10px;font-size:14px;}
+
+/* ---------- Modal / detail panel ---------- */
+.overlay{
+  position:fixed;inset:0;background:rgba(15,25,28,.45);z-index:200;
+  display:flex;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto;
+}
+.overlay.hidden{display:none;}
+.modal{
+  background:#fff;border-radius:var(--radius-lg);max-width:640px;width:100%;
+  padding:26px;box-shadow:0 24px 60px rgba(0,0,0,.25);
+}
+.modal-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;}
+.modal-close{border:none;background:#f2f5f5;border-radius:8px;width:30px;height:30px;cursor:pointer;font-size:16px;color:var(--muted);}
+.evidence-row{display:flex;align-items:flex-start;gap:10px;padding:7px 0;font-size:13.5px;}
+.evidence-icon{width:18px;flex-shrink:0;text-align:center;font-weight:700;}
+.evidence-icon.ok{color:var(--good);}
+.evidence-icon.warn{color:var(--warn);}
+.evidence-icon.bad{color:var(--danger);}
+
+/* ---------- Data sources ---------- */
+.source-card{border:1px solid var(--border);border-radius:12px;padding:18px;}
+.source-card.connected{border-color:var(--good);}
+.source-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.cap-row{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;border-bottom:1px solid var(--border);}
+.cap-row:last-child{border:none;}
+.cap-ok{color:var(--good);font-weight:700;}
+.cap-warn{color:var(--warn);font-weight:700;}
+.form-row{margin-top:10px;}
+.form-row label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:4px;}
+.form-row input{width:100%;padding:8px 10px;border-radius:7px;border:1px solid var(--border);font-size:13px;}
+.readiness-check{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:13.5px;}
+.spinner-inline{display:inline-block;width:14px;height:14px;border:2px solid #d8dedf;border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loading-row{color:var(--muted);font-size:13px;display:flex;align-items:center;gap:8px;padding:20px 0;}
+</style>
+</head>
+<body>
+
+<div id="login-gate">
+  <div id="login-card">
+    <div class="brand"><div class="logo-dot"></div><div><strong>Return Risk Manager</strong></div></div>
+    <h1>Sign in</h1>
+    <p class="sub">Explainable return-risk intelligence for your store.</p>
+    <label for="login-email">Email</label>
+    <input id="login-email" type="email" autocomplete="username" placeholder="you@merchant.com">
+    <label for="login-password">Password</label>
+    <input id="login-password" type="password" autocomplete="current-password" placeholder="••••••••">
+    <button class="primary" onclick="Auth.login()">Sign in</button>
+    <div id="login-error"></div>
+    <details>
+      <summary>Create a demo account</summary>
+      <label for="reg-email">Email</label>
+      <input id="reg-email" type="email" placeholder="you@merchant.com">
+      <label for="reg-password">Password (8+ characters)</label>
+      <input id="reg-password" type="password" placeholder="••••••••">
+      <label for="reg-org">Organization ID</label>
+      <input id="reg-org" type="text" placeholder="my_store">
+      <button onclick="Auth.registerDemo()">Create account</button>
+    </details>
+  </div>
+</div>
+
+<div id="app" class="hidden">
+  <div class="sidebar">
+    <div class="brand">
+      <div class="logo-dot"></div>
+      <div class="brand-text"><div class="name">Risk Manager</div><div class="tag">Return risk intelligence</div></div>
+    </div>
+    <button class="nav-item" data-page="overview"><span class="ico">&#9673;</span> Overview</button>
+    <button class="nav-item" data-page="risk"><span class="ico">&#9888;</span> Risk</button>
+    <button class="nav-item" data-page="diagnosis"><span class="ico">&#128269;</span> Diagnosis</button>
+    <button class="nav-item" data-page="claims"><span class="ico">&#128196;</span> Claims</button>
+    <button class="nav-item" data-page="datasources"><span class="ico">&#9881;</span> Data Sources</button>
+    <div class="sidebar-footer">
+      <div class="org-name" id="org-name-label"></div>
+      <button id="logout-btn" onclick="Auth.logout()">Log out</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <h2 id="topbar-title">Overview</h2>
+      <div class="right">
+        <span class="badge" id="demo-badge" style="display:none">DEMO / SYNTHETIC DATA</span>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="page active" id="page-overview"></div>
+      <div class="page" id="page-risk"></div>
+      <div class="page" id="page-diagnosis"></div>
+      <div class="page" id="page-claims"></div>
+      <div class="page" id="page-datasources"></div>
+    </div>
+  </div>
+</div>
+
+<div class="overlay hidden" id="modal-overlay" onclick="if(event.target===this)UI.closeModal()">
+  <div class="modal" id="modal-body"></div>
+</div>
+
+<script>
+/* ============================================================
+   State + API helpers
+   ============================================================ */
+const TOKEN_KEY = "rrm_token";
+const State = {
+  token: localStorage.getItem(TOKEN_KEY) || null,
+  orgId: null,
+  currentPage: "overview",
+  riskLatest: null,
+  riskOrders: null,
+  claims: null,
+  dataSources: null,
+  riskFilter: "all",
+};
+
+async function api(path, opts) {
+  opts = opts || {};
+  const headers = Object.assign({}, opts.headers || {});
+  if (State.token) headers["Authorization"] = "Bearer " + State.token;
+  if (opts.body) headers["Content-Type"] = "application/json";
+  const res = await fetch(path, Object.assign({}, opts, { headers }));
+  if (res.status === 401) {
+    Auth.forceLogout();
+    throw new Error("Session expired. Please sign in again.");
+  }
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(data.error || ("Request failed (" + res.status + ")"));
+  }
+  return data;
+}
+
+/* ============================================================
+   Formatting helpers
+   ============================================================ */
+const Fmt = {
+  money(n) {
+    if (n === null || n === undefined || isNaN(n)) return "—";
+    return "\u20b9" + Number(n).toLocaleString("en-IN", { maximumFractionDigits: 0 });
+  },
+  moneyCompact(n) {
+    if (n === null || n === undefined || isNaN(n)) return "—";
+    const abs = Math.abs(n);
+    if (abs >= 100000) return "\u20b9" + (n / 100000).toFixed(1) + "L";
+    if (abs >= 1000) return "\u20b9" + (n / 1000).toFixed(1) + "K";
+    return Fmt.money(n);
+  },
+  pct(x, digits) {
+    if (x === null || x === undefined || isNaN(x)) return "—";
+    digits = digits === undefined ? 1 : digits;
+    return (x * 100).toFixed(digits) + "%";
+  },
+  num(n) {
+    if (n === null || n === undefined || isNaN(n)) return "—";
+    return Number(n).toLocaleString("en-IN");
+  },
+  escape(s) {
+    if (s === null || s === undefined) return "";
+    return String(s).replace(/[&<>"']/g, (c) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[c]));
+  },
+  dim(dimension) {
+    const labels = {
+      fulfilment_method: "Fulfilment method",
+      shipping_service: "Shipping service",
+      category: "Product category",
+      region: "Region",
+    };
+    return labels[dimension] || dimension;
+  },
+};
+
+/* ============================================================
+   Auth
+   ============================================================ */
+const Auth = {
+  async login() {
+    const email = document.getElementById("login-email").value.trim();
+    const password = document.getElementById("login-password").value;
+    document.getElementById("login-error").textContent = "";
+    try {
+      const data = await api("/auth/login", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+      });
+      State.token = data.token;
+      State.orgId = data.organization_id;
+      localStorage.setItem(TOKEN_KEY, data.token);
+      App.start();
+    } catch (e) {
+      document.getElementById("login-error").textContent = e.message || "Sign-in failed.";
+    }
+  },
+  async registerDemo() {
+    const email = document.getElementById("reg-email").value.trim();
+    const password = document.getElementById("reg-password").value;
+    const organization_id = document.getElementById("reg-org").value.trim();
+    document.getElementById("login-error").textContent = "";
+    try {
+      await api("/auth/register", {
+        method: "POST",
+        body: JSON.stringify({ email, password, organization_id }),
+      });
+      document.getElementById("login-email").value = email;
+      document.getElementById("login-password").value = password;
+      document.getElementById("login-error").style.color = "var(--good)";
+      document.getElementById("login-error").textContent = "Account created — signing in…";
+      await Auth.login();
+    } catch (e) {
+      document.getElementById("login-error").style.color = "var(--danger)";
+      document.getElementById("login-error").textContent = e.message || "Registration failed.";
+    }
+  },
+  async logout() {
+    try { await api("/auth/logout", { method: "POST" }); } catch (e) {}
+    Auth.forceLogout();
+  },
+  forceLogout() {
+    State.token = null;
+    localStorage.removeItem(TOKEN_KEY);
+    document.getElementById("app").classList.add("hidden");
+    document.getElementById("login-gate").style.display = "flex";
+  },
+};
+
+/* ============================================================
+   App shell / navigation
+   ============================================================ */
+const App = {
+  async start() {
+    document.getElementById("login-gate").style.display = "none";
+    document.getElementById("app").classList.remove("hidden");
+    document.querySelectorAll(".nav-item").forEach((btn) => {
+      btn.addEventListener("click", () => App.goTo(btn.dataset.page));
+    });
+    await App.goTo("overview");
+  },
+  async goTo(page) {
+    State.currentPage = page;
+    document.querySelectorAll(".nav-item").forEach((b) => b.classList.toggle("active", b.dataset.page === page));
+    document.querySelectorAll(".page").forEach((p) => p.classList.remove("active"));
+    document.getElementById("page-" + page).classList.add("active");
+    const titles = { overview: "Overview", risk: "Return Risk", diagnosis: "Diagnosis", claims: "Return Claims", datasources: "Data Sources" };
+    document.getElementById("topbar-title").textContent = titles[page];
+    try {
+      if (page === "overview") await Pages.overview();
+      else if (page === "risk") await Pages.risk();
+      else if (page === "diagnosis") await Pages.diagnosis();
+      else if (page === "claims") await Pages.claims();
+      else if (page === "datasources") await Pages.datasources();
+    } catch (e) {
+      document.getElementById("page-" + page).innerHTML =
+        '<div class="error-state">Unable to retrieve merchant data. Try again. (' + Fmt.escape(e.message) + ')</div>';
+    }
+  },
+  async ensureRiskLatest() {
+    if (!State.riskLatest) State.riskLatest = await api("/risk/latest");
+    if (State.riskLatest.is_synthetic_demo) {
+      document.getElementById("demo-badge").style.display = "inline-block";
+    }
+    document.getElementById("org-name-label").textContent = State.riskLatest.organization_id || "";
+    return State.riskLatest;
+  },
+  async ensureRiskOrders() {
+    if (!State.riskOrders) State.riskOrders = await api("/risk/orders");
+    return State.riskOrders;
+  },
+  async ensureClaims() {
+    if (!State.claims) State.claims = await api("/claims");
+    return State.claims;
+  },
+  async ensureDataSources() {
+    if (!State.dataSources) State.dataSources = await api("/data-sources");
+    return State.dataSources;
+  },
+};
+
+const UI = {
+  openModal(html) {
+    document.getElementById("modal-body").innerHTML = html;
+    document.getElementById("modal-overlay").classList.remove("hidden");
+  },
+  closeModal() {
+    document.getElementById("modal-overlay").classList.add("hidden");
+  },
+};
+
+/* ============================================================
+   Overview page
+   ============================================================ */
+const Pages = {};
+
+Pages.overview = async function () {
+  const el = document.getElementById("page-overview");
+  el.innerHTML = '<div class="loading-row"><span class="spinner-inline"></span> Loading return risk overview…</div>';
+  const data = await App.ensureRiskLatest();
+
+  if (data.status === "abstained") {
+    el.innerHTML = Views.notReady(data);
+    return;
+  }
+
+  const orders = await App.ensureRiskOrders();
+  const nTotal = orders.orders.length;
+  const nReturned = orders.orders.filter((o) => o.actual_return).length;
+  const returnRate = nTotal ? nReturned / nTotal : null;
+
+  const exp = data.financial_exposure || {};
+  const ev = data.test_evaluation || {};
+  const counts = ev.confusion_matrix || (ev.counts || {});
+
+  el.innerHTML = `
+    <div class="grid cols-4">
+      ${Views.statCard("Orders analysed", Fmt.num(nTotal), "evaluation set")}
+      ${Views.statCard("Return exposure", Fmt.moneyCompact(exp.predicted_return_exposure), "predicted, high-risk orders")}
+      ${Views.statCard("High-risk orders", Fmt.num(exp.n_high_risk_orders), Fmt.pct(exp.pct_orders_high_risk) + " of orders")}
+      ${Views.statCard("Return rate", Fmt.pct(returnRate), "observed in evaluation set")}
+    </div>
+
+    <div class="grid cols-2" style="margin-top:20px;align-items:start;">
+      <div class="card">
+        <div class="section-title"><h3>What's driving your returns?</h3>
+          <a href="#" onclick="App.goTo('diagnosis');return false;" style="font-size:13px;font-weight:600;">View full analysis →</a>
+        </div>
+        <div class="section-sub">Top factors associated with higher return risk.</div>
+        <div id="overview-drivers"></div>
+        <div class="disclaimer-box">These are associations supported by the available merchant data. They are not proof of causation.</div>
+      </div>
+
+      <div class="card">
+        <div class="section-title"><h3>Model performance</h3></div>
+        <div class="section-sub">
+          <span class="badge ${data.is_synthetic_demo ? "demo" : ""}">${data.is_synthetic_demo ? "DEMO / SYNTHETIC DATA" : "MERCHANT HELD-OUT TEST"}</span>
+        </div>
+        <div class="metric-row">
+          <div class="metric-box"><div class="v">${Fmt.pct(ev.precision)}</div><div class="l">Precision</div></div>
+          <div class="metric-box"><div class="v">${Fmt.pct(ev.recall)}</div><div class="l">Recall</div></div>
+          <div class="metric-box"><div class="v">${Fmt.pct(ev.f1)}</div><div class="l">F1 score</div></div>
+        </div>
+        <details class="tech">
+          <summary>View model details</summary>
+          <div class="tech-body">
+            <div class="metric-row">
+              <div class="metric-box"><div class="v">${Fmt.pct(ev.fpr)}</div><div class="l">False positive rate</div></div>
+              <div class="metric-box"><div class="v">${Fmt.pct(ev.fnr)}</div><div class="l">False negative rate</div></div>
+              <div class="metric-box"><div class="v">${data.model && data.model.threshold !== undefined ? data.model.threshold : "—"}</div><div class="l">Threshold</div></div>
+            </div>
+            ${Views.confusionMatrix(counts)}
+            <p class="note" style="margin-top:10px;">Test set: ${Fmt.num(ev.test_size !== undefined ? ev.test_size : ev.n_total)} orders. ROC-AUC / PR-AUC are not computed by the current evaluation.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px;text-align:center;padding:26px;">
+      <button class="cta-btn" onclick="App.goTo('risk')">View risk analysis →</button>
+    </div>
+  `;
+
+  const driversEl = document.getElementById("overview-drivers");
+  const top = Views.topDrivers(data.diagnosis, 5);
+  driversEl.innerHTML = top.length ? top.map((f, i) => Views.driverRow(f, i, top[0].relative_risk)).join("") : Views.emptyLine("No statistically significant drivers were found in the available data.");
+};
+
+Views = {};
+
+Views.statCard = function (label, value, note) {
+  return `<div class="card stat-card"><div class="stat-label">${Fmt.escape(label)}</div><div class="stat-value">${value}</div><div class="stat-note">${Fmt.escape(note || "")}</div></div>`;
+};
+
+Views.emptyLine = function (text) {
+  return `<div class="empty-state" style="padding:16px 0;">${Fmt.escape(text)}</div>`;
+};
+
+Views.notReady = function (data) {
+  const reason = (data.model_decision && data.model_decision.reason) || "Insufficient finalized return labels.";
+  return `
+    <div class="card">
+      <span class="badge" style="background:var(--danger-bg);color:var(--danger);">MODEL STATUS: NOT READY</span>
+      <h3 style="margin-top:12px;">Risk prediction is not available yet</h3>
+      <p class="note" style="font-size:14px;margin-top:8px;">${Fmt.escape(reason)}</p>
+      <button class="cta-btn secondary" style="margin-top:14px;" onclick="App.goTo('datasources')">Connect additional data</button>
+    </div>`;
+};
+
+Views.topDrivers = function (diagnosis, limit) {
+  if (!diagnosis) return [];
+  let all = [];
+  Object.keys(diagnosis).forEach((dim) => {
+    (diagnosis[dim] || []).forEach((f) => all.push(f));
+  });
+  all = all.filter((f) => f.practically_significant);
+  all.sort((a, b) => b.relative_risk - a.relative_risk);
+  return all.slice(0, limit || 5);
+};
+
+Views.evidenceLabel = function (f) {
+  if (f.statistically_supported && f.practically_significant) return "Strong";
+  if (f.practically_significant) return "Emerging";
+  return "Weak";
+};
+
+Views.driverRow = function (f, i, maxRr) {
+  const pct = Math.min(100, (f.relative_risk / (maxRr || f.relative_risk)) * 100);
+  return `
+    <div class="driver-row" onclick="App.goTo('diagnosis')">
+      <div class="driver-rank">${i + 1}</div>
+      <div class="driver-name">${Fmt.escape(f.segment)}<span class="dim">${Fmt.escape(Fmt.dim(f.dimension))}</span></div>
+      <div class="driver-bar-track"><div class="driver-bar-fill" style="width:${pct}%"></div></div>
+      <div class="driver-rr">${f.relative_risk.toFixed(1)}×</div>
+      <div class="driver-evidence">${Views.evidenceLabel(f)}</div>
+    </div>`;
+};
+
+Views.confusionMatrix = function (counts) {
+  if (!counts || counts.tp === undefined) return "";
+  return `
+    <table style="margin-top:12px;">
+      <tr><th></th><th>Predicted return</th><th>Predicted no return</th></tr>
+      <tr><td><strong>Actually returned</strong></td><td>${Fmt.num(counts.tp)} (TP)</td><td>${Fmt.num(counts.fn)} (FN)</td></tr>
+      <tr><td><strong>Actually not returned</strong></td><td>${Fmt.num(counts.fp)} (FP)</td><td>${Fmt.num(counts.tn)} (TN)</td></tr>
+    </table>`;
+};
+
+/* ============================================================
+   Risk page
+   ============================================================ */
+Pages.risk = async function () {
+  const el = document.getElementById("page-risk");
+  el.innerHTML = '<div class="loading-row"><span class="spinner-inline"></span> Loading order risk table…</div>';
+  const latest = await App.ensureRiskLatest();
+  if (latest.status === "abstained") { el.innerHTML = Views.notReady(latest); return; }
+
+  const data = await App.ensureRiskOrders();
+  el.innerHTML = `
+    <div class="risk-summary">
+      <div class="box high"><div class="n">${Fmt.num(data.n_high)}</div><div class="l">High risk</div></div>
+      <div class="box medium"><div class="n">${Fmt.num(data.n_medium)}</div><div class="l">Medium risk</div></div>
+      <div class="box low"><div class="n">${Fmt.num(data.n_low)}</div><div class="l">Low risk</div></div>
+    </div>
+    <p class="note" style="margin-bottom:14px;">Scores are computed on the model's held-out evaluation set${data.is_synthetic_demo ? " (demo/synthetic data)" : ""}.</p>
+    <div class="card">
+      <div class="filter-bar">
+        <button class="filter-btn active" data-f="all">All</button>
+        <button class="filter-btn" data-f="high">High</button>
+        <button class="filter-btn" data-f="medium">Medium</button>
+        <button class="filter-btn" data-f="low">Low</button>
+      </div>
+      <div class="table-wrap"><table id="risk-table">
+        <thead><tr><th>Order</th><th>Risk</th><th>Amount</th><th>Risk signal</th><th>Status</th></tr></thead>
+        <tbody id="risk-table-body"></tbody>
+      </table></div>
+    </div>
+  `;
+  el.querySelectorAll(".filter-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      el.querySelectorAll(".filter-btn").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      State.riskFilter = btn.dataset.f;
+      Views.renderRiskTable(data.orders);
+    });
+  });
+  Views.renderRiskTable(data.orders);
+};
+
+Views.renderRiskTable = function (orders) {
+  const filter = State.riskFilter;
+  const rows = orders.filter((o) => filter === "all" || o.risk_level === filter).slice(0, 200);
+  const statusLabel = { high: "At Risk", medium: "Monitoring", low: "" };
+  document.getElementById("risk-table-body").innerHTML = rows.map((o) => `
+    <tr class="order-row" onclick='Views.openOrderDetail(${JSON.stringify(o.order_id)})'>
+      <td>#${Fmt.escape(o.order_id)}</td>
+      <td><span class="pill ${o.risk_level}">${Fmt.pct(o.risk_score, 0)}</span></td>
+      <td>${Fmt.money(o.amount)}</td>
+      <td>${Fmt.escape(o.key_reason)}</td>
+      <td>${statusLabel[o.risk_level] ? `<span class="pill ${o.risk_level}">${statusLabel[o.risk_level]}</span>` : ""}</td>
+    </tr>`).join("") || `<tr><td colspan="5"><div class="empty-state">No orders match this filter.</div></td></tr>`;
+};
+
+Views.openOrderDetail = function (orderId) {
+  const order = (State.riskOrders.orders || []).find((o) => o.order_id === orderId);
+  if (!order) return;
+  const signalsHtml = (order.signals || []).map((s) => `
+    <div class="evidence-row">
+      <span class="evidence-icon ${s.flagged ? "warn" : "ok"}">${s.flagged ? "⚠" : "•"}</span>
+      <span>${Fmt.escape(Fmt.dim(s.dimension))}: <strong>${Fmt.escape(s.value)}</strong>${s.flagged ? " — elevated-risk segment" : ""}</span>
+    </div>`).join("");
+  UI.openModal(`
+    <div class="modal-head">
+      <div><h3>Order #${Fmt.escape(order.order_id)}</h3><p class="note">${Fmt.money(order.amount)}${order.order_date ? " · " + Fmt.escape(order.order_date) : ""}</p></div>
+      <button class="modal-close" onclick="UI.closeModal()">✕</button>
+    </div>
+    <span class="pill ${order.risk_level}">${Fmt.pct(order.risk_score,0)} risk score — ${order.risk_level.toUpperCase()}</span>
+    <h4 style="margin-top:18px;font-size:14px;">Signals contributing to this risk score</h4>
+    <div style="margin-top:6px;">${signalsHtml || '<p class="note">No categorical signals available for this order.</p>'}</div>
+    ${order.actual_return !== null && order.actual_return !== undefined ? `<p class="note" style="margin-top:14px;">Evaluation-set outcome: <strong>${order.actual_return ? "Returned" : "Not returned"}</strong></p>` : ""}
+    <div class="disclaimer-box">These signals contributed to the model's risk score. They describe association, not a guarantee this order will return.</div>
+  `);
+};
+
+/* ============================================================
+   Diagnosis page
+   ============================================================ */
+Pages.diagnosis = async function () {
+  const el = document.getElementById("page-diagnosis");
+  el.innerHTML = '<div class="loading-row"><span class="spinner-inline"></span> Loading diagnosis…</div>';
+  const data = await App.ensureRiskLatest();
+  if (data.status === "abstained") { el.innerHTML = Views.notReady(data); return; }
+
+  const findings = Views.topDrivers(data.diagnosis, 8);
+  let html = `<div class="section-sub" style="margin-bottom:16px;">Where return risk is concentrated, and the evidence behind each finding. These are observed associations, not proven causes.</div>`;
+
+  if (!findings.length) {
+    html += `<div class="card">${Views.emptyLine("No segment showed a strong enough, evidence-backed pattern in the available data.")}</div>`;
+  } else {
+    html += findings.map((f) => Views.diagnosisCard(f)).join("");
+  }
+
+  if (data.recommendation) {
+    const r = data.recommendation;
+    html += `
+      <div class="card" style="border-left:4px solid var(--accent);">
+        <div class="section-title"><h3>Recommended investigation</h3></div>
+        <p style="margin-top:6px;">${Fmt.escape(r.text)}</p>
+        <p class="note" style="margin-top:8px;">Suggested action based on: ${Fmt.escape(r.evidence_summary || "")}</p>
+      </div>`;
+  }
+
+  if (data.verification) {
+    const v = data.verification;
+    html += `
+      <div class="card">
+        <div class="section-title"><h3>Did the intervention work?</h3>
+          <span class="badge demo">${Fmt.escape(v.label || "DEMO / SYNTHETIC SIMULATION")}</span>
+        </div>
+        <div class="grid cols-2" style="margin-top:12px;">
+          <div class="metric-box"><div class="v">${Fmt.pct(v.before_rate)}</div><div class="l">Before (n=${Fmt.num(v.before_n)})</div></div>
+          <div class="metric-box"><div class="v">${Fmt.pct(v.after_rate)}</div><div class="l">After (n=${Fmt.num(v.after_n)})</div></div>
+        </div>
+        <p style="margin-top:12px;">
+          ${v.improved === true ? '<span class="pill low">Improved</span>' : v.improved === false ? '<span class="pill high">No improvement</span>' : '<span class="pill indeterminate">Indeterminate</span>'}
+          <span class="note"> change: ${Fmt.pct(v.absolute_change)} absolute, p = ${v.p_value !== undefined ? Number(v.p_value).toFixed(3) : "—"}</span>
+        </p>
+        <p class="note">This is a simulated post-intervention comparison used to demonstrate the verification mechanics, not a live merchant result.</p>
+      </div>`;
+  }
+
+  el.innerHTML = html;
+};
+
+Views.diagnosisCard = function (f) {
+  const text = `Orders where ${Fmt.dim(f.dimension).toLowerCase()} is "${f.segment}" show an observed return rate of ${Fmt.pct(f.segment_return_rate)}, compared with ${Fmt.pct(f.baseline_return_rate)} for the rest of the data — about ${f.relative_risk.toFixed(1)}× higher.`;
+  return `
+    <div class="card">
+      <div class="section-title">
+        <h3>${Fmt.escape(f.segment)} <span class="note" style="font-weight:500;">(${Fmt.escape(Fmt.dim(f.dimension))})</span></h3>
+        <span class="pill ${f.statistically_supported ? "low" : "medium"}">${Views.evidenceLabel(f)}</span>
+      </div>
+      <div class="metric-row" style="margin-top:10px;">
+        <div class="metric-box"><div class="v">${f.relative_risk.toFixed(1)}×</div><div class="l">Relative risk</div></div>
+        <div class="metric-box"><div class="v">${Fmt.num(f.segment_n)}</div><div class="l">Orders in segment</div></div>
+        <div class="metric-box"><div class="v">${Fmt.pct(f.segment_return_rate)}</div><div class="l">Segment return rate</div></div>
+      </div>
+      <p style="margin-top:12px;font-size:13.5px;color:var(--muted);">${Fmt.escape(text)}</p>
+      <details class="tech">
+        <summary>Technical details</summary>
+        <div class="tech-body note">
+          <p>Segment n = ${Fmt.num(f.segment_n)}, baseline n = ${Fmt.num(f.baseline_n)}.</p>
+          <p>95% CI for segment return rate: ${Fmt.pct(f.ci_low)} – ${Fmt.pct(f.ci_high)} (Wilson interval).</p>
+          <p>Statistically supported (CI entirely above baseline): ${f.statistically_supported ? "Yes" : "No"}.</p>
+          <p>Practically significant (relative risk above the practical-effect threshold): ${f.practically_significant ? "Yes" : "No"}.</p>
+        </div>
+      </details>
+    </div>`;
+};
+
+/* ============================================================
+   Claims page
+   ============================================================ */
+Pages.claims = async function () {
+  const el = document.getElementById("page-claims");
+  el.innerHTML = '<div class="loading-row"><span class="spinner-inline"></span> Loading return claims…</div>';
+  const data = await App.ensureClaims();
+
+  if (!data.claims || !data.claims.length) {
+    el.innerHTML = `<div class="card">${Views.emptyLine("No return claims require review.")}</div>`;
+    return;
+  }
+
+  let html = `<p class="section-sub">${Fmt.num(data.n_needs_review)} of ${Fmt.num(data.n_total)} claims need review.</p><div class="card" style="padding:0;">`;
+  html += `<table>
+      <thead><tr><th>Claim</th><th>Order</th><th>Claimed reason</th><th>Status</th></tr></thead>
+      <tbody>` +
+    data.claims.map((c) => `
+      <tr class="order-row" onclick='Views.openClaimDetail(${JSON.stringify(c.claim_id)})'>
+        <td>${Fmt.escape(c.claim_id)}</td>
+        <td>#${Fmt.escape(c.order_id || "—")}</td>
+        <td>${Fmt.escape(c.raw_reason || c.normalized_reason || "—")}</td>
+        <td><span class="pill ${c.status.toLowerCase().replace("_","-")}">${c.status.replace("_"," ")}</span></td>
+      </tr>`).join("") +
+    `</tbody></table></div>`;
+  el.innerHTML = html;
+  Views._claimsCache = data.claims;
+};
+
+Views.openClaimDetail = function (claimId) {
+  const c = (Views._claimsCache || []).find((x) => x.claim_id === claimId);
+  if (!c) return;
+  const line = (icon, cls, text) => `<div class="evidence-row"><span class="evidence-icon ${cls}">${icon}</span><span>${Fmt.escape(text)}</span></div>`;
+  let evidenceHtml = "";
+  (c.supporting_signals || []).forEach((s) => evidenceHtml += line("✓", "ok", s));
+  (c.contradictory_signals || []).forEach((s) => evidenceHtml += line("⚠", "warn", s));
+  (c.missing_evidence || []).forEach((s) => evidenceHtml += line("–", "warn", s));
+  let imageHtml = "";
+  if (c.image_signal) {
+    const sig = c.image_signal;
+    const cls = sig.overall_signal === "SUSPICIOUS" ? "bad" : sig.overall_signal === "NORMAL" ? "ok" : "warn";
+    imageHtml = `<h4 style="margin-top:16px;font-size:14px;">Image evidence ${sig.is_demo ? '<span class="badge demo">demo heuristic</span>' : ""}</h4>` +
+      line(sig.overall_signal === "SUSPICIOUS" ? "⚠" : sig.overall_signal === "NORMAL" ? "✓" : "–", cls, "Overall signal: " + sig.overall_signal);
+  }
+  UI.openModal(`
+    <div class="modal-head">
+      <div><h3>Return claim ${Fmt.escape(c.claim_id)}</h3><p class="note">Order #${Fmt.escape(c.order_id || "—")}</p></div>
+      <button class="modal-close" onclick="UI.closeModal()">✕</button>
+    </div>
+    <p><strong>Claimed reason:</strong> ${Fmt.escape(c.raw_reason || "—")}</p>
+    <h4 style="margin-top:16px;font-size:14px;">Evidence</h4>
+    ${evidenceHtml}
+    ${imageHtml}
+    <p style="margin-top:16px;"><strong>Overall:</strong> <span class="pill ${c.status.toLowerCase().replace("_","-")}">${c.status.replace("_"," ")}</span></p>
+    <div class="disclaimer-box">${Fmt.escape(c.disclaimer)}</div>
+  `);
+};
+
+/* ============================================================
+   Data sources page
+   ============================================================ */
+Pages.datasources = async function () {
+  const el = document.getElementById("page-datasources");
+  el.innerHTML = '<div class="loading-row"><span class="spinner-inline"></span> Loading data sources…</div>';
+  const data = await App.ensureDataSources();
+  const rzp = data.sources.razorpay;
+  const oms = data.sources.merchant_oms;
+  const csv = data.sources.csv;
+  const readiness = data.data_readiness || {};
+  const decision = data.model_decision || {};
+
+  el.innerHTML = `
+    <div class="grid cols-3">
+      <div class="source-card ${rzp.connected ? "connected" : ""}">
+        <div class="source-head"><h3 style="font-size:15px;">Razorpay</h3>
+          <span class="badge ${rzp.connected ? "" : "demo"}">${rzp.connected ? "Connected" : "Not connected"}</span></div>
+        <p class="note">Environment: ${Fmt.escape(rzp.mode)} — Test Mode. No live payment actions are performed.</p>
+        <div style="margin-top:10px;">
+          <div class="cap-row"><span>Payments</span><span class="${rzp.capabilities.payments ? "cap-ok" : "cap-warn"}">${rzp.capabilities.payments ? "✓" : "✕"}</span></div>
+          <div class="cap-row"><span>Refunds</span><span class="${rzp.capabilities.refunds ? "cap-ok" : "cap-warn"}">${rzp.capabilities.refunds ? "✓" : "✕"}</span></div>
+          <div class="cap-row"><span>Return labels</span><span class="cap-warn">⚠ Not provided by Razorpay</span></div>
+        </div>
+        <details class="tech" id="rzp-form-toggle">
+          <summary>${rzp.connected ? "Reconnect / test connection" : "Connect Test Mode credentials"}</summary>
+          <div class="tech-body">
+            <div class="form-row"><label>Key ID</label><input id="rzp-key-id" placeholder="rzp_test_..."></div>
+            <div class="form-row"><label>Key secret</label><input id="rzp-key-secret" type="password"></div>
+            <div class="form-row"><label>Webhook secret (optional)</label><input id="rzp-webhook-secret" type="password"></div>
+            <div style="margin-top:12px;display:flex;gap:8px;">
+              <button class="cta-btn secondary" onclick="Views.testRazorpay()">Test connection</button>
+              <button class="cta-btn secondary" onclick="Views.importRazorpay()">Import data</button>
+            </div>
+            <div id="rzp-status" class="note" style="margin-top:8px;"></div>
+          </div>
+        </details>
+      </div>
+
+      <div class="source-card">
+        <div class="source-head"><h3 style="font-size:15px;">Merchant Returns / OMS</h3>
+          <span class="badge demo">${oms.connected ? "Connected" : "Not connected"}</span></div>
+        <p class="note">${Fmt.escape(oms.note)}</p>
+      </div>
+
+      <div class="source-card">
+        <div class="source-head"><h3 style="font-size:15px;">CSV</h3>
+          <span class="badge">${csv.available ? "Available" : "Unavailable"}</span></div>
+        <p class="note">Role: ${Fmt.escape(csv.role)}. Used as a historical import / fallback source, not the primary integration.</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+      <div class="section-title"><h3>Data readiness</h3></div>
+      <div id="readiness-checks" style="margin-top:8px;"></div>
+      <p style="margin-top:14px;"><strong>Model status:</strong>
+        <span class="pill ${decision.status === "MERCHANT_SPECIFIC" || decision.status === "READY" ? "low" : decision.status === "INSUFFICIENT_DATA" ? "high" : "medium"}">${Fmt.escape(readiness.model_readiness_label || decision.status || "UNKNOWN")}</span>
+      </p>
+      ${decision.reason ? `<p class="note">${Fmt.escape(decision.reason)}</p>` : ""}
+    </div>
+  `;
+
+  const statusIcon = { REQUIRED: "ok", RECOMMENDED: "ok", OPTIONAL: "ok", NOT_AVAILABLE: "bad", NOT_USABLE: "warn", REQUIRED_MISSING: "bad" };
+  const contract = readiness.feature_contract || [];
+  document.getElementById("readiness-checks").innerHTML = contract.map((row) => {
+    const cls = statusIcon[row.status] || "warn";
+    const icon = cls === "ok" ? "✓" : cls === "bad" ? "✕" : "⚠";
+    const missing = row.missingness ? ` — ${Fmt.pct(row.missingness)} missing` : "";
+    return `<div class="readiness-check"><span class="evidence-icon ${cls}">${icon}</span><span>${Fmt.escape(row.field)} <span class="note">(${Fmt.escape(row.status)}${missing})</span></span></div>`;
+  }).join("") || Views.emptyLine("No feature-contract data available.");
+};
+
+Views.testRazorpay = async function () {
+  const key_id = document.getElementById("rzp-key-id").value.trim();
+  const key_secret = document.getElementById("rzp-key-secret").value;
+  const webhook_secret = document.getElementById("rzp-webhook-secret").value.trim();
+  const statusEl = document.getElementById("rzp-status");
+  statusEl.textContent = "Testing connection…";
+  try {
+    const res = await api("/integrations/razorpay/test-connection", {
+      method: "POST",
+      body: JSON.stringify({ key_id, key_secret, webhook_secret }),
+    });
+    statusEl.textContent = res.connected ? "Connected (Test Mode). " + (res.detail || "") : "Connection failed.";
+    State.dataSources = null;
+  } catch (e) {
+    statusEl.textContent = e.message || "Connection failed.";
+  }
+};
+
+Views.importRazorpay = async function () {
+  const statusEl = document.getElementById("rzp-status");
+  statusEl.textContent = "Importing…";
+  try {
+    const res = await api("/integrations/razorpay/import", { method: "POST", body: JSON.stringify({}) });
+    statusEl.textContent = `Imported ${res.rows} rows (Test Mode). ${res.next_step || ""}`;
+    State.dataSources = null;
+  } catch (e) {
+    statusEl.textContent = e.message || "Import failed. Connect Razorpay Test Mode first.";
+  }
+};
+
+/* ============================================================
+   Init
+   ============================================================ */
+(async function init() {
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") UI.closeModal(); });
+  if (State.token) {
+    try {
+      await App.start();
+    } catch (e) {
+      Auth.forceLogout();
+    }
+  }
+})();
+</script>
+</body>
+</html>
