@@ -6,3 +6,4 @@ lightgbm>=4.0
 pytest>=7.4
 flask>=3.0
 requests>=2.31
+gunicorn
