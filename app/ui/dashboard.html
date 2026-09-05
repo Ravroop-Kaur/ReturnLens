@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Return Risk Manager</title>
+<title>ReturnLens</title>
 <style>
 :root{
   --bg:#f5f7f8;
@@ -281,7 +281,7 @@ tr.order-row:hover{background:#fafbfb;}
 
 <div id="login-gate">
   <div id="login-card">
-    <div class="brand"><div class="logo-dot"></div><div><strong>Return Risk Manager</strong></div></div>
+    <div class="brand"><div class="logo-dot"></div><div><strong>ReturnLens</strong></div></div>
     <h1>Sign in</h1>
     <p class="sub">Explainable return-risk intelligence for your store.</p>
     <label for="login-email">Email</label>
@@ -365,7 +365,7 @@ async function api(path, opts) {
   opts = opts || {};
   const headers = Object.assign({}, opts.headers || {});
   if (State.token) headers["Authorization"] = "Bearer " + State.token;
-  if (opts.body) headers["Content-Type"] = "application/json";
+  if (opts.body && !(opts.body instanceof FormData)) headers["Content-Type"] = "application/json";
   const res = await fetch(path, Object.assign({}, opts, { headers }));
   if (res.status === 401) {
     Auth.forceLogout();
@@ -1093,22 +1093,15 @@ Pages.datasources = async function () {
 
   el.innerHTML = `
     <div class="source-note">
-      Razorpay payment and refund data does not directly represent product returns. Actual return outcomes can be provided by the merchant's return system or imported through CSV.
+      Razorpay payment and refund data does not directly represent product returns. Actual return outcomes can be provided by the merchant.
     </div>
 
-    <div class="grid cols-3">
-      <div class="source-card ${rzp.connected ? "connected" : ""}">
-        <div class="source-head"><h3 style="font-size:15px;">1. Razorpay Test Mode</h3>
-          <span class="badge ${rzp.connected ? "" : "demo"}">${rzp.connected ? "Connected" : "Not connected"}</span></div>
-        <p class="note">Payments and refunds.</p>
-        <p class="note" style="margin-top:6px;">Environment: ${Fmt.escape(rzp.mode)} — Test Mode. No live payment actions are performed.</p>
-        <div style="margin-top:10px;">
-          <div class="cap-row"><span>Payments</span><span class="${rzp.capabilities.payments ? "cap-ok" : "cap-warn"}">${rzp.capabilities.payments ? "✓" : "✕"}</span></div>
-          <div class="cap-row"><span>Refunds</span><span class="${rzp.capabilities.refunds ? "cap-ok" : "cap-warn"}">${rzp.capabilities.refunds ? "✓" : "✕"}</span></div>
-          <div class="cap-row"><span>Return labels</span><span class="cap-warn">⚠ Not provided by Razorpay</span></div>
-        </div>
-        <details class="tech" id="rzp-form-toggle">
-          <summary>${rzp.connected ? "Reconnect / test connection" : "Connect Test Mode credentials"}</summary>
+    <div class="grid cols-2">
+      <div class="source-card">
+        <h3 style="font-size:15px;">Razorpay Test Mode</h3>
+        <p class="note" style="margin-top:6px;">Payments and refunds.</p>
+        <details class="tech" id="rzp-form-toggle" style="margin-top:14px;">
+          <summary>${rzp.connected ? "Reconnect Razorpay" : "Connect Razorpay"}</summary>
           <div class="tech-body">
             <div class="form-row"><label>Key ID</label><input id="rzp-key-id" placeholder="rzp_test_..."></div>
             <div class="form-row"><label>Key secret</label><input id="rzp-key-secret" type="password"></div>
@@ -1123,18 +1116,15 @@ Pages.datasources = async function () {
       </div>
 
       <div class="source-card">
-        <div class="source-head"><h3 style="font-size:15px;">2. Merchant return data</h3>
-          <span class="badge demo">${oms.connected ? "Connected" : "Not connected"}</span></div>
-        <p class="note">Actual product-return outcomes.</p>
-        <p class="note" style="margin-top:6px;">Source: Merchant returns system / API / CSV.</p>
-        <p class="note" style="margin-top:6px;">${Fmt.escape(oms.note)}</p>
-      </div>
-
-      <div class="source-card">
-        <div class="source-head"><h3 style="font-size:15px;">3. CSV import</h3>
-          <span class="badge">${csv.available ? "Available" : "Unavailable"}</span></div>
-        <p class="note">Historical order and return data.</p>
-        <p class="note" style="margin-top:6px;">Used as a historical import / fallback source, not the primary integration.</p>
+        <h3 style="font-size:15px;">Merchant return data</h3>
+        <p class="note" style="margin-top:6px;">Actual product-return outcomes.</p>
+        <div style="margin-top:14px;">
+          <button class="cta-btn secondary" onclick="document.getElementById('csv-file-input').click()">Upload CSV</button>
+          <input type="file" id="csv-file-input" accept=".csv" style="display:none" onchange="Views.uploadCsv(event)">
+        </div>
+        <div id="csv-upload-result" style="margin-top:10px;"></div>
+        ${csv.last_import && csv.last_import.filename ? `<p class="note" style="margin-top:10px;">Last import: ${Fmt.escape(csv.last_import.filename)}</p>` : ""}
+        <p class="note" style="margin-top:10px;">${Fmt.escape(oms.note)}</p>
       </div>
     </div>
 
@@ -1160,6 +1150,32 @@ Pages.datasources = async function () {
     const missing = row.missingness ? ` — ${Fmt.pct(row.missingness)} missing` : "";
     return `<div class="readiness-check"><span class="evidence-icon ${cls}">${icon}</span><span>${Fmt.escape(row.field)} <span class="note">(${Fmt.escape(row.status)}${missing})</span></span></div>`;
   }).join("") || Views.emptyLine("No feature-contract data available.");
+};
+
+Views.uploadCsv = async function (evt) {
+  const file = evt.target.files && evt.target.files[0];
+  evt.target.value = ""; // allow re-selecting the same file later
+  if (!file) return;
+  const resultEl = document.getElementById("csv-upload-result");
+  resultEl.innerHTML = `<span class="note"><span class="spinner-inline"></span> Uploading ${Fmt.escape(file.name)}…</span>`;
+  try {
+    const form = new FormData();
+    form.append("file", file);
+    const res = await api("/data-sources/csv/import", { method: "POST", body: form });
+    const readiness = res.data_readiness || {};
+    const nRecords = readiness.n_orders !== undefined ? readiness.n_orders : readiness.n_rows_raw;
+    const countText = nRecords !== undefined && nRecords !== null ? ` ${Fmt.num(nRecords)} record${nRecords === 1 ? "" : "s"} imported.` : "";
+    resultEl.innerHTML = `<div class="disclaimer-box" style="border-style:solid;border-color:var(--good);background:var(--good-bg);color:var(--good);">
+      <strong>${Fmt.escape(res.filename || file.name)}</strong> — Import successful.${countText}
+    </div>`;
+    State.dataSources = null;
+    State.riskLatest = null;
+    State.riskOrders = null;
+  } catch (e) {
+    resultEl.innerHTML = `<div class="disclaimer-box" style="border-style:solid;border-color:var(--danger);background:var(--danger-bg);color:var(--danger);">
+      ${Fmt.escape(e.message || "Import failed. Please check the file and try again.")}
+    </div>`;
+  }
 };
 
 Views.testRazorpay = async function () {
