@@ -17,307 +17,138 @@ Explainable Return Risk Intelligence
 | Verification | Simulated post-intervention before/after comparison |
 | Defense-only | **Yes.** No autonomous refunds, courier changes, or payment actions. |
 
-> **Important honesty note.** No real merchant dataset was provided for this
-> build. The dataset used for development and for every number in this
-> README (`data/sample/generic_merchant_orders.csv`) is **synthetically
-> generated** (see `data/sample/generate_sample_data.py`) with a known,
-> documented risk-generating process, specifically so that precision/recall
-> measure genuine detection ability against a real (if synthetic) signal,
-> rather than being fabricated. Every result below is labelled accordingly.
-> Section 24 of the brief ("real-data model evaluation") could not be
-> performed because no real dataset was supplied -- this is disclosed here
-> rather than papered over.
+# ReturnLens
 
----
+**Explainable Return Risk Intelligence** — built for the Razorpay AI Buildathon 2026 (Track 02: AI Risk Manager).
 
-## 1. What problem are we solving?
+## What this actually is
 
-Merchants lose money not just to fraud, but to a steady, often-ignored
-drain: **orders that come back**. Returns tie up working capital, cost
-shipping twice, and are frequently concentrated in a few identifiable
-segments (a fulfilment partner, a shipping method, a product category)
-rather than being spread evenly. This product predicts which orders are
-likely to be returned, explains why, quantifies the exposure, and
-recommends a bounded, human-reviewed action.
+Most merchants lose money to returns quietly — it's not one big fraud event, it's death by a thousand cuts. An order gets placed, shipped, and then comes right back, and the merchant eats the shipping both ways plus the tied-up capital. Often these returns aren't random either — they cluster around a specific courier, a category, a shipping method. ReturnLens tries to catch that pattern early.
 
-## 2. Why returns (and not fraud or chargebacks)?
+Given an order at the moment it's placed, it predicts the probability that it'll eventually be returned, tells you *why* using a separate statistical check (not just "the model said so"), works out how much money is actually at stake, and suggests a bounded action a human can review. It never takes action on its own — no auto-refunds, no auto-blocking couriers, nothing like that.
 
-The brief explicitly asks for **one** loss class, done well, rather than
-several done superficially. Returns were chosen because:
-- they are the loss class best supported by a single, common e-commerce
-  export format (order + eventual return outcome),
-- the detection problem is genuinely learnable from pre-outcome order
-  attributes (category, fulfilment, shipping, amount, timing),
-- the statistical diagnosis and financial exposure story is easy for a
-  non-technical merchant to understand end-to-end.
+I picked returns instead of fraud/chargebacks because it's the loss class you can actually learn from a normal e-commerce order export, and it's easy to explain to a non-technical merchant end to end — from "here's the risky segment" to "here's what it's costing you."
 
-## 3. What does the ML model predict?
+## Being upfront about the data
 
-For each order, at the moment it is placed, the model predicts:
+I didn't have access to a real merchant dataset for this build, so every number in this README comes from a **synthetic** dataset (`data/sample/generic_merchant_orders.csv`) that I generated myself with a known, documented risk pattern baked in (see `data/sample/generate_sample_data.py`). I did this on purpose so precision/recall would still mean something — the model has to actually detect the planted signal, it's not just made-up numbers. But I want to be clear: this is not a claim about how it'll perform on a real merchant's data. Anywhere a number shows up, it's labelled as synthetic/demo.
 
-**"Will this order eventually result in a return?"**
+## How the model works
 
-Output: a probability `P(return)`, a HIGH/LOW risk label (via a frozen
-threshold), and a binary prediction.
+For every order, at the time it's placed, it predicts one thing: **will this order eventually come back as a return?** Output is a probability, plus a HIGH/LOW label from a threshold that's frozen ahead of time (not tuned after the fact).
 
-## 4. What data does it use?
+Features going in: order amount, category, fulfilment method, shipping service, region, and timing (day/month/hour), plus historical return rates by product/category/fulfilment/region/shipping — but computed carefully so we only ever use information that would genuinely have been known at prediction time. `return_event`, `return_date`, `refund_event`, `chargeback_event` never touch the feature set — those are only used as the label or for evaluation afterward. Review text is left out entirely for this version, since I couldn't reliably confirm a review wasn't written *after* the return (which would leak the answer). All the reasoning and the tests that enforce this live in `docs/leakage_notes.md` and `tests/test_leakage.py`.
 
-The canonical schema (`src/canonical/schema.py`) is merchant-agnostic. A
-generic merchant CSV is mapped into it via `src/adapters/generic_csv.py`
-(the **primary** ingestion path); an isolated `src/adapters/amazon_adapter.py`
-demonstrates that a real-world Amazon-style export (Order ID / Date /
-Status / Fulfilment / Category / Amount / ship-state / ship-service-level)
-can be mapped into the exact same canonical form. Amazon is a source
-adapter, never a hard-coded assumption -- confirmed by
-`tests/test_ingestion.py::test_amazon_is_only_a_source_adapter_not_required`.
+Data comes in through a merchant-agnostic canonical schema (`src/canonical/schema.py`). The main path is a generic CSV adapter (`src/adapters/generic_csv.py`); there's also an Amazon-style adapter (`src/adapters/amazon_adapter.py`) just to prove the schema isn't hard-coded around one platform — Amazon is one source among possible others, not a requirement.
 
-Features used by the model (see section 10 below for the full list):
-order amount, category, fulfilment method, shipping service, region,
-order timing (day of week / month / hour), and leakage-safe historical
-return rates for product / category / fulfilment / region / shipping
-service.
+## How it's evaluated
 
-## 5. What information is excluded due to leakage?
+Split by time, not randomly: earliest 60% of orders train the model, next 20% is validation (where the threshold gets picked, using a cost function that treats a missed return as 3x worse than a false alarm — that's a documented assumption, not something measured), and the final 20% is a **frozen** test set that's touched exactly once, at the end.
 
-`return_event`, `return_date`, `refund_event`, and `chargeback_event` are
-**never** used as features -- only as the training target or for
-post-hoc evaluation. `review_text` is excluded entirely from features in
-this MVP because review timestamps relative to the return event cannot be
-reliably verified from the available data (a review written to explain a
-return would leak the outcome). Full reasoning and automated leakage
-tests are in `docs/leakage_notes.md` and `tests/test_leakage.py`.
+On the synthetic demo run:
 
-Historical group return-rate features (e.g. "this category's typical
-return rate") are computed using an **as-of information window**. A
-historical return is usable only after its return timestamp is known;
-a historical no-return is usable only after its observation window has
-closed. The current order's outcome and any future outcome are excluded.
-This is stricter than merely shifting by order date and is covered by
-leakage/maturity tests.
+- Logistic Regression was chosen over LightGBM (validation ROC-AUC 0.883 vs 0.874)
+- Threshold: 0.505
+- Test set: 4,800 orders, 1,665 of which actually returned
+- Precision 0.733, Recall 0.750, F1 0.741
+- False positive rate 0.145, false negative rate 0.250
 
-## 6. How is the model evaluated?
+You can reproduce this yourself with `python -m evaluation.reports.run_full_pipeline`. Again — synthetic data, so treat this as "the pipeline works and measures itself honestly," not "this is the accuracy you'll get."
 
-Chronological (time-aware) split: earliest 60% of orders = train, next
-20% = validation, latest 20% = **frozen** test. The classification
-threshold is chosen on validation only (minimizing an explicit,
-documented cost function that weights a missed return 3x an unnecessary
-flag -- an assumption, not a measured constant) and then frozen before
-the test set is touched even once.
+## The diagnosis engine (separate from the ML model)
 
-## 7. What are precision and recall?
+`src/diagnosis/statistical.py` looks at each dimension — fulfilment, category, region, shipping — and flags segments where the return rate is both statistically real (Wilson confidence interval sits clearly above baseline) and big enough to matter (at least 1.3x the baseline rate), ignoring anything with under 30 orders so it's not reacting to noise. On the demo data it correctly finds that third-party-fulfilled orders return at 30.9% vs a 14.3% baseline — which is exactly the effect I planted in the generator, so at least I know the engine is finding real signal and not just noise.
 
-- **Precision** = of the orders we flagged high-risk, what fraction
-  actually returned? High precision means fewer wasted reviews.
-- **Recall** = of the orders that actually returned, what fraction did we
-  catch? High recall means fewer missed returns.
+## Money, in plain terms
 
-Both matter, and they trade off against each other via the threshold.
+`src/exposure/financial.py` uses order value to work out: how much is tied up in orders currently flagged high-risk, how much actually came back as returns historically, and how much is riding on false positives vs false negatives. I'm deliberately careful with language here — the code never says "savings," "profit," or "ROI" (there's even a test enforcing that), because none of this is a promise, it's an estimate of exposure.
 
-## 8. What is the held-out test set?
+## Checking whether an intervention actually helped
 
-The most recent 20% of orders by date (test set ends 2025-12-31 in the
-demo run), **never used** for feature selection, model selection, or
-threshold tuning.
+`src/verification/simulate.py` runs a two-proportion z-test comparing a before-rate to an after-rate. Right now the "after" data is simulated (an assumed reduction, clearly labelled DEMO/SYNTHETIC everywhere it shows up) — but the same function works unmodified the day a merchant hands over real before/after numbers. Only the label changes.
 
-## 9. What are the actual results?
+## What's real vs what's demo, laid out plainly
 
-*(Demo/synthetic dataset -- see honesty note above. Reproduce with
-`python -m evaluation.reports.run_full_pipeline`.)*
+**Actually working:**
+- A data readiness pipeline that checks duplicates, aggregates multi-line orders correctly, validates a feature contract, tracks label lifecycle (a return that hasn't resolved yet is `PENDING`, never force-labelled), and decides `READY`/`NOT_READY` — never silently guessing at missing data.
+- Model scope decisions that can genuinely abstain (`INSUFFICIENT_DATA`) rather than train on garbage, and a version registry that never overwrites past model versions.
+- Drift monitoring that compares distributions over time and reports normal/mild/significant drift — it only reports, it never auto-retrains.
+- A real login/session system (PBKDF2-HMAC-SHA256 hashing, bearer tokens) and multi-tenancy enforced at the data layer, so one organization's data is never reachable through another's session.
+- A connector abstraction with three implementations — mock (bundled synthetic data), CSV (manual import, the fallback), and Razorpay (real API or a clearly-labelled demo fallback).
+- A real, working Razorpay Test Mode integration: signed webhook receiver (HMAC-SHA256 verified against the raw body, idempotent per org so a redelivered event isn't reprocessed), and endpoints to test a connection and import payments/refunds. Worth noting — Razorpay's payment data doesn't include an actual "this order was returned" signal, so you'd still need an OMS/returns source for real training labels.
+- A return-claim evidence layer that never issues a fraud verdict, only SUPPORTED / NEEDS_REVIEW / SUSPICIOUS / INDETERMINATE, always with a disclaimer attached.
+- An image evidence analyzer — currently a deterministic mock, clearly labelled `is_demo=True`, no accuracy claims anywhere.
+- A dashboard generator that shows data sources, data readiness, the confusion matrix (tagged DEMO/SYNTHETIC or MERCHANT HELD-OUT TEST depending on what generated it), and the claims/evidence cards.
+- Tests covering ingestion edge cases, leakage, the model, metrics, the benchmark, exposure, diagnosis, verification, auth, tenancy (including cross-tenant isolation), connectors, claims/evidence, image evidence, Razorpay, the dashboard, and an end-to-end run. `python3 -m pytest -q` from the repo root.
 
-| Metric | Value |
-|---|---|
-| Model selected | Logistic Regression (validation ROC-AUC 0.883 vs LightGBM 0.874) |
-| Threshold (frozen on validation) | 0.505 |
-| Test set size | 4,800 orders (1,665 actual returns, 3,135 non-returns) |
-| TP / FP / TN / FN | 1,248 / 454 / 2,681 / 417 |
-| Precision | 0.733 |
-| Recall | 0.750 |
-| F1 | 0.741 |
-| False Positive Rate | 0.145 |
-| False Negative Rate | 0.250 |
+**Demo/mocked, and labelled as such everywhere it appears:**
+- The synthetic order dataset and the Amazon-style sample.
+- The mock connector and the mock image analyzer.
+- Razorpay client falling back to demo payloads when no real keys are configured.
+- The "after" side of the intervention simulation.
+- Auth and tenancy are in-memory right now — the shape of the API is what you'd want in production, just backed by an actual database instead of a Python dict.
 
-### Synthetic-data boundary
+**Deliberately not built** (out of scope for this MVP): a real pretrained image-authenticity detector, production database/ERP/OMS connectors beyond CSV and Razorpay, a real frontend beyond the generated static dashboard, SSO, distributed sessions, Kafka, microservices, or any autonomous action on refunds/blocks/cancellations.
 
-The current benchmark and model metrics are generated from synthetic merchant data. They demonstrate the pipeline and evaluation method; they are not a guarantee of performance on real merchant data. Real-merchant results are reported separately when labelled, mature data is available.
+## Known rough edges
 
-These metrics are the result of the **stricter point-in-time feature
-implementation** in this version. Historical return-rate features may
-only use labels whose outcomes would already have been known at the
-prediction timestamp: a positive return must have a recorded
-`return_date`, while a negative label is usable only after the
-configured return-observation window closes. This avoids label-maturity
-leakage.
+- No real merchant data was available, so nothing here is validated against reality yet — everything is honest about being synthetic.
+- One feature (historical category return-rate) ends up with a counter-intuitive negative coefficient in the fitted regression, most likely from collinearity with the category one-hot features. I'm disclosing it rather than hiding it — a production version would probably drop the raw one-hots once the historical-rate feature is present.
+- The "explanation" shown is based on feature weights, not a full SHAP breakdown — it's an approximation and documented as one.
+- The FP/FN cost ratio used to pick the threshold (3x) is an assumption, not calibrated against a real merchant's actual costs.
 
-The result is intentionally reported without guaranteeing a target
-precision/recall range. Performance on a real merchant may be higher or
-lower depending on label quality, history depth, feature availability,
-and distribution drift.
-
-## 10. What does the statistical diagnosis do?
-
-Separately from the ML model, `src/diagnosis/statistical.py` checks each
-canonical dimension (fulfilment method, category, region, shipping
-service) for segments whose return rate is both **statistically
-supported** (a Wilson confidence interval for the segment sits entirely
-above the baseline rate) and **practically significant** (relative risk
->= 1.3x), ignoring any segment with fewer than 30 orders. In the demo
-run it correctly surfaces `fulfilment_method = third_party_fulfilled`
-(30.9% observed return rate vs 14.3% baseline, ~2.2x, 947 orders) -- which
-matches the effect actually planted in the synthetic generator, confirming
-the diagnosis engine recovers real signal rather than noise.
-
-## 11. How is financial exposure calculated?
-
-`src/exposure/financial.py` computes, using order amount as the value
-basis:
-- **Predicted return exposure**: transaction value of orders currently
-  flagged high-risk (forward-looking estimate, not a fact).
-- **Observed historical return value**: transaction value of orders that
-  actually returned in the evaluated period (descriptive of the past).
-- **False-positive exposure** / **false-negative exposure**: transaction
-  value tied to each error type.
-
-We never use the words "revenue lost", "savings", "profit", or "ROI" --
-enforced by an automated test
-(`tests/test_financial_exposure.py::test_exposure_terminology_never_claims_savings`).
-
-## 12. How does intervention verification work?
-
-`src/verification/simulate.py` runs a two-proportion z-test comparing a
-before-rate to an after-rate. In this MVP the "after" data is a
-**simulated** sample (documented, explicit assumed relative reduction),
-clearly labelled `DEMO / SYNTHETIC SIMULATION` everywhere it is shown.
-The exact same function works unmodified on real before/after data if a
-merchant ever supplies it -- only the label changes.
-
-## 12A. Diagnosis benchmark size
-
-The statistical diagnosis benchmark contains **600 independent scenarios**
-across six scenario families. The family-stratified split produces **204
-frozen test scenarios** (34 per family), with 198 scenarios in dev/validation
-combined. This benchmark measures diagnosis reliability, not the ML order-level
-return predictor, and its results are explicitly synthetic.
-
-## 13. What is synthetic vs real?
-
-- **Synthetic**: the entire demo dataset (`data/sample/generic_merchant_orders.csv`),
-  the benchmark scenarios (`evaluation/benchmark/scenarios.py`), and the
-  post-intervention "after" sample in verification.
-- **Real (if supplied)**: the generic CSV / Amazon adapter ingestion path,
-  the leakage-safe feature engineering, the model training and evaluation
-  code, and the statistical diagnosis engine all operate identically on
-  real merchant data -- nothing about them is specific to the synthetic
-  generator.
-
-## 14. What are the limitations?
-
-- No real merchant dataset was available for this build; all reported
-  numbers are on synthetic data with a known, documented generating
-  process (see honesty note above).
-- The demo metrics are synthetic and are not evidence that the same
-  performance will hold on real merchants. The operating threshold is
-  selected on validation only; the later held-out test set is used once
-  for final reporting. Real merchant deployment should be gated by
-  merchant-specific held-out evaluation and can abstain when data is
-  insufficient.
-- The `hist_return_rate_category` coefficient has a counter-intuitive
-  (negative) sign in the fitted logistic regression, most likely due to
-  collinearity with the category one-hot features. This is disclosed
-  rather than hidden; a production version would likely drop the raw
-  category one-hots when the historical-rate feature is present, or use
-  a model less sensitive to collinearity.
-- The local "explanation" in the report is feature-weight-based, not a
-  full SHAP explanation; it is documented as an approximation.
-- Multi-tenancy is enforced server-side by the in-memory tenant store and
-  authenticated organization identity. Persistence is the remaining
-  production upgrade.
-- The Razorpay Test Mode adapter is implemented as a deliberately small
-  real read-only flow: Test Mode credentials are verified against the real
-  Razorpay API, payments/refunds can be imported, and a signed webhook
-  endpoint can update the merchant event stream. True return labels still
-  require an OMS/returns source because Razorpay payments do not define
-  an order-return outcome.
-
-## 15. What is future work?
-
-- Evaluate on a real merchant export via the same generic CSV path.
-- Expand the small Razorpay Test Mode flow only if the demo needs more
-  payment/refund event types; keep it read-only and source-isolated.
-- Expand the diagnosis engine to two-way interactions (e.g. fulfilment x
-  shipping) once enough real segment-level sample size exists.
-- Calibrate the FP/FN cost ratio used for threshold selection against a
-  merchant's actual, disclosed costs instead of the current documented
-  assumption (3x).
-
----
-
-## Architecture
+## Architecture, roughly
 
 ```
-MERCHANT DATA (generic CSV | Amazon-style CSV)
-        |
-CANONICAL SCHEMA  (src/canonical)
-        |
-FEATURE ENGINEERING (src/features, leakage-safe, expanding windows)
-        |
-   +----+-----------------------+
-   |                            |
-ML RETURN-RISK SCORER   STATISTICAL DIAGNOSIS
-(src/model)             (src/diagnosis)
-   |                            |
-   +----------+-----------------+
-              |
-      FINANCIAL EXPOSURE (src/exposure)
-              |
-      BOUNDED RECOMMENDATION (src/recommendation)
-              |
-      INTERVENTION (simulated)
-              |
-      VERIFICATION (src/verification)
-              |
-      MERCHANT-FACING UI (app/ui) + TECHNICAL EVIDENCE (secondary)
+merchant data (generic CSV | Amazon-style CSV)
+        │
+canonical schema
+        │
+feature engineering (leakage-safe)
+        │
+   ┌────┴─────────────────┐
+   │                       │
+ML risk scorer      statistical diagnosis
+   │                       │
+   └──────────┬────────────┘
+              │
+      financial exposure
+              │
+      bounded recommendation
+              │
+      intervention (simulated)
+              │
+      verification
+              │
+      merchant-facing dashboard
 ```
 
 ## Project layout
 
 ```
-return-risk-manager/
-├── app/ui/                    merchant-facing static HTML dashboard generator
+├── app/ui/              merchant-facing dashboard generator (static HTML)
 ├── src/
-│   ├── canonical/              schema + column-mapping/validation
-│   ├── adapters/                generic CSV (primary) + Amazon-style (isolated)
-│   ├── features/                 leakage-safe feature engineering
-│   ├── model/                     train/val/test split + LR/LightGBM training
-│   │                               + registry.py (model scope decision + version ledger)
-│   ├── quality/                    data readiness pipeline (dedup, order-level
-│   │                               aggregation, feature contract, label lifecycle,
-│   │                               drift monitoring)
-│   ├── diagnosis/                  statistical association engine
-│   ├── exposure/                    financial exposure calculations
-│   ├── recommendation/               bounded recommendation engine
-│   ├── verification/                  before/after simulation + real-data-ready z-test
-│   ├── auth/                           lightweight login/session service
-│   ├── tenancy/                         tenant-scoped storage
-│   ├── connectors/                       MerchantDataConnector + mock/csv/razorpay
-│   ├── integrations/razorpay/             isolated Razorpay client/config/mapper/webhook
-│   ├── claims/                             return-claim model + evidence aggregation
-│   ├── evidence/                            image-evidence analyzer (secondary signal)
-│   ├── pipeline.py                          orchestration: auth -> readiness -> model
-│   │                                        or abstain -> explain -> quantify -> act -> verify
-│   └── api/app.py                            minimal Flask app (login, protected routes,
-│                                              Razorpay webhook receiver)
-├── evaluation/
-│   ├── metrics/                classification metrics (precision/recall/F1/FPR/FNR)
-│   ├── benchmark/                independent synthetic scenario harness
-│   └── reports/                    full pipeline orchestrator + JSON output
-├── data/sample/                synthetic demo dataset + generator + Amazon-style sample
-├── docs/leakage_notes.md      full leakage reasoning
-├── tools/                      minirunner.py -- DEV-ONLY fallback test runner
-│                                sandboxes with no network access to install real pytest
-├── tests/                      automated tests (ingestion, leakage, model, metrics,
-│                                benchmark, exposure, diagnosis, verification, data
-│                                quality/readiness, drift, auth, tenancy, connectors,
-│                                claims/evidence, image evidence, Razorpay, API, e2e)
+│   ├── canonical/       schema + column mapping/validation
+│   ├── adapters/        generic CSV (main path) + Amazon-style (example)
+│   ├── features/        leakage-safe feature engineering
+│   ├── model/           train/val/test split, LR + LightGBM, version registry
+│   ├── quality/         readiness, dedup, order-level aggregation, drift
+│   ├── diagnosis/       statistical association engine
+│   ├── exposure/        financial exposure math
+│   ├── recommendation/  bounded recommendation engine
+│   ├── verification/    before/after simulation + real z-test
+│   ├── auth/            login/session service
+│   ├── tenancy/         tenant-scoped storage
+│   ├── connectors/      mock / CSV / Razorpay connectors
+│   ├── integrations/razorpay/   client, config, mapper, webhook
+│   ├── claims/          return-claim model + evidence aggregation
+│   ├── evidence/        image evidence analyzer (secondary signal)
+│   ├── pipeline.py      wires the whole thing together
+│   └── api/app.py       minimal Flask app (login, protected routes, webhook)
+├── evaluation/          metrics, benchmark harness, full pipeline report
+├── data/sample/         synthetic dataset + generator
+├── docs/                leakage notes, ml improvement notes, Razorpay test mode notes
+├── tests/               all the automated tests
 └── requirements.txt
 ```
 
@@ -329,208 +160,32 @@ pip install -r requirements.txt
 # (re)generate the synthetic demo dataset
 python data/sample/generate_sample_data.py
 
-# run the full PREDICT -> EXPLAIN -> QUANTIFY -> ACT -> VERIFY pipeline
+# run predict → explain → quantify → act → verify, end to end
 python -m evaluation.reports.run_full_pipeline
 
-# generate the merchant-facing dashboard from the resulting report
+# turn that report into the dashboard
 python app/ui/generate_dashboard.py
-# open app/ui/dashboard.html in a browser
+# then just open app/ui/dashboard.html
 
-# run the independent synthetic benchmark for the diagnosis engine
+# run the diagnosis engine's own benchmark
 python -m evaluation.benchmark.run_benchmark
 
-# run all automated tests (real pytest, when network/pip access is available)
+# run all tests
 pytest tests/ -q
 
-# run the demo API (login, protected risk endpoint, Razorpay webhook receiver)
+# run the demo API (login, protected risk endpoint, Razorpay webhook)
 python -m src.api.app
-# no Razorpay credentials needed -- src.connectors.mock backs /risk/latest until
-# a real connector is configured, and src.integrations.razorpay.client falls back
-# to a clearly-labelled demo payload when RAZORPAY_KEY_ID/KEY_SECRET are unset.
+# no Razorpay keys needed to try this — it falls back to mock/demo data
 ```
 
-## Defense-only confirmation
+## Trying it with real Razorpay Test Mode
 
-This project contains no functionality capable of executing a real-world
-action against a merchant account, payment, courier, or customer. All
-"interventions" are simulated and explicitly labelled. There is no
-offense-capable functionality anywhere in this codebase. Razorpay webhooks
-are DATA INGESTION ONLY -- they update stored risk information and never
-trigger a refund, block, cancellation, or configuration change.
-
----
-
-## Part 2 — Real-merchant-readiness alteration pass
-
-The sections above describe the original hackathon submission (synthetic
-data, single-tenant, no login, no external connectors). Everything below
-documents what was added on top of it to make the architecture
-real-merchant-ready, organized the way any reviewer should read it: what
-actually works today, what is demo/mocked, and what is explicitly out of
-scope for this MVP.
-
-### CURRENTLY IMPLEMENTED
-
-- **Data readiness pipeline** (`src/quality/readiness.py`): runs duplicate
-  analysis, order-level aggregation, an explicit feature contract
-  (REQUIRED / RECOMMENDED / OPTIONAL / NOT_AVAILABLE / NOT_USABLE), label
-  lifecycle (RETURNED / NO_RETURN / PENDING), date/numeric validity, and
-  history-span checks, then decides `READY` vs `NOT_READY` with itemized
-  reasons. Nothing is fabricated: a missing/unusable field is reported as
-  such, never silently imputed with a guessed value.
-- **Duplicate handling** (`src/quality/dedup.py`): distinguishes exact
-  duplicate rows (safe to drop), legitimate multi-line orders (never
-  collapsed), and genuinely conflicting records on the same order+product
-  (surfaced, never silently resolved).
-- **Order-level aggregation** (`src/quality/order_level.py`): line-item
-  data is aggregated to one row per order (amount summed, outcome fields
-  OR'd, dates min/maxed, everything else kept only on agreement) before
-  training/evaluation ever sees it, so a 3-item order is never
-  triple-counted.
-- **Label lifecycle** (`src/quality/lifecycle.py`): a recent order whose
-  return window hasn't closed is `PENDING`, never coerced into
-  `NO_RETURN`. Only finalized labels are used for supervised
-  training/evaluation (`usable_for_supervision`).
-- **Model scope decision + abstention** (`src/model/registry.py`):
-  `decide_model_scope` chooses `MERCHANT_SPECIFIC`, `GLOBAL_BASELINE`, or
-  `INSUFFICIENT_DATA` (abstain) purely from the readiness report's
-  numbers. The pipeline abstains (never trains/predicts) whenever
-  required fields are missing/unusable or there isn't enough labelled
-  history -- and always persists a `status: "abstained"` result so the
-  dashboard has something honest to show.
-- **Model version registry**: every trained model version (scope, feature
-  set, threshold, row counts, demo/real flag) is appended to an
-  in-memory, per-organization ledger -- never overwritten.
-- **Drift monitoring** (`src/quality/drift.py`): compares a reference
-  window against a current window on return prevalence, order-amount
-  distribution, categorical distributions, and missingness, reporting
-  `NORMAL` / `MILD_DRIFT` / `SIGNIFICANT_DRIFT` per signal. It only
-  reports -- it never triggers an automatic retrain.
-- **Login + sessions** (`src/auth/service.py`): PBKDF2-HMAC-SHA256
-  password hashing (no plaintext, ever), opaque bearer session tokens,
-  login/logout, and `require_session` for protecting routes.
-- **Multi-tenancy** (`src/tenancy/store.py`): every persisted record
-  (risk results, claims, evidence, model versions) is namespaced by
-  `organization_id` at the data-layer level -- there is no "read
-  everything" API a caller could misuse to cross tenants. Enforced
-  server-side, never by frontend discipline.
-- **Merchant connector abstraction** (`src/connectors/base.py`) with
-  three implementations: `MockMerchantConnector` (bundled synthetic demo
-  data), `CSVMerchantConnector` (manual import -- the fallback path, not
-  the product), and `RazorpayConnector` (real API or demo-mode fallback).
-  None of them require a merchant's production database admin password.
-- **Razorpay integration** (`src/integrations/razorpay/`): an isolated
-  client/config/mapper package. Credentials come only from environment
-  variables (`RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`,
-  `RAZORPAY_WEBHOOK_SECRET`); Test Mode keys (`rzp_test_...`) are
-  detected automatically. The ML/business logic never sees a
-  Razorpay-specific field name -- only the canonical schema.
-- **Razorpay webhook receiver** (`src/integrations/razorpay/webhook.py`,
-  wired at `POST /webhooks/razorpay` in `src/api/app.py`): validates the
-  HMAC-SHA256 signature against the raw request body, rejects invalid
-  signatures, and is idempotent per organization (a redelivered event ID
-  is recorded as `duplicate` and never reprocessed). Webhooks are DATA
-  INGESTION ONLY.
-- **Return-claim evidence layer** (`src/claims/`): a `ReturnClaim`
-  representation, controlled-taxonomy reason normalization (ambiguous
-  reasons are left unnormalized rather than force-fit), and
-  `aggregate_evidence`, which outputs one of `SUPPORTED` / `NEEDS_REVIEW`
-  / `SUSPICIOUS` / `INDETERMINATE` -- never a fraud verdict -- with a
-  disclaimer attached to every result.
-- **Image evidence analyzer** (`src/evidence/image_analyzer.py`): a
-  provider abstraction (`ImageEvidenceAnalyzer`) plus a deterministic,
-  clearly-labelled `MockImageEvidenceAnalyzer` (`is_demo=True`, no
-  accuracy claim anywhere in its output). Output is `NORMAL` /
-  `SUSPICIOUS` / `INCONCLUSIVE`, always paired with the disclaimer that
-  it does not prove fraud, intent, or fault.
-- **Orchestration** (`src/pipeline.py`): `run_organization_pipeline` wires
-  auth -> connector -> readiness -> model-scope decision -> (train +
-  evaluate + exposure + diagnosis + recommendation + simulated
-  verification + drift + registry) or abstain, and always persists a
-  tenant-scoped result. `review_return_claim` runs the secondary evidence
-  layer for one claim, enforcing that a claim's `organization_id` matches
-  the authenticated caller's.
-- **Minimal API** (`src/api/app.py`): `POST /auth/login`, `POST
-  /auth/logout`, `GET /risk/latest` (protected, tenant-scoped), `POST
-  /webhooks/razorpay`.
-- **Automated tests cover ingestion, leakage, model, metrics, benchmark, exposure, diagnosis, verification, auth, tenancy, connectors, claims/evidence, image evidence, Razorpay, dashboard, and end-to-end flows.** covering all of the above (data
-  quality edge cases -- malformed dates, unseen categories, missing
-  columns, conflicting duplicates, insufficient history -- auth, tenancy
-  including cross-tenant isolation, connectors, claims/evidence, image
-  evidence, Razorpay signature/idempotency, dashboard rendering, and an
-  end-to-end pipeline test including the abstention path). Run with
-  `python3 -m pytest -q` from the repo root.
-- **Dashboard generator** (`app/ui/generate_dashboard.py`): renders
-  DATA SOURCES (`render_data_sources`, G1: Razorpay/Merchant
-  API/Database/CSV/synthetic-demo, with the org's actual connector
-  marked active and CSV explicitly labelled fallback/import, not the
-  product), DATA READINESS (per-field checkmarks plus the READY /
-  PARTIALLY SUPPORTED / NOT READY badge), and a dynamic confusion matrix
-  + precision/recall/F1 block explicitly labelled `DEMO / SYNTHETIC` or
-  `MERCHANT HELD-OUT TEST` depending on the result's `is_synthetic_demo`
-  flag (A9's requirement, not just a generic badge). It also renders
-  RETURN CLAIMS / EVIDENCE (`render_claim_card` / `render_claims_section`,
-  G4/G5: reason, supporting/contradictory/missing signals, the
-  SUPPORTED/NEEDS_REVIEW/SUSPICIOUS/INDETERMINATE tag, and the
-  never-a-fraud-verdict disclaimer on every card). Critically, `render()`
-  It accepts both the benchmark report shape and the per-organization
-  pipeline result shape without requiring benchmark-only fields.
-  The dashboard includes a lightweight login gate backed by the protected API;
-  account/session persistence remains an MVP in-memory implementation.
-
-### DEMO / MOCK
-
-- `data/sample/generic_merchant_orders.csv` and the Amazon-style sample
-  remain **synthetic** -- every number derived from them in this README
-  or a report is labelled accordingly, never presented as real-world
-  performance.
-- `MockMerchantConnector` serves the synthetic dataset through the same
-  interface a real connector would use; `connector_type == "mock"` is
-  the flag every consumer checks to label results DEMO/SYNTHETIC.
-- `RazorpayClient` runs in demo mode (`is_demo=True`) whenever
-  `RAZORPAY_KEY_ID`/`RAZORPAY_KEY_SECRET` are not set, returning a small,
-  clearly-synthetic page of Razorpay-shaped payment objects instead of
-  making a network call.
-- `MockImageEvidenceAnalyzer` is the only image analyzer implemented; a
-  real pretrained detector would need to be documented as pretrained and
-  would still not be allowed to claim a specific accuracy number without
-  a genuine held-out evaluation.
-- `simulate_intervention` (pre-existing, unchanged) remains a labelled
-  synthetic before/after simulation, not a real intervention outcome.
-- `src/auth/service.py` and `src/tenancy/store.py` are in-memory
-  reference implementations. The API shape (register/login/logout/
-  require_session; put/get/list_kind/delete, all organization_id-scoped)
-  is what a production deployment would keep, backed by a real database
-  with row-level security instead of a Python dict.
-
-### FUTURE PRODUCTION (explicitly out of scope for this MVP)
-
-- A real pretrained image-authenticity/manipulation detector.
-- A production database/warehouse/ERP/OMS connector beyond CSV and
-  Razorpay (the `MerchantDataConnector` abstraction is designed so this
-  can be added without touching the ML engine).
-- A real interactive frontend and login page (the dashboard generator
-  now renders data sources, data readiness, the confusion matrix, and
-  return-claims/evidence as static HTML sections from a JSON report; a
-  real app would call `POST /auth/login` and the other API routes
-  directly instead of regenerating a static file).
-- Enterprise SSO, a distributed session/database backend, Kafka,
-  microservices, autonomous refunds/blocks/cancellations, or any other
-  item explicitly listed as "do not overbuild" in the product spec.
-
-
-
-## Small real Razorpay Test Mode flow
-
-1. In the Razorpay Dashboard switch to **Test Mode** and generate a Test Mode Key ID/Key Secret. Razorpay documents Test Mode as a sandbox; no real payments are processed.
-2. Register/login to the app, then call `POST /integrations/razorpay/test-connection` with the Test Mode credentials and an optional webhook secret. The server makes a real read-only Razorpay API request and registers the data source.
+1. Switch to Test Mode in the Razorpay Dashboard and grab a Test Mode Key ID/Secret — Razorpay's own docs describe Test Mode as a full sandbox, no real payments involved.
+2. Log in to the app, then hit `POST /integrations/razorpay/test-connection` with those credentials (and a webhook secret if you have one). This makes a real, read-only call to Razorpay to confirm it works.
 3. Call `POST /integrations/razorpay/import` to pull Test Mode payments/refunds into the canonical schema.
-4. Configure Razorpay Test Mode webhook delivery to `/webhooks/razorpay/<data_source_id>`. The endpoint verifies the raw-body HMAC signature and deduplicates `x-razorpay-event-id`.
-5. Razorpay payments/refunds are operational signals. Razorpay does not provide a native order-return outcome through this payments flow, so `refund_event` stays separate from `return_event`. Use an OMS/returns source for the actual return label before training the return-risk model.
+4. Point Razorpay's Test Mode webhook delivery at `/webhooks/razorpay/<data_source_id>`. Signatures are verified against the raw body, and duplicate deliveries are deduped by event ID.
+5. One catch worth knowing: Razorpay's payments API tells you about payments and refunds, not whether an order was *returned*. So `refund_event` and `return_event` stay separate — you'd still need an actual OMS/returns feed to train the return-risk model on real labels.
 
-Razorpay's official documentation confirms that Test Mode uses separate API keys, test webhooks carry the same payload structure as live webhooks, webhook signatures use HMAC-SHA256, and duplicate events should be handled by event ID.
+## On the "no autonomous actions" thing
 
-
-## Development disclosure
-
-This submission was developed with AI-assisted iteration, including code review, debugging, test hardening, and documentation updates. The final implementation and design decisions remain the responsibility of the project author.
+This is worth stating plainly: nothing in this codebase can take a real-world action against a merchant's account, payment, courier, or customer. Every "intervention" is simulated and labelled as such. Razorpay webhooks only ever bring data *in* — they update stored risk info and never trigger a refund, a block, or a cancellation.
