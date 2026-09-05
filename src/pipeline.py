@@ -41,6 +41,7 @@ from src.verification.simulate import simulate_intervention
 from src.claims.model import ReturnClaim
 from src.claims.evidence import aggregate_evidence
 from src.evidence.image_analyzer import ImageEvidenceAnalyzer
+from src.presentation.friendly import friendly_value, friendly_dimension
 
 
 class PipelineAuthError(Exception):
@@ -58,6 +59,16 @@ def _require_organization(token: Optional[str], auth: AuthService) -> str:
 
 
 _ORDER_SIGNAL_DIMENSIONS = ["fulfilment_method", "shipping_service", "category", "region"]
+
+
+def _display_score(raw: float, floor: float = 0.03, ceiling: float = 0.97) -> float:
+    """Rescale a raw model probability into a display range that never
+    claims 0% or 100% certainty (a single model score is an estimate,
+    not a guarantee). This is a presentation-only, strictly monotonic
+    rescale -- it never changes which side of a threshold an order
+    falls on, only how confident the displayed number looks."""
+    raw = min(1.0, max(0.0, float(raw)))
+    return floor + (ceiling - floor) * raw
 
 
 def _build_order_risk_table(
@@ -108,8 +119,13 @@ def _build_order_risk_table(
             if dim in test_df.columns:
                 value = row.get(dim)
                 if pd.notna(value):
-                    is_flagged = str(value) in flagged_segments.get(dim, set())
-                    signals.append({"dimension": dim, "value": str(value), "flagged": is_flagged})
+                    raw_value = str(value)
+                    is_flagged = raw_value in flagged_segments.get(dim, set())
+                    signals.append({
+                        "dimension": dim,
+                        "value": friendly_value(raw_value),
+                        "flagged": is_flagged,
+                    })
 
         flagged_labels = [s["value"] for s in signals if s["flagged"]]
         if flagged_labels:
@@ -122,7 +138,7 @@ def _build_order_risk_table(
             "order_id": str(row.get("order_id", f"row_{i}")),
             "order_date": str(order_date_value) if pd.notna(order_date_value) else None,
             "amount": float(row.get("amount", 0.0)) if pd.notna(row.get("amount", None)) else None,
-            "risk_score": round(score, 4),
+            "risk_score": round(_display_score(score), 2),
             "risk_level": level,
             "predicted_high_risk": bool(y_pred_test[i]),
             "actual_return": bool(y_test.values[i]) if y_test is not None else None,
