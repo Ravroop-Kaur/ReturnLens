@@ -57,6 +57,7 @@ class EvidenceAggregate:
     confidence: str  # "low" | "medium" | "high" -- qualitative, not a fabricated number
     normalized_reason: Optional[str]
     raw_reason: str
+    order_id: Optional[str] = None
     supporting_signals: list = field(default_factory=list)
     contradictory_signals: list = field(default_factory=list)
     missing_evidence: list = field(default_factory=list)
@@ -71,6 +72,7 @@ class EvidenceAggregate:
             "confidence": self.confidence,
             "normalized_reason": self.normalized_reason,
             "raw_reason": self.raw_reason,
+            "order_id": self.order_id,
             "supporting_signals": self.supporting_signals,
             "contradictory_signals": self.contradictory_signals,
             "missing_evidence": self.missing_evidence,
@@ -173,6 +175,7 @@ def aggregate_evidence(claim: ReturnClaim, image_result=None) -> EvidenceAggrega
         confidence=confidence,
         normalized_reason=normalized,
         raw_reason=claim.claimed_reason,
+        order_id=claim.order_id,
         supporting_signals=supporting,
         contradictory_signals=contradictory,
         missing_evidence=missing,
