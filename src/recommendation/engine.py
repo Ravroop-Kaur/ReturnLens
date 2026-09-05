@@ -38,8 +38,10 @@ class Recommendation:
 def recommend(finding) -> "Recommendation | None":
     if finding is None:
         return None
+    segment_label = getattr(finding, "segment_label", None) or finding.segment
+    dimension_label = getattr(finding, "dimension_label", None) or finding.dimension
     template = DIMENSION_TEMPLATES.get(finding.dimension, DEFAULT_TEMPLATE)
-    text = template.format(segment=finding.segment, dimension=finding.dimension)
+    text = template.format(segment=segment_label, dimension=dimension_label)
     return Recommendation(
         text=text,
         dimension=finding.dimension,
