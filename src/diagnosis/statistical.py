@@ -12,8 +12,10 @@ strength of evidence.
 from __future__ import annotations
 import numpy as np
 import pandas as pd
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from scipy.stats import norm
+
+from src.presentation.friendly import friendly_value, friendly_dimension
 
 
 @dataclass
@@ -29,11 +31,24 @@ class SegmentFinding:
     ci_high: float
     practically_significant: bool
     statistically_supported: bool
+    # Merchant-friendly display text for `segment`/`dimension`. Kept
+    # separate from the raw fields above because `segment` is also
+    # used internally to match against raw order field values (see
+    # src.pipeline._build_order_risk_table) -- only these _label
+    # fields should ever be shown to a merchant.
+    segment_label: str = field(default="")
+    dimension_label: str = field(default="")
+
+    def __post_init__(self):
+        if not self.segment_label:
+            self.segment_label = friendly_value(self.segment)
+        if not self.dimension_label:
+            self.dimension_label = friendly_dimension(self.dimension)
 
     def plain_english(self) -> str:
         rr = self.relative_risk
         return (
-            f"Orders in segment '{self.segment}' ({self.dimension}) show an observed "
+            f"Orders where {self.dimension_label.lower()} is \"{self.segment_label}\" show an observed "
             f"return rate of {self.segment_return_rate:.1%}, compared with {self.baseline_return_rate:.1%} "
             f"for the rest of the data -- about {rr:.1f}x higher. This is an observed association, not a "
             f"proven cause."
