@@ -404,6 +404,15 @@ const Fmt = {
     };
     return labels[dimension] || dimension;
   },
+  claimStatus(status) {
+    const labels = {
+      SUPPORTED: "Supported",
+      NEEDS_REVIEW: "Needs review",
+      SUSPICIOUS: "Suspicious",
+      INDETERMINATE: "Indeterminate",
+    };
+    return labels[status] || (status || "").replace("_", " ");
+  },
 };
 
 /* ============================================================
@@ -596,7 +605,7 @@ Pages.overview = async function () {
   el.innerHTML = `
     <div class="grid cols-4">
       ${Views.statCard("Orders analysed", Fmt.num(nTotal), "evaluation set")}
-      ${Views.statCard("Potential return exposure", Fmt.moneyCompact(exp.predicted_return_exposure), "Order value at risk, not actual loss — sum of amounts for orders predicted high-risk")}
+      ${Views.statCard("Potential return exposure", Fmt.moneyCompact(exp.predicted_return_exposure), "Value of predicted high-risk orders — an estimate, not a realised loss")}
       ${Views.statCard("High-risk orders", Fmt.num(exp.n_high_risk_orders), Fmt.pct(exp.pct_orders_high_risk) + " of orders")}
       ${Views.statCard("Return rate", Fmt.pct(returnRate), "observed in evaluation set")}
     </div>
@@ -720,14 +729,16 @@ Pages.risk = async function () {
   // order list itself too so this never shows a bare "—" if that ever
   // drifts out of sync with the orders actually returned.
   const orders = data.orders || [];
+  const nTotalOrders = orders.length;
   const nHigh = data.n_high !== undefined ? data.n_high : orders.filter((o) => o.risk_level === "high").length;
   const nMedium = data.n_medium !== undefined ? data.n_medium : orders.filter((o) => o.risk_level === "medium").length;
   const nLow = data.n_low !== undefined ? data.n_low : orders.filter((o) => o.risk_level === "low").length;
+  const pctOf = (n) => (nTotalOrders ? Fmt.pct(n / nTotalOrders) : "—");
   el.innerHTML = `
     <div class="risk-summary">
-      <div class="box high"><div class="n">${Fmt.num(nHigh)}</div><div class="l">High risk</div></div>
-      <div class="box medium"><div class="n">${Fmt.num(nMedium)}</div><div class="l">Medium risk</div></div>
-      <div class="box low"><div class="n">${Fmt.num(nLow)}</div><div class="l">Low risk</div></div>
+      <div class="box high"><div class="n">${Fmt.num(nHigh)}</div><div class="l">High Risk</div><div class="note">${pctOf(nHigh)} of orders</div></div>
+      <div class="box medium"><div class="n">${Fmt.num(nMedium)}</div><div class="l">Medium Risk</div><div class="note">${pctOf(nMedium)} of orders</div></div>
+      <div class="box low"><div class="n">${Fmt.num(nLow)}</div><div class="l">Low Risk</div><div class="note">${pctOf(nLow)} of orders</div></div>
     </div>
     <p class="note" style="margin-bottom:14px;">Scores are computed on the model's held-out evaluation set${data.is_synthetic_demo ? " (demo/synthetic data)" : ""}. A risk score is a calibrated estimate between 0 and 1, not a probability guarantee.</p>
     <div class="card">
@@ -786,29 +797,25 @@ Views.openOrderDetail = function (orderId) {
   const signals = order.signals || [];
   const flaggedCount = signals.filter((s) => s.flagged).length;
 
-  const reasonsHtml = signals.map((s, i) => {
-    const f = s.flagged ? Views.findMatchingFinding(s.dimension, s.value) : null;
+  const reasonsHtml = signals.map((s) => {
     const dimLabel = Fmt.dim(s.dimension);
-    let detail;
-    let tag = "";
-    if (f) {
-      detail = `${Fmt.escape(dimLabel)} orders have a ${Fmt.pct(f.segment_return_rate)} return rate, ` +
-        `compared to ${Fmt.pct(f.baseline_return_rate)} for other ${Fmt.escape(dimLabel).toLowerCase()} values ` +
-        `(${f.relative_risk.toFixed(1)}× higher).`;
-      tag = f.relative_risk >= 1.6 ? "Higher return rate" : "Moderately higher return rate";
-    } else if (s.flagged) {
-      detail = `${Fmt.escape(dimLabel)}: ${Fmt.escape(s.value)} — flagged by the diagnosis engine as an elevated-risk segment.`;
-      tag = "Higher return rate";
-    } else {
-      detail = `${Fmt.escape(dimLabel)}: ${Fmt.escape(s.value)}.`;
+    const f = Views.findMatchingFinding(s.dimension, s.value);
+    // Only say something when there is something useful to say: an
+    // elevated-risk segment gets a short flagged note, a segment the
+    // diagnosis engine actually checked (but found unremarkable) gets
+    // a neutral note, and a value with no diagnosis coverage at all
+    // gets no forced description.
+    let insight = "";
+    if (s.flagged) {
+      insight = "High observed return rate";
+    } else if (f) {
+      insight = "No strong return-risk difference observed";
     }
     return `
-      <div class="evidence-row" style="align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border);">
-        <span class="driver-rank" style="margin-top:1px;">${i + 1}</span>
-        <div style="margin-left:10px;">
-          <div><strong>${Fmt.escape(dimLabel)}: ${Fmt.escape(s.value)}</strong>${tag ? ` <span class="pill ${s.flagged ? "high" : "medium"}" style="margin-left:6px;">${tag}</span>` : ""}</div>
-          <div class="note" style="margin-top:3px;">${detail}</div>
-        </div>
+      <div style="padding:10px 0;border-bottom:1px solid var(--border);">
+        <div class="note" style="text-transform:uppercase;letter-spacing:.03em;font-size:11.5px;">${Fmt.escape(dimLabel)}</div>
+        <div style="font-weight:700;font-size:14.5px;margin-top:2px;">${Fmt.escape(s.value)}</div>
+        ${insight ? `<div class="note" style="margin-top:2px;">${Fmt.escape(insight)}</div>` : ""}
       </div>`;
   }).join("");
 
@@ -821,16 +828,21 @@ Views.openOrderDetail = function (orderId) {
     overallText = "This order's score reflects the model's overall estimate from all available order features; no single field value here matches a known elevated-risk segment strongly enough to call out individually.";
   }
 
-  const techRowsHtml = signals.map((s) => `
-    <tr><td>${Fmt.escape(s.dimension)}</td><td>${Fmt.escape(s.value)}</td><td>${s.flagged ? "Yes" : "No"}</td></tr>
-  `).join("");
+  const techRowsHtml = signals.map((s) => {
+    const f = Views.findMatchingFinding(s.dimension, s.value);
+    const compare = f ? `${Fmt.pct(f.segment_return_rate)} vs ${Fmt.pct(f.baseline_return_rate)} (${f.relative_risk.toFixed(1)}×)` : "—";
+    return `<tr><td>${Fmt.escape(s.dimension)}</td><td>${Fmt.escape(s.value)}</td><td>${s.flagged ? "Yes" : "No"}</td><td>${compare}</td></tr>`;
+  }).join("");
 
   UI.openModal(`
     <div class="modal-head">
       <div><h3>Order #${Fmt.escape(order.order_id)}</h3><p class="note">${Fmt.money(order.amount)}${order.order_date ? " · " + Fmt.escape(order.order_date) : ""}</p></div>
       <button class="modal-close" onclick="UI.closeModal()">✕</button>
     </div>
-    <span class="pill ${order.risk_level}">${Views.riskScoreText(order.risk_score)} risk score — ${order.risk_level.toUpperCase()}</span>
+    <div>
+      <span class="pill ${order.risk_level}" style="font-size:13px;padding:6px 14px;">${order.risk_level.toUpperCase()} RISK</span>
+      <div class="note" style="margin-top:6px;">Risk score: ${Views.riskScoreText(order.risk_score)}</div>
+    </div>
     <h4 style="margin-top:18px;font-size:14px;">Why is this order ${Fmt.escape(order.risk_level)} risk?</h4>
     <p class="note" style="margin-top:2px;">This order has the following characteristics associated with return risk.</p>
     <div style="margin-top:8px;">${reasonsHtml || '<p class="note">No categorical signals available for this order.</p>'}</div>
@@ -843,13 +855,13 @@ Views.openOrderDetail = function (orderId) {
       <summary>Technical details</summary>
       <div class="tech-body">
         <table>
-          <thead><tr><th>Field</th><th>Value</th><th>Flagged segment</th></tr></thead>
-          <tbody>${techRowsHtml || '<tr><td colspan="3">No fields available.</td></tr>'}</tbody>
+          <thead><tr><th>Field</th><th>Value</th><th>Flagged segment</th><th>Segment vs. baseline return rate</th></tr></thead>
+          <tbody>${techRowsHtml || '<tr><td colspan="4">No fields available.</td></tr>'}</tbody>
         </table>
         <p class="note" style="margin-top:8px;">Raw model score: ${order.risk_score !== undefined ? Number(order.risk_score).toFixed(2) : "—"} (threshold-relative risk level: ${Fmt.escape(order.risk_level)}).</p>
       </div>
     </details>
-    <div class="disclaimer-box">These signals contributed to the model's risk score. They describe association, not a guarantee this order will return.</div>
+    <div class="disclaimer-box">This score is a model estimate based on association, not a guaranteed probability that this order will be returned.</div>
   `);
 };
 
@@ -871,32 +883,36 @@ Pages.diagnosis = async function () {
     html += findings.map((f) => Views.diagnosisCard(f)).join("");
   }
 
-  if (data.recommendation) {
+  if (data.recommendation && data.top_finding) {
     const r = data.recommendation;
+    const tf = data.top_finding;
+    const reasonText = `${Fmt.escape(tf.segment_label || tf.segment)} has a ${Fmt.pct(tf.segment_return_rate)} return rate compared with ${Fmt.pct(tf.baseline_return_rate)} for other orders.`;
     html += `
       <div class="card" style="border-left:4px solid var(--accent);">
-        <div class="section-title"><h3>Recommended investigation</h3></div>
-        <p style="margin-top:6px;">${Fmt.escape(r.text)}</p>
-        <p class="note" style="margin-top:8px;">Suggested action based on: ${Fmt.escape(r.evidence_summary || "")}</p>
+        <div class="section-title"><h3>Recommended next step</h3></div>
+        <p style="margin-top:6px;font-weight:600;">${Fmt.escape(r.text)}</p>
+        <p class="note" style="margin-top:8px;">${reasonText}</p>
+        <p class="note" style="margin-top:6px;">This is an evidence-based suggestion, not a claim of proven cause.</p>
       </div>`;
   }
 
   if (data.verification) {
     const v = data.verification;
+    const improvementPp = Math.abs(v.absolute_change) * 100;
     html += `
       <div class="card">
-        <div class="section-title"><h3>Did the intervention work?</h3>
+        <div class="section-title"><h3>Intervention verification</h3>
           <span class="badge demo">${Fmt.escape(v.label || "DEMO / SYNTHETIC SIMULATION")}</span>
         </div>
         <div class="grid cols-2" style="margin-top:12px;">
-          <div class="metric-box"><div class="v">${Fmt.pct(v.before_rate)}</div><div class="l">Before (n=${Fmt.num(v.before_n)})</div></div>
-          <div class="metric-box"><div class="v">${Fmt.pct(v.after_rate)}</div><div class="l">After (n=${Fmt.num(v.after_n)})</div></div>
+          <div class="metric-box"><div class="v">${Fmt.pct(v.before_rate)}</div><div class="l">Before intervention (n=${Fmt.num(v.before_n)})</div></div>
+          <div class="metric-box"><div class="v">${Fmt.pct(v.after_rate)}</div><div class="l">Simulated after intervention (n=${Fmt.num(v.after_n)})</div></div>
         </div>
         <p style="margin-top:12px;">
           ${v.improved === true ? '<span class="pill low">Improved</span>' : v.improved === false ? '<span class="pill high">No improvement</span>' : '<span class="pill indeterminate">Indeterminate</span>'}
-          <span class="note"> change: ${Fmt.pct(v.absolute_change)} absolute, p = ${v.p_value !== undefined ? Number(v.p_value).toFixed(3) : "—"}</span>
+          <span class="note"> Simulated improvement: ${improvementPp.toFixed(1)} percentage points (p = ${v.p_value !== undefined ? Number(v.p_value).toFixed(3) : "—"})</span>
         </p>
-        <p class="note">This is a simulated post-intervention comparison used to demonstrate the verification mechanics, not a live merchant result.</p>
+        <p class="note">This is a simulated result using demo data. It does not represent a real merchant intervention.</p>
       </div>`;
   }
 
@@ -905,23 +921,38 @@ Pages.diagnosis = async function () {
 
 Views.diagnosisCard = function (f) {
   const label = f.segment_label || f.segment;
-  const text = `Orders where ${Fmt.dim(f.dimension).toLowerCase()} is "${label}" show an observed return rate of ${Fmt.pct(f.segment_return_rate)}, compared with ${Fmt.pct(f.baseline_return_rate)} for the rest of the data — about ${f.relative_risk.toFixed(1)}× higher.`;
+  const dimLabel = Fmt.dim(f.dimension);
+  const ppDiff = (f.segment_return_rate - f.baseline_return_rate) * 100;
+  const compareText = `${Fmt.escape(label)} orders are returned at ${Fmt.pct(f.segment_return_rate)}, compared with ${Fmt.pct(f.baseline_return_rate)} for other orders (${ppDiff.toFixed(1)} percentage points higher).`;
+  const isStrong = f.statistically_supported && f.practically_significant;
+  const trustLabel = isStrong ? "Strong evidence" : "Limited evidence";
+  const trustText = isStrong
+    ? "The difference is large enough and supported by enough orders to make this an area worth investigating."
+    : "The available data shows some difference, but there is not enough evidence to treat this as a high-priority finding.";
   return `
     <div class="card">
       <div class="section-title">
-        <h3>${Fmt.escape(label)} <span class="note" style="font-weight:500;">(${Fmt.escape(Fmt.dim(f.dimension))})</span></h3>
-        <span class="pill ${f.statistically_supported ? "low" : "medium"}">${Views.evidenceLabel(f)}</span>
+        <h3>${Fmt.escape(label)} <span class="note" style="font-weight:500;">(${Fmt.escape(dimLabel)})</span></h3>
       </div>
-      <div class="metric-row" style="margin-top:10px;">
-        <div class="metric-box"><div class="v">${f.relative_risk.toFixed(1)}×</div><div class="l">Relative risk</div></div>
-        <div class="metric-box"><div class="v">${Fmt.num(f.segment_n)}</div><div class="l">Orders in segment</div></div>
-        <div class="metric-box"><div class="v">${Fmt.pct(f.segment_return_rate)}</div><div class="l">Segment return rate</div></div>
+      <div style="font-size:32px;font-weight:800;margin-top:4px;">${Fmt.pct(f.segment_return_rate)}</div>
+      <div class="note" style="margin-top:-2px;">Return rate</div>
+      <p style="margin-top:12px;font-size:14px;">${compareText}</p>
+      <p class="note" style="margin-top:4px;">${f.relative_risk.toFixed(1)}× higher than the rest of the store, based on ${Fmt.num(f.segment_n)} orders in this segment.</p>
+
+      <div class="card" style="background:#fafbfb;margin-top:16px;padding:14px 16px;">
+        <div class="section-title"><h3 style="font-size:14px;">Why this finding is trustworthy</h3>
+          <span class="pill ${isStrong ? "low" : "medium"}">${trustLabel}</span></div>
+        <p class="note" style="margin-top:6px;">${trustText}</p>
+        <div class="metric-row" style="margin-top:10px;">
+          <div class="metric-box"><div class="v">${Fmt.num(f.segment_n)}</div><div class="l">Orders in this segment</div></div>
+          <div class="metric-box"><div class="v">${Fmt.num(f.baseline_n)}</div><div class="l">Orders outside this segment</div></div>
+        </div>
       </div>
-      <p style="margin-top:12px;font-size:13.5px;color:var(--muted);">${Fmt.escape(text)}</p>
-      <details class="tech">
+
+      <details class="tech" style="margin-top:14px;">
         <summary>Technical details</summary>
         <div class="tech-body note">
-          <p>Segment n = ${Fmt.num(f.segment_n)}, baseline n = ${Fmt.num(f.baseline_n)}.</p>
+          <p>Relative risk: ${f.relative_risk.toFixed(2)}×. Segment n = ${Fmt.num(f.segment_n)}, baseline n = ${Fmt.num(f.baseline_n)}.</p>
           <p>95% CI for segment return rate: ${Fmt.pct(f.ci_low)} – ${Fmt.pct(f.ci_high)} (Wilson interval).</p>
           <p>Statistically supported (CI entirely above baseline): ${f.statistically_supported ? "Yes" : "No"}.</p>
           <p>Practically significant (relative risk above the practical-effect threshold): ${f.practically_significant ? "Yes" : "No"}.</p>
@@ -952,7 +983,7 @@ Pages.claims = async function () {
         <td>${Fmt.escape(c.claim_id)}</td>
         <td>#${Fmt.escape(c.order_id || "—")}</td>
         <td>${Fmt.escape(c.raw_reason || c.normalized_reason || "—")}</td>
-        <td><span class="pill ${c.status.toLowerCase().replace("_","-")}">${c.status.replace("_"," ")}</span></td>
+        <td><span class="pill ${c.status.toLowerCase().replace("_","-")}">${Fmt.claimStatus(c.status)}</span></td>
       </tr>`).join("") +
     `</tbody></table></div>`;
   el.innerHTML = html;
@@ -983,7 +1014,8 @@ Views.openClaimDetail = function (claimId) {
     <h4 style="margin-top:16px;font-size:14px;">Evidence</h4>
     ${evidenceHtml}
     ${imageHtml}
-    <p style="margin-top:16px;"><strong>Overall:</strong> <span class="pill ${c.status.toLowerCase().replace("_","-")}">${c.status.replace("_"," ")}</span></p>
+    <p style="margin-top:16px;"><strong>Status:</strong> <span class="pill ${c.status.toLowerCase().replace("_","-")}">${Fmt.claimStatus(c.status)}</span></p>
+    <p class="note" style="margin-top:6px;">The available evidence supports further review but does not by itself prove who caused the issue.</p>
     <div class="disclaimer-box">${Fmt.escape(c.disclaimer)}</div>
   `);
 };
@@ -1004,9 +1036,10 @@ Pages.datasources = async function () {
   el.innerHTML = `
     <div class="grid cols-3">
       <div class="source-card ${rzp.connected ? "connected" : ""}">
-        <div class="source-head"><h3 style="font-size:15px;">Razorpay</h3>
+        <div class="source-head"><h3 style="font-size:15px;">Razorpay Test Mode</h3>
           <span class="badge ${rzp.connected ? "" : "demo"}">${rzp.connected ? "Connected" : "Not connected"}</span></div>
-        <p class="note">Environment: ${Fmt.escape(rzp.mode)} — Test Mode. No live payment actions are performed.</p>
+        <p class="note">Payments and refunds.</p>
+        <p class="note" style="margin-top:6px;">Environment: ${Fmt.escape(rzp.mode)} — Test Mode. No live payment actions are performed.</p>
         <div style="margin-top:10px;">
           <div class="cap-row"><span>Payments</span><span class="${rzp.capabilities.payments ? "cap-ok" : "cap-warn"}">${rzp.capabilities.payments ? "✓" : "✕"}</span></div>
           <div class="cap-row"><span>Refunds</span><span class="${rzp.capabilities.refunds ? "cap-ok" : "cap-warn"}">${rzp.capabilities.refunds ? "✓" : "✕"}</span></div>
@@ -1030,23 +1063,29 @@ Pages.datasources = async function () {
       <div class="source-card">
         <div class="source-head"><h3 style="font-size:15px;">Merchant Returns / OMS</h3>
           <span class="badge demo">${oms.connected ? "Connected" : "Not connected"}</span></div>
-        <p class="note">${Fmt.escape(oms.note)}</p>
+        <p class="note">Actual product-return outcomes.</p>
+        <p class="note" style="margin-top:6px;">${Fmt.escape(oms.note)}</p>
       </div>
 
       <div class="source-card">
-        <div class="source-head"><h3 style="font-size:15px;">CSV</h3>
+        <div class="source-head"><h3 style="font-size:15px;">CSV Import</h3>
           <span class="badge">${csv.available ? "Available" : "Unavailable"}</span></div>
-        <p class="note">Role: ${Fmt.escape(csv.role)}. Used as a historical import / fallback source, not the primary integration.</p>
+        <p class="note">Historical merchant data.</p>
+        <p class="note" style="margin-top:6px;">Used as a historical import / fallback source, not the primary integration.</p>
       </div>
     </div>
 
     <div class="card" style="margin-top:20px;">
       <div class="section-title"><h3>Data readiness</h3></div>
-      <div id="readiness-checks" style="margin-top:8px;"></div>
+      <p class="note" style="margin-top:2px;">What we can tell about the data feeding your risk model.</p>
       <p style="margin-top:14px;"><strong>Model status:</strong>
         <span class="pill ${decision.status === "MERCHANT_SPECIFIC" || decision.status === "READY" ? "low" : decision.status === "INSUFFICIENT_DATA" ? "high" : "medium"}">${Fmt.escape(readiness.model_readiness_label || decision.status || "UNKNOWN")}</span>
       </p>
       ${decision.reason ? `<p class="note">${Fmt.escape(decision.reason)}</p>` : ""}
+      <details class="tech" style="margin-top:12px;">
+        <summary>Data requirements</summary>
+        <div class="tech-body" id="readiness-checks"></div>
+      </details>
     </div>
   `;
 
