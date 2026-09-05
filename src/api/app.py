@@ -291,23 +291,15 @@ def risk_orders():
         except PipelineAuthError as exc:
             return jsonify({"error": str(exc)}), 401
         orders = tenant_store.get("risk_orders", organization_id, "latest") or []
-    return jsonify(_to_jsonable({"orders": orders}))
-
-
-@app.get("/claims")
-def list_claims():
-    """All return claims already reviewed for this organization. This
-    never invents a fraud verdict -- see src.claims.evidence for the
-    only statuses ever produced."""
-    session, error_response, status = _require_auth_session()
-    if error_response is not None:
-        return error_response, status
-    organization_id = session.organization_id
-    claim_ids = tenant_store.list_kind("claims", organization_id)
-    claims = [tenant_store.get("claims", organization_id, cid) for cid in claim_ids]
-    claims = [c for c in claims if c is not None]
-    needs_review = sum(1 for c in claims if c.get("status") != "SUPPORTED")
-    return jsonify(_to_jsonable({"claims": claims, "needs_review_count": needs_review}))
+    n_high = sum(1 for o in orders if o.get("risk_level") == "high")
+    n_medium = sum(1 for o in orders if o.get("risk_level") == "medium")
+    n_low = sum(1 for o in orders if o.get("risk_level") == "low")
+    return jsonify(_to_jsonable({
+        "orders": orders,
+        "n_high": n_high,
+        "n_medium": n_medium,
+        "n_low": n_low,
+    }))
 
 
 _DEMO_CLAIM_SEEDS = [
@@ -319,24 +311,18 @@ _DEMO_CLAIM_SEEDS = [
 ]
 
 
-@app.post("/claims/seed-demo")
-def seed_demo_claims():
-    """Demo-only helper: runs the existing evidence-aggregation engine
-    (src.claims.evidence, via src.pipeline.review_return_claim) against
-    a handful of representative claims built from the organization's
-    own order table, so the Claims screen has something real to show
-    in demo mode. Every status produced is exactly what the evidence
-    engine already returns -- nothing here is fabricated beyond the
-    input claim text."""
-    token = _bearer_token()
-    session, error_response, status = _require_auth_session()
-    if error_response is not None:
-        return error_response, status
-    organization_id = session.organization_id
-
+def _seed_demo_claims(token: str, organization_id: str) -> list[dict]:
+    """Runs the existing evidence-aggregation engine (src.claims.evidence,
+    via src.pipeline.review_return_claim) against a handful of
+    representative claims built from the organization's own order
+    table, so the Claims screen has something real to show in demo
+    mode. Every status produced is exactly what the evidence engine
+    already returns -- nothing here is fabricated beyond the input
+    claim text. Returns [] (never raises) if there is no order table
+    yet to build claims from."""
     orders = tenant_store.get("risk_orders", organization_id, "latest") or []
     if not orders:
-        return jsonify({"error": "No orders available yet. Load Risk analysis first."}), 400
+        return []
 
     analyzer = MockImageEvidenceAnalyzer()
     results = []
@@ -361,6 +347,55 @@ def seed_demo_claims():
             tenant_store=tenant_store, image_analyzer=analyzer,
         )
         results.append(result)
+    return results
+
+
+@app.get("/claims")
+def list_claims():
+    """All return claims already reviewed for this organization. This
+    never invents a fraud verdict -- see src.claims.evidence for the
+    only statuses ever produced.
+
+    In demo mode (synthetic connector, no claims filed yet), this
+    seeds a handful of representative demo claims the first time the
+    Claims screen is opened, so it never shows an empty page purely
+    because nothing has been manually seeded -- exactly the same
+    evidence engine output a real filed claim would get."""
+    token = _bearer_token()
+    session, error_response, status = _require_auth_session()
+    if error_response is not None:
+        return error_response, status
+    organization_id = session.organization_id
+    claim_ids = tenant_store.list_kind("claims", organization_id)
+    claims = [tenant_store.get("claims", organization_id, cid) for cid in claim_ids]
+    claims = [c for c in claims if c is not None]
+
+    if not claims:
+        risk_result = tenant_store.get("risk_results", organization_id, "latest")
+        if risk_result and risk_result.get("is_synthetic_demo"):
+            claims = _seed_demo_claims(token, organization_id)
+
+    needs_review = sum(1 for c in claims if c.get("status") != "SUPPORTED")
+    return jsonify(_to_jsonable({
+        "claims": claims,
+        "n_total": len(claims),
+        "n_needs_review": needs_review,
+        "needs_review_count": needs_review,
+    }))
+
+
+@app.post("/claims/seed-demo")
+def seed_demo_claims():
+    """Manual trigger for the same demo-claim seeding /claims does
+    automatically on first load. Kept for direct/manual use."""
+    token = _bearer_token()
+    session, error_response, status = _require_auth_session()
+    if error_response is not None:
+        return error_response, status
+    organization_id = session.organization_id
+    results = _seed_demo_claims(token, organization_id)
+    if not results:
+        return jsonify({"error": "No orders available yet. Load Risk analysis first."}), 400
     return jsonify(_to_jsonable({"claims": results}))
 
 
@@ -383,19 +418,25 @@ def data_sources_status():
     readiness = risk_result.get("data_readiness") if risk_result else None
 
     return jsonify(_to_jsonable({
-        "razorpay": {
-            "connected": razorpay_connected,
-            "environment": "TEST" if razorpay_connected else None,
-            "capabilities": {"payments": True, "refunds": True, "return_labels": False},
-        },
-        "oms": {
-            "connected": oms_connected,
-            "description": "Return outcomes are used to train and evaluate the return-risk model.",
-        },
-        "csv": {
-            "available": True,
-            "label": "Historical import / fallback",
-            "last_import": tenant_store.get("data_sources", organization_id, "csv"),
+        "sources": {
+            "razorpay": {
+                "connected": razorpay_connected,
+                "mode": "TEST",
+                "capabilities": {"payments": True, "refunds": True, "return_labels": False},
+            },
+            "merchant_oms": {
+                "connected": oms_connected,
+                "note": (
+                    "Return outcomes from your OMS are used to train and evaluate the return-risk model."
+                    if oms_connected else
+                    "Not connected yet. Currently using CSV import / synthetic demo data for return outcomes."
+                ),
+            },
+            "csv": {
+                "available": True,
+                "role": "Historical import / fallback",
+                "last_import": tenant_store.get("data_sources", organization_id, "csv"),
+            },
         },
         "data_readiness": readiness,
         "model_decision": risk_result.get("model_decision") if risk_result else None,
