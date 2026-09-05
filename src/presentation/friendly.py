@@ -14,9 +14,9 @@ prettified yet.
 from __future__ import annotations
 
 _FRIENDLY_VALUES = {
-    "platform_fulfilled": "Platform-fulfilled",
-    "third_party_fulfilled": "Third-party fulfilled",
-    "merchant_fulfilled": "Merchant-fulfilled",
+    "platform_fulfilled": "Platform fulfilment",
+    "third_party_fulfilled": "Third-party fulfilment",
+    "merchant_fulfilled": "Merchant fulfilment",
 }
 
 _FRIENDLY_DIMENSIONS = {
