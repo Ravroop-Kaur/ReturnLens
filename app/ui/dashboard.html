@@ -43,11 +43,13 @@ h1,h2,h3,h4{margin:0;font-weight:700;}
 /* ---------- Login gate ---------- */
 #login-gate{
   position:fixed;inset:0;background:#0e1b1c;z-index:9999;
-  display:flex;align-items:center;justify-content:center;padding:20px;
+  display:flex;align-items:flex-start;justify-content:center;padding:20px;
+  overflow-y:auto;
 }
 #login-card{
   width:min(420px,100%);background:#ffffff;border-radius:var(--radius-lg);
   padding:32px;box-shadow:0 20px 60px rgba(0,0,0,.35);
+  margin:auto;max-height:calc(100vh - 40px);overflow-y:auto;
 }
 #login-card .brand{display:flex;align-items:center;gap:10px;margin-bottom:18px;}
 #login-card .brand .logo-dot{width:28px;height:28px;border-radius:8px;background:var(--accent);flex-shrink:0;}
@@ -594,7 +596,7 @@ Pages.overview = async function () {
   el.innerHTML = `
     <div class="grid cols-4">
       ${Views.statCard("Orders analysed", Fmt.num(nTotal), "evaluation set")}
-      ${Views.statCard("Return exposure", Fmt.moneyCompact(exp.predicted_return_exposure), "predicted, high-risk orders")}
+      ${Views.statCard("Potential return exposure", Fmt.moneyCompact(exp.predicted_return_exposure), "Order value at risk, not actual loss — sum of amounts for orders predicted high-risk")}
       ${Views.statCard("High-risk orders", Fmt.num(exp.n_high_risk_orders), Fmt.pct(exp.pct_orders_high_risk) + " of orders")}
       ${Views.statCard("Return rate", Fmt.pct(returnRate), "observed in evaluation set")}
     </div>
@@ -687,7 +689,7 @@ Views.driverRow = function (f, i, maxRr) {
   return `
     <div class="driver-row" onclick="App.goTo('diagnosis')">
       <div class="driver-rank">${i + 1}</div>
-      <div class="driver-name">${Fmt.escape(f.segment)}<span class="dim">${Fmt.escape(Fmt.dim(f.dimension))}</span></div>
+      <div class="driver-name">${Fmt.escape(f.segment_label || f.segment)}<span class="dim">${Fmt.escape(Fmt.dim(f.dimension))}</span></div>
       <div class="driver-bar-track"><div class="driver-bar-fill" style="width:${pct}%"></div></div>
       <div class="driver-rr">${f.relative_risk.toFixed(1)}×</div>
       <div class="driver-evidence">${Views.evidenceLabel(f)}</div>
@@ -714,13 +716,20 @@ Pages.risk = async function () {
   if (latest.status === "abstained") { el.innerHTML = Views.notReady(latest); return; }
 
   const data = await App.ensureRiskOrders();
+  // Backend already returns n_high/n_medium/n_low, but count from the
+  // order list itself too so this never shows a bare "—" if that ever
+  // drifts out of sync with the orders actually returned.
+  const orders = data.orders || [];
+  const nHigh = data.n_high !== undefined ? data.n_high : orders.filter((o) => o.risk_level === "high").length;
+  const nMedium = data.n_medium !== undefined ? data.n_medium : orders.filter((o) => o.risk_level === "medium").length;
+  const nLow = data.n_low !== undefined ? data.n_low : orders.filter((o) => o.risk_level === "low").length;
   el.innerHTML = `
     <div class="risk-summary">
-      <div class="box high"><div class="n">${Fmt.num(data.n_high)}</div><div class="l">High risk</div></div>
-      <div class="box medium"><div class="n">${Fmt.num(data.n_medium)}</div><div class="l">Medium risk</div></div>
-      <div class="box low"><div class="n">${Fmt.num(data.n_low)}</div><div class="l">Low risk</div></div>
+      <div class="box high"><div class="n">${Fmt.num(nHigh)}</div><div class="l">High risk</div></div>
+      <div class="box medium"><div class="n">${Fmt.num(nMedium)}</div><div class="l">Medium risk</div></div>
+      <div class="box low"><div class="n">${Fmt.num(nLow)}</div><div class="l">Low risk</div></div>
     </div>
-    <p class="note" style="margin-bottom:14px;">Scores are computed on the model's held-out evaluation set${data.is_synthetic_demo ? " (demo/synthetic data)" : ""}.</p>
+    <p class="note" style="margin-bottom:14px;">Scores are computed on the model's held-out evaluation set${data.is_synthetic_demo ? " (demo/synthetic data)" : ""}. A risk score is a calibrated estimate between 0 and 1, not a probability guarantee.</p>
     <div class="card">
       <div class="filter-bar">
         <button class="filter-btn active" data-f="all">All</button>
@@ -729,7 +738,7 @@ Pages.risk = async function () {
         <button class="filter-btn" data-f="low">Low</button>
       </div>
       <div class="table-wrap"><table id="risk-table">
-        <thead><tr><th>Order</th><th>Risk</th><th>Amount</th><th>Risk signal</th><th>Status</th></tr></thead>
+        <thead><tr><th>Order</th><th>Amount</th><th>Risk score</th><th>Risk level</th><th>Key signal</th><th>Status</th></tr></thead>
         <tbody id="risk-table-body"></tbody>
       </table></div>
     </div>
@@ -745,37 +754,101 @@ Pages.risk = async function () {
   Views.renderRiskTable(data.orders);
 };
 
+Views.riskScoreText = function (score) {
+  if (score === null || score === undefined || isNaN(score)) return "—";
+  return Number(score).toFixed(2);
+};
+
 Views.renderRiskTable = function (orders) {
   const filter = State.riskFilter;
   const rows = orders.filter((o) => filter === "all" || o.risk_level === filter).slice(0, 200);
-  const statusLabel = { high: "At Risk", medium: "Monitoring", low: "" };
+  const statusLabel = { high: "At Risk", medium: "Monitoring", low: "Normal" };
   document.getElementById("risk-table-body").innerHTML = rows.map((o) => `
     <tr class="order-row" onclick='Views.openOrderDetail(${JSON.stringify(o.order_id)})'>
       <td>#${Fmt.escape(o.order_id)}</td>
-      <td><span class="pill ${o.risk_level}">${Fmt.pct(o.risk_score, 0)}</span></td>
       <td>${Fmt.money(o.amount)}</td>
+      <td><span class="pill ${o.risk_level}">${Views.riskScoreText(o.risk_score)}</span></td>
+      <td><span class="pill ${o.risk_level}">${o.risk_level.charAt(0).toUpperCase() + o.risk_level.slice(1)}</span></td>
       <td>${Fmt.escape(o.key_reason)}</td>
       <td>${statusLabel[o.risk_level] ? `<span class="pill ${o.risk_level}">${statusLabel[o.risk_level]}</span>` : ""}</td>
-    </tr>`).join("") || `<tr><td colspan="5"><div class="empty-state">No orders match this filter.</div></td></tr>`;
+    </tr>`).join("") || `<tr><td colspan="6"><div class="empty-state">No orders match this filter.</div></td></tr>`;
+};
+
+Views.findMatchingFinding = function (dimension, value) {
+  const diagnosis = (State.riskLatest && State.riskLatest.diagnosis) || {};
+  const findings = diagnosis[dimension] || [];
+  return findings.find((f) => (f.segment_label || f.segment) === value) || null;
 };
 
 Views.openOrderDetail = function (orderId) {
   const order = (State.riskOrders.orders || []).find((o) => o.order_id === orderId);
   if (!order) return;
-  const signalsHtml = (order.signals || []).map((s) => `
-    <div class="evidence-row">
-      <span class="evidence-icon ${s.flagged ? "warn" : "ok"}">${s.flagged ? "⚠" : "•"}</span>
-      <span>${Fmt.escape(Fmt.dim(s.dimension))}: <strong>${Fmt.escape(s.value)}</strong>${s.flagged ? " — elevated-risk segment" : ""}</span>
-    </div>`).join("");
+  const signals = order.signals || [];
+  const flaggedCount = signals.filter((s) => s.flagged).length;
+
+  const reasonsHtml = signals.map((s, i) => {
+    const f = s.flagged ? Views.findMatchingFinding(s.dimension, s.value) : null;
+    const dimLabel = Fmt.dim(s.dimension);
+    let detail;
+    let tag = "";
+    if (f) {
+      detail = `${Fmt.escape(dimLabel)} orders have a ${Fmt.pct(f.segment_return_rate)} return rate, ` +
+        `compared to ${Fmt.pct(f.baseline_return_rate)} for other ${Fmt.escape(dimLabel).toLowerCase()} values ` +
+        `(${f.relative_risk.toFixed(1)}× higher).`;
+      tag = f.relative_risk >= 1.6 ? "Higher return rate" : "Moderately higher return rate";
+    } else if (s.flagged) {
+      detail = `${Fmt.escape(dimLabel)}: ${Fmt.escape(s.value)} — flagged by the diagnosis engine as an elevated-risk segment.`;
+      tag = "Higher return rate";
+    } else {
+      detail = `${Fmt.escape(dimLabel)}: ${Fmt.escape(s.value)}.`;
+    }
+    return `
+      <div class="evidence-row" style="align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border);">
+        <span class="driver-rank" style="margin-top:1px;">${i + 1}</span>
+        <div style="margin-left:10px;">
+          <div><strong>${Fmt.escape(dimLabel)}: ${Fmt.escape(s.value)}</strong>${tag ? ` <span class="pill ${s.flagged ? "high" : "medium"}" style="margin-left:6px;">${tag}</span>` : ""}</div>
+          <div class="note" style="margin-top:3px;">${detail}</div>
+        </div>
+      </div>`;
+  }).join("");
+
+  let overallText;
+  if (flaggedCount >= 2) {
+    overallText = "Multiple elevated-risk signals occur together on this order, which increases the model's estimated likelihood of a return. This is a model estimate, not a guarantee the order will be returned.";
+  } else if (flaggedCount === 1) {
+    overallText = "This order has one characteristic the diagnosis engine has linked to a higher observed return rate. This is a model estimate, not a guarantee the order will be returned.";
+  } else {
+    overallText = "This order's score reflects the model's overall estimate from all available order features; no single field value here matches a known elevated-risk segment strongly enough to call out individually.";
+  }
+
+  const techRowsHtml = signals.map((s) => `
+    <tr><td>${Fmt.escape(s.dimension)}</td><td>${Fmt.escape(s.value)}</td><td>${s.flagged ? "Yes" : "No"}</td></tr>
+  `).join("");
+
   UI.openModal(`
     <div class="modal-head">
       <div><h3>Order #${Fmt.escape(order.order_id)}</h3><p class="note">${Fmt.money(order.amount)}${order.order_date ? " · " + Fmt.escape(order.order_date) : ""}</p></div>
       <button class="modal-close" onclick="UI.closeModal()">✕</button>
     </div>
-    <span class="pill ${order.risk_level}">${Fmt.pct(order.risk_score,0)} risk score — ${order.risk_level.toUpperCase()}</span>
-    <h4 style="margin-top:18px;font-size:14px;">Signals contributing to this risk score</h4>
-    <div style="margin-top:6px;">${signalsHtml || '<p class="note">No categorical signals available for this order.</p>'}</div>
+    <span class="pill ${order.risk_level}">${Views.riskScoreText(order.risk_score)} risk score — ${order.risk_level.toUpperCase()}</span>
+    <h4 style="margin-top:18px;font-size:14px;">Why is this order ${Fmt.escape(order.risk_level)} risk?</h4>
+    <p class="note" style="margin-top:2px;">This order has the following characteristics associated with return risk.</p>
+    <div style="margin-top:8px;">${reasonsHtml || '<p class="note">No categorical signals available for this order.</p>'}</div>
+    <div class="card" style="background:#fafbfb;margin-top:14px;padding:14px 16px;">
+      <strong style="font-size:13.5px;">Overall assessment</strong>
+      <p class="note" style="margin-top:4px;">${Fmt.escape(overallText)}</p>
+    </div>
     ${order.actual_return !== null && order.actual_return !== undefined ? `<p class="note" style="margin-top:14px;">Evaluation-set outcome: <strong>${order.actual_return ? "Returned" : "Not returned"}</strong></p>` : ""}
+    <details class="tech" style="margin-top:14px;">
+      <summary>Technical details</summary>
+      <div class="tech-body">
+        <table>
+          <thead><tr><th>Field</th><th>Value</th><th>Flagged segment</th></tr></thead>
+          <tbody>${techRowsHtml || '<tr><td colspan="3">No fields available.</td></tr>'}</tbody>
+        </table>
+        <p class="note" style="margin-top:8px;">Raw model score: ${order.risk_score !== undefined ? Number(order.risk_score).toFixed(2) : "—"} (threshold-relative risk level: ${Fmt.escape(order.risk_level)}).</p>
+      </div>
+    </details>
     <div class="disclaimer-box">These signals contributed to the model's risk score. They describe association, not a guarantee this order will return.</div>
   `);
 };
@@ -831,11 +904,12 @@ Pages.diagnosis = async function () {
 };
 
 Views.diagnosisCard = function (f) {
-  const text = `Orders where ${Fmt.dim(f.dimension).toLowerCase()} is "${f.segment}" show an observed return rate of ${Fmt.pct(f.segment_return_rate)}, compared with ${Fmt.pct(f.baseline_return_rate)} for the rest of the data — about ${f.relative_risk.toFixed(1)}× higher.`;
+  const label = f.segment_label || f.segment;
+  const text = `Orders where ${Fmt.dim(f.dimension).toLowerCase()} is "${label}" show an observed return rate of ${Fmt.pct(f.segment_return_rate)}, compared with ${Fmt.pct(f.baseline_return_rate)} for the rest of the data — about ${f.relative_risk.toFixed(1)}× higher.`;
   return `
     <div class="card">
       <div class="section-title">
-        <h3>${Fmt.escape(f.segment)} <span class="note" style="font-weight:500;">(${Fmt.escape(Fmt.dim(f.dimension))})</span></h3>
+        <h3>${Fmt.escape(label)} <span class="note" style="font-weight:500;">(${Fmt.escape(Fmt.dim(f.dimension))})</span></h3>
         <span class="pill ${f.statistically_supported ? "low" : "medium"}">${Views.evidenceLabel(f)}</span>
       </div>
       <div class="metric-row" style="margin-top:10px;">
