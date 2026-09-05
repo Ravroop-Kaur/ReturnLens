@@ -225,6 +225,18 @@ tr.order-row:hover{background:#fafbfb;}
   font-size:12.5px;color:var(--muted);margin-top:12px;
 }
 
+.recommend-card{
+  border:1px solid var(--accent);border-left-width:6px;background:var(--accent-light);
+  padding:26px 28px;
+}
+.recommend-eyebrow{text-transform:uppercase;letter-spacing:.06em;font-size:12px;font-weight:800;color:var(--accent-dark);}
+.recommend-title{font-size:22px;margin:8px 0 18px;color:var(--text);}
+.recommend-section{margin-top:16px;}
+.recommend-label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px;}
+.recommend-list{margin:0;padding-left:20px;}
+.recommend-list li{margin-bottom:4px;font-size:14.5px;}
+.recommend-why-text{font-size:14.5px;margin:0;}
+
 .empty-state{padding:34px 20px;text-align:center;color:var(--muted);}
 .empty-state .big-ico{font-size:26px;margin-bottom:8px;}
 .error-state{padding:16px 18px;background:var(--danger-bg);color:var(--danger);border-radius:10px;font-size:14px;}
@@ -248,6 +260,7 @@ tr.order-row:hover{background:#fafbfb;}
 .evidence-icon.bad{color:var(--danger);}
 
 /* ---------- Data sources ---------- */
+.source-note{background:var(--warn-bg);border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.5;}
 .source-card{border:1px solid var(--border);border-radius:12px;padding:18px;}
 .source-card.connected{border-color:var(--good);}
 .source-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
@@ -819,13 +832,36 @@ Views.openOrderDetail = function (orderId) {
       </div>`;
   }).join("");
 
+  // High-risk wording is unchanged (flagged-signal-count based). Medium
+  // and low risk get a short, risk-level-specific explanation shown
+  // right under the heading instead; for those, the "Overall assessment"
+  // box below the signals is skipped so the explanation isn't repeated.
+  let topExplanation;
   let overallText;
-  if (flaggedCount >= 2) {
-    overallText = "Multiple elevated-risk signals occur together on this order, which increases the model's estimated likelihood of a return. This is a model estimate, not a guarantee the order will be returned.";
-  } else if (flaggedCount === 1) {
-    overallText = "This order has one characteristic the diagnosis engine has linked to a higher observed return rate. This is a model estimate, not a guarantee the order will be returned.";
+  if (order.risk_level === "high") {
+    topExplanation = "This order has the following characteristics associated with return risk.";
+    if (flaggedCount >= 2) {
+      overallText = "Multiple elevated-risk signals occur together on this order, which increases the model's estimated likelihood of a return. This is a model estimate, not a guarantee the order will be returned.";
+    } else if (flaggedCount === 1) {
+      overallText = "This order has one characteristic the diagnosis engine has linked to a higher observed return rate. This is a model estimate, not a guarantee the order will be returned.";
+    } else {
+      overallText = "This order's score reflects the model's overall estimate from all available order features; no single field value here matches a known elevated-risk segment strongly enough to call out individually.";
+    }
+  } else if (order.risk_level === "medium") {
+    topExplanation = "The model considers several order characteristics together. No single characteristic is strongly elevated, but their combined pattern results in a medium-risk score.";
+    overallText = null;
+  } else if (order.risk_level === "low") {
+    topExplanation = "No strong return-risk signals were identified for this order.";
+    overallText = null;
   } else {
-    overallText = "This order's score reflects the model's overall estimate from all available order features; no single field value here matches a known elevated-risk segment strongly enough to call out individually.";
+    topExplanation = "This order has the following characteristics associated with return risk.";
+    if (flaggedCount >= 2) {
+      overallText = "Multiple elevated-risk signals occur together on this order, which increases the model's estimated likelihood of a return. This is a model estimate, not a guarantee the order will be returned.";
+    } else if (flaggedCount === 1) {
+      overallText = "This order has one characteristic the diagnosis engine has linked to a higher observed return rate. This is a model estimate, not a guarantee the order will be returned.";
+    } else {
+      overallText = "This order's score reflects the model's overall estimate from all available order features; no single field value here matches a known elevated-risk segment strongly enough to call out individually.";
+    }
   }
 
   const techRowsHtml = signals.map((s) => {
@@ -844,12 +880,13 @@ Views.openOrderDetail = function (orderId) {
       <div class="note" style="margin-top:6px;">Risk score: ${Views.riskScoreText(order.risk_score)}</div>
     </div>
     <h4 style="margin-top:18px;font-size:14px;">Why is this order ${Fmt.escape(order.risk_level)} risk?</h4>
-    <p class="note" style="margin-top:2px;">This order has the following characteristics associated with return risk.</p>
+    <p class="note" style="margin-top:2px;">${Fmt.escape(topExplanation)}</p>
     <div style="margin-top:8px;">${reasonsHtml || '<p class="note">No categorical signals available for this order.</p>'}</div>
+    ${overallText ? `
     <div class="card" style="background:#fafbfb;margin-top:14px;padding:14px 16px;">
       <strong style="font-size:13.5px;">Overall assessment</strong>
       <p class="note" style="margin-top:4px;">${Fmt.escape(overallText)}</p>
-    </div>
+    </div>` : ""}
     ${order.actual_return !== null && order.actual_return !== undefined ? `<p class="note" style="margin-top:14px;">Evaluation-set outcome: <strong>${order.actual_return ? "Returned" : "Not returned"}</strong></p>` : ""}
     <details class="tech" style="margin-top:14px;">
       <summary>Technical details</summary>
@@ -884,15 +921,23 @@ Pages.diagnosis = async function () {
   }
 
   if (data.recommendation && data.top_finding) {
-    const r = data.recommendation;
     const tf = data.top_finding;
-    const reasonText = `${Fmt.escape(tf.segment_label || tf.segment)} has a ${Fmt.pct(tf.segment_return_rate)} return rate compared with ${Fmt.pct(tf.baseline_return_rate)} for other orders.`;
+    const segmentLabel = Fmt.escape(tf.segment_label || tf.segment);
+    const reasonText = `${segmentLabel} has a ${Fmt.pct(tf.segment_return_rate)} return rate compared with ${Fmt.pct(tf.baseline_return_rate)} for other orders.`;
+    const focusList = Views.FOCUS_AREAS[tf.dimension] || Views.FOCUS_AREAS.default;
     html += `
-      <div class="card" style="border-left:4px solid var(--accent);">
-        <div class="section-title"><h3>Recommended next step</h3></div>
-        <p style="margin-top:6px;font-weight:600;">${Fmt.escape(r.text)}</p>
-        <p class="note" style="margin-top:8px;">${reasonText}</p>
-        <p class="note" style="margin-top:6px;">This is an evidence-based suggestion, not a claim of proven cause.</p>
+      <div class="card recommend-card">
+        <div class="recommend-eyebrow">Recommended next step</div>
+        <h2 class="recommend-title">Investigate ${segmentLabel} returns first</h2>
+        <div class="recommend-section">
+          <div class="recommend-label">Focus on</div>
+          <ul class="recommend-list">${focusList.map((item) => `<li>${Fmt.escape(item)}</li>`).join("")}</ul>
+        </div>
+        <div class="recommend-section">
+          <div class="recommend-label">Why</div>
+          <p class="recommend-why-text">${reasonText}</p>
+        </div>
+        <div class="disclaimer-box" style="background:#fff;margin-top:18px;">This finding shows an observed pattern in the available data. It does not prove that this factor is the cause of the returns.</div>
       </div>`;
   }
 
@@ -919,16 +964,27 @@ Pages.diagnosis = async function () {
   el.innerHTML = html;
 };
 
+// Frontend-only wording: broad, non-causal areas worth looking into for
+// a given segment dimension. Purely presentational -- no statistics,
+// scores, or business logic live here.
+Views.FOCUS_AREAS = {
+  category: ["Product sizing and fit information", "Product listing accuracy", "Product quality and common return reasons"],
+  fulfilment_method: ["Packaging and handling quality", "Fulfilment process accuracy", "Common return reasons for this fulfilment method"],
+  shipping_service: ["Delivery timeliness and transit damage", "Courier handling quality", "Common return reasons for this shipping service"],
+  region: ["Regional delivery and courier performance", "Regional listing or fit expectations", "Common return reasons in this region"],
+  default: ["Order fulfilment and delivery quality", "Product listing accuracy", "Common return reasons for this segment"],
+};
+
 Views.diagnosisCard = function (f) {
   const label = f.segment_label || f.segment;
   const dimLabel = Fmt.dim(f.dimension);
   const ppDiff = (f.segment_return_rate - f.baseline_return_rate) * 100;
   const compareText = `${Fmt.escape(label)} orders are returned at ${Fmt.pct(f.segment_return_rate)}, compared with ${Fmt.pct(f.baseline_return_rate)} for other orders (${ppDiff.toFixed(1)} percentage points higher).`;
   const isStrong = f.statistically_supported && f.practically_significant;
-  const trustLabel = isStrong ? "Strong evidence" : "Limited evidence";
+  const trustLabel = isStrong ? "Strong evidence to investigate" : "Limited evidence";
   const trustText = isStrong
-    ? "The difference is large enough and supported by enough orders to make this an area worth investigating."
-    : "The available data shows some difference, but there is not enough evidence to treat this as a high-priority finding.";
+    ? "This is a meaningful difference, and there are enough orders in this segment to make it worth investigating."
+    : "There's some difference here, but not enough evidence yet to treat this as a high-priority finding.";
   return `
     <div class="card">
       <div class="section-title">
@@ -958,6 +1014,8 @@ Views.diagnosisCard = function (f) {
           <p>Practically significant (relative risk above the practical-effect threshold): ${f.practically_significant ? "Yes" : "No"}.</p>
         </div>
       </details>
+
+      <div class="disclaimer-box">This finding shows an observed pattern in the available data. It does not prove that this factor is the cause of the returns.</div>
     </div>`;
 };
 
@@ -1034,9 +1092,13 @@ Pages.datasources = async function () {
   const decision = data.model_decision || {};
 
   el.innerHTML = `
+    <div class="source-note">
+      Razorpay payment and refund data does not directly represent product returns. Actual return outcomes can be provided by the merchant's return system or imported through CSV.
+    </div>
+
     <div class="grid cols-3">
       <div class="source-card ${rzp.connected ? "connected" : ""}">
-        <div class="source-head"><h3 style="font-size:15px;">Razorpay Test Mode</h3>
+        <div class="source-head"><h3 style="font-size:15px;">1. Razorpay Test Mode</h3>
           <span class="badge ${rzp.connected ? "" : "demo"}">${rzp.connected ? "Connected" : "Not connected"}</span></div>
         <p class="note">Payments and refunds.</p>
         <p class="note" style="margin-top:6px;">Environment: ${Fmt.escape(rzp.mode)} — Test Mode. No live payment actions are performed.</p>
@@ -1061,16 +1123,17 @@ Pages.datasources = async function () {
       </div>
 
       <div class="source-card">
-        <div class="source-head"><h3 style="font-size:15px;">Merchant Returns / OMS</h3>
+        <div class="source-head"><h3 style="font-size:15px;">2. Merchant return data</h3>
           <span class="badge demo">${oms.connected ? "Connected" : "Not connected"}</span></div>
         <p class="note">Actual product-return outcomes.</p>
+        <p class="note" style="margin-top:6px;">Source: Merchant returns system / API / CSV.</p>
         <p class="note" style="margin-top:6px;">${Fmt.escape(oms.note)}</p>
       </div>
 
       <div class="source-card">
-        <div class="source-head"><h3 style="font-size:15px;">CSV Import</h3>
+        <div class="source-head"><h3 style="font-size:15px;">3. CSV import</h3>
           <span class="badge">${csv.available ? "Available" : "Unavailable"}</span></div>
-        <p class="note">Historical merchant data.</p>
+        <p class="note">Historical order and return data.</p>
         <p class="note" style="margin-top:6px;">Used as a historical import / fallback source, not the primary integration.</p>
       </div>
     </div>

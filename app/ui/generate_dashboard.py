@@ -1,5 +1,5 @@
 """
-Generates a single self-contained static HTML dashboard from the
+Generates a single self-contained static HTML report from the
 pipeline's JSON report, following the plain-English merchant flow:
 
     UPLOAD DATA -> WE FOUND A PROBLEM -> WHICH ORDERS ARE AT RISK? ->
@@ -11,7 +11,15 @@ present but placed in a secondary, collapsible section -- never the
 headline numbers.
 
 No JS framework, no build step, no external network calls: this is
-meant to be opened directly in a browser or embedded in the demo.
+meant to be opened directly in a browser or embedded in a report.
+
+NOTE: this is a standalone, offline report generator -- it is NOT
+the dashboard the live app serves. The application at src.api.app
+serves app/ui/dashboard.html directly (a hand-built, API-backed SPA
+with a login gate, order-level modal, and Overview/Risk/Diagnosis/
+Claims/Data Sources pages); that file is edited by hand, never by
+this script. This module's default --out is app/ui/dashboard_report.html
+specifically so running it can never clobber the live dashboard.
 """
 
 from __future__ import annotations
@@ -509,7 +517,11 @@ def main():
     parser.add_argument("--report", default=str(REPO_ROOT / "evaluation/reports/full_report.json"))
     parser.add_argument("--claims", default=None, help="Optional path to a JSON list of claim evidence dicts (spec G4).")
     parser.add_argument("--show-data-sources", action="store_true", help="Render the DATA SOURCES section (spec G1).")
-    parser.add_argument("--out", default=str(REPO_ROOT / "app/ui/dashboard.html"))
+    parser.add_argument("--out", default=str(REPO_ROOT / "app/ui/dashboard_report.html"),
+                         help="Output path. Defaults to a standalone static report file -- "
+                              "NEVER app/ui/dashboard.html, which is the live, hand-built SPA "
+                              "served by src.api.app at '/' and must not be overwritten by this "
+                              "generator.")
     args = parser.parse_args()
 
     report = json.loads(Path(args.report).read_text())
